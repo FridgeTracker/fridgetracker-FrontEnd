@@ -1,0 +1,55 @@
+.createWrapper{
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+}
+
+.progressTracker{
+    height: 8vh;
+    background-color: rgb(243, 255, 216);
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center contents horizontally */
+    align-items: center;
+}
+.progressContent{
+    width: 40%;
+    margin-left: 50px;
+    display: flex;
+    justify-content: center; /* Center contents horizontally */
+    align-items: center;
+}
+.progressContent div{
+    width: 35%;
+}
+
+.createWrapper form{
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+}
+
+.leftWrapper{
+    float: left;
+    width: 50%;
+    height: 45vh;
+    background-color: rgb(255, 255, 255);
+    display: grid; /* Use flexbox */
+    justify-content: center; /* Center contents horizontally */
+    align-items: center;
+}
+.leftWrapper input{
+    width: 40vh;
+    height: 4vh;
+}
+.leftWrapper li {
+    list-style-type: none;
+}
+
+.rightWrapper{
+    width: 50%;
+    float: left;
+    background-color: rgb(255, 255, 255);
+    height: 50vh;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center contents horizontally */
+    align-items: center;
+}

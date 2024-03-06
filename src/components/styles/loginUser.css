@@ -1,0 +1,38 @@
+.loginWrapper{
+    height: 80%;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center contents horizontally */
+    align-items: center; 
+    }
+
+.formWrapper{
+    width: 100%;
+    height: 70%;
+    justify-content: center; /* Center contents horizontally */
+    align-items: center; 
+    display: flex;   
+    display: grid;
+}
+.emailInput{
+    width: 50vh;
+    height: 5vh;
+}
+.passInput{
+    width: 50vh;
+    height: 5vh;
+}
+.buttonWrapper{
+    height: 5vh;
+    width: 100%;
+    justify-content: center; /* Center contents horizontally */
+    align-items: center; 
+    display: flex;  
+}
+.buttonWrapper button{
+    height: 5vh;
+    width: 40%;
+    background-color: rgb(96, 160, 0);
+    border: none;
+    cursor: pointer;
+     
+}
