@@ -1,0 +1,100 @@
+
+html, body, #root, .wrapper {
+    height:100%;
+  }
+  
+.wrapper{
+background-color: #F3F3F3;
+width: 100%;
+}
+.sideBarWrapper{
+background-color: white;
+height: 100%;
+width: 22%;
+overflow: hidden;
+position: absolute;
+float:left
+}
+
+.sideBarWrapper img{
+    width:100%
+}
+
+.sideBarWrapper div{
+    width:100%;
+    height: 5%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  
+}
+
+.sideBarWrapper div:hover{
+    background-color: #F8FFF4;
+}
+p {
+    margin: 0px;
+    padding:0px;
+}
+
+.logoutButton {
+    margin-bottom: 15%;
+    position :absolute;
+    bottom:0
+}
+.contentWrapper{
+    width:78%;
+    height:100%;
+    margin-left: 22%;
+
+}
+.searchBarWrapper{
+    width: 100%;
+    height: 7%;
+    background-color: #E4E4E4;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+   
+}
+.searchBarWrapper input{
+    width: 95%;
+    height: 45%;
+    border: none;
+    border-radius: 10px;
+}
+.headerWrapper{
+    width:100%;
+    height: 20%;
+    background-color: red;
+    overflow: hidden;
+}
+.headerWrapper img{
+    width:100%;
+}
+.iconHolder{
+    width: 100%;
+    height: 8%;
+    background-color: #EAEAEA;
+    display:flex;
+    align-items: center;
+}
+.iconHolder div{
+    width: 15%;
+    height:50%;
+    background-color: white;
+    margin-left: 50px;
+    border-radius: 10px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 5px 5px black;
+}
+.iconHolder div:hover{
+    box-shadow: 5px 5px 5px greenyellow;
+    cursor: pointer;
+}
+.mainBodyWrapper{
+    width:100%;
+    height:100%;
+}
