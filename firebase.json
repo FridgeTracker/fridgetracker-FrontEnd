@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "fridgetrackerv2",
     "public": "build",
     "rewrites": [ {
       "source": "**",
