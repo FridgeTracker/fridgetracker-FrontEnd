@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+//import axios from 'axios';
 import './Dash.css';
 import logo from "./assets/Fridge_logo.png";
 import headerImage from "./assets/image.png";
@@ -79,7 +79,7 @@ function Dash(){
                     <input type= 'text'/>
                 </div>
                 <div className = 'headerWrapper'>
-                    <img src = {headerImage} alt = "header Image"></img>
+                    <img src = {headerImage} alt = "header"></img>
                 </div>
                 <div className='iconHolder'>
                     <div className='membersButton' onClick = {membersHandler}><p>Members</p></div>
