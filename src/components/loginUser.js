@@ -43,7 +43,7 @@ function LoginUser(){
       return(
         <div className='loginWrapper'>
           <form onSubmit={loginInWithEmailAndPassword} className='formWrapper'>
-            <p>E-mail</p>
+            <p>Email</p>
             <input
               className='emailInput'
               type="email"
