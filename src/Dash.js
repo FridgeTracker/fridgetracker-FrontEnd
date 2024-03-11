@@ -7,7 +7,10 @@ import Freezers from './components/freezers';
 import Fridges from './components/fridges';
 import Members from './components/members';
 
-
+import dashIcon from "./assets/dashIcon.png";
+import mealIcon from "./assets/mealIcon.png";
+import setIcon from "./assets/setIcon.png";
+import powerIcon from "./assets/powerIcon.png";
 
 function Dash(){
 
@@ -63,18 +66,22 @@ function Dash(){
             ) : (
                 <p>Loading user data...</p>
             )}
+            <img src = {logo} alt = "fridge logo"/>
         </div>*/
 
         <div className = 'wrapper'>
             
             <div className= 'sideBarWrapper'>
-                
-                <img src = {logo} alt = "fridge logo"></img>
-                <div className = 'dashboardButton'><p>Dashboard</p></div>
-                <div className = 'mealButton'><p>Meals</p></div>
-                <div className = 'settingsButton'><p>Settings</p></div>
-                <div className = 'logoutButton'><p>Logout</p></div>
 
+                <div className='fridgeLogoWrapper'>
+                <img src = {logo} alt = "fridge logo"/>
+                </div>
+
+                <div className = 'dashboardButton'><img src={dashIcon} alt="d"/><p>Dashboard</p></div>
+                <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
+                <div className = 'settingsButton'><img src={setIcon} alt="s"/><p>Settings</p></div>
+                <div className = 'logoutButton'><img src={powerIcon} alt="s"/><p>Logout</p></div>
+           
             </div>
             <div className='contentWrapper'>
                 <div className= 'searchBarWrapper'>

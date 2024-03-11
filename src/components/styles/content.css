@@ -21,10 +21,19 @@
     width: 30%;
     height: 100%;
     background-color: #F3F3F3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    overflow-y: auto;
+
 }
+::-webkit-scrollbar {
+    width: 5px; /* Adjust the width as desired */
+  }
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+  }
+::-webkit-scrollbar-thumb {
+    background: #cecece; /* Color of the thumb */
+    border-radius: 5px; /* Rounded corners */
+  }
 
 
 .fridgeListHolder{
@@ -35,25 +44,49 @@
 .fridgeListHolder div {
     width: 80%;
     height: 40px;
-    background-color: white;
     margin :10% 10%;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content:baseline;
-     
+    justify-content:baseline; 
 }
+
 .fridgeListHolder div:hover{
     box-shadow: 5px 5px 5px greenyellow;
     cursor: pointer;
 }
+
 .itemListHolder {
     width: 100%;
     height: 100%;
     background-color:aqua;
 }
-.plusSign{
-    
+
+.fridge1Holder{
+    width: 80%;
+    height: 40px;
+    background-color: lightgrey;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border: 1px solid rgb(133, 133, 133);
+}
+
+.fridge2Holder{
+    width: 80%;
+    height: 40px;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border: 1px solid rgb(133, 133, 133);
+}
+
+.fridge1Holder img{
+    max-width:60%;
+    max-height:60%;
 }
 
 
