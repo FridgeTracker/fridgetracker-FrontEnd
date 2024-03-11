@@ -3,11 +3,11 @@ import "./styles/content.css";
 
 import React from "react";
 
-const Item = () => {
+const Item = ({Item}) => {
 
     return (
     <div className= "itemButton">
-        <p>HI</p>
+        <p>{Item.foodName}</p>
     </div>
     );
 }

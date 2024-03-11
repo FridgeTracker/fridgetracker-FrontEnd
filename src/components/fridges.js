@@ -9,7 +9,6 @@ import plus_sign from "../assets/plus_sign.png";
 
 
 function Fridges() {
-  //const [showFridge1, setFridge1] = useState(false);
   const [userData, setUserData] = useState({});
   const [selectedFridge, setSelectedFridge] = useState(null);
 
@@ -46,9 +45,9 @@ function Fridges() {
       <div className="fridgeListWrapper">
         <div className="fridgeListHolder">
 
-        {userData.fridges && userData.fridges.map((fridge) => (
-        <Fridge key={fridge.id} fridge={fridge} onFridgeClick={fridgeHandler} />
-      ))}
+          {userData.fridges && userData.fridges.map((fridge) => (
+          <Fridge key={fridge.id} fridge={fridge} onFridgeClick={fridgeHandler} />
+          ))}
 
           <div className="fridge1Holder">
               <img src = {plus_sign} alt = "plus sign"/>
@@ -57,27 +56,19 @@ function Fridges() {
         </div>
       </div>
 
-      <div className='itemListHolder'>
-        {selectedFridge && (
-          <div className = "itemWrapper">
-            <div className = "itemList">
-              
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-              <Item/>
-          
+      <div className='itemContainer'>
+
+        <div className='itemListContainer'>
+            <div className = "itemWrapper">
+              <div className='itemListHolder'>
+                {selectedFridge && selectedFridge.items.map((item) =>
+                  <Item key={item.fridgeid} Item={item}/>
+                  )}
+              </div>
             </div>
-          </div>
-        )}
+          
+        </div>
+
       </div>
 
     </div>
