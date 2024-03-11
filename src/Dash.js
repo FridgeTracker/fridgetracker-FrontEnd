@@ -7,6 +7,8 @@ import Freezers from './components/freezers';
 import Fridges from './components/fridges';
 import Members from './components/members';
 
+
+
 function Dash(){
 
 /*const [userData, setUserData] = useState(null);
@@ -30,8 +32,8 @@ function Dash(){
         fetchUserData();
     }, []);*/
     const [showMembers, setMembers] = useState(false);
-  const [showFridges, setFridges] = useState(false);
-  const [showFreezers, setFreezers] = useState(false);
+    const [showFridges, setFridges] = useState(false);
+    const [showFreezers, setFreezers] = useState(false);
 
   const membersHandler = () => {
     setMembers(true);
@@ -81,7 +83,7 @@ function Dash(){
                 <div className = 'headerWrapper'>
                     <img src = {headerImage} alt = "header"></img>
                 </div>
-                <div className='iconHolder'>
+                <div className='iconHolder' tabIndex="0">
                     <div className='membersButton' onClick = {membersHandler}><p>Members</p></div>
                     <div className='fridgesButton' onClick = {fridgesHandler}><p>Fridges</p></div>
                     <div className='freezersButton' onClick={freezersHandler}><p>Freezers</p></div>

@@ -95,7 +95,12 @@ p {
     box-shadow: 5px 5px 5px greenyellow;
     cursor: pointer;
 }
+
+.iconHolder div:focused{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    outline:none;
+}
 .mainBodyWrapper{
     width:100%;
-    height:100%;
+    height:65%;
 }
