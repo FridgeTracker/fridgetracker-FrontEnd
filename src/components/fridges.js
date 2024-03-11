@@ -8,7 +8,7 @@ import plus_sign from "../assets/plus_sign.png";
 
 
 function Fridges() {
-  const [showFridge1, setFridge1] = useState(false);
+  //const [showFridge1, setFridge1] = useState(false);
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
@@ -50,7 +50,6 @@ function Fridges() {
       </div>
 
       <div className='itemListHolder'>
-        {showFridge1 && <Fridge />}
       </div>
 
     </div>
