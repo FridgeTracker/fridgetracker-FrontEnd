@@ -88,6 +88,35 @@
     max-width:60%;
     max-height:60%;
 }
+.itemWrapper{
+    width: 65%;
+    height: 100%;
+    background-color: #b2b2b2;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+
+}
+.itemList{
+    width: 90%;
+    height:90%;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+
+}
+
+.itemList div {
+    background-color: blue;
+    width: 80%;
+    height: 40px;
+    margin :10% 10%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content:baseline; 
+}
 
 
 

@@ -4,12 +4,14 @@ import "./styles/content.css";
 import axios from 'axios';
 
 import Fridge from './fridge.js';
+import Item from './item.js';
 import plus_sign from "../assets/plus_sign.png";
 
 
 function Fridges() {
   //const [showFridge1, setFridge1] = useState(false);
   const [userData, setUserData] = useState({});
+  const [selectedFridge, setSelectedFridge] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,14 +35,20 @@ function Fridges() {
     console.log(userData); // Log userData when it changes
   }, [userData]);
 
+  const fridgeHandler = (fridgeName) => {
+    const clickedFridge = userData.fridges.find(fridge => fridge.id === fridgeName.id);
+    setSelectedFridge(clickedFridge);
+  }
+
   return (
     <div className="fridge">
       
       <div className="fridgeListWrapper">
         <div className="fridgeListHolder">
 
-          {userData.fridges && userData.fridges.map((fridge) =>
-          <Fridge key={userData.id} fridge={fridge}/>)}
+        {userData.fridges && userData.fridges.map((fridge) => (
+        <Fridge key={fridge.id} fridge={fridge} onFridgeClick={fridgeHandler} />
+      ))}
 
           <div className="fridge1Holder">
               <img src = {plus_sign} alt = "plus sign"/>
@@ -50,6 +58,26 @@ function Fridges() {
       </div>
 
       <div className='itemListHolder'>
+        {selectedFridge && (
+          <div className = "itemWrapper">
+            <div className = "itemList">
+              
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+              <Item/>
+          
+            </div>
+          </div>
+        )}
       </div>
 
     </div>

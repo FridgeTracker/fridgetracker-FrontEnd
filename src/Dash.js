@@ -38,17 +38,31 @@ function Dash(){
     const [showFridges, setFridges] = useState(false);
     const [showFreezers, setFreezers] = useState(false);
 
-  const membersHandler = () => {
+
+
+    function colorChange(element){
+        const divs = document.querySelectorAll(".elementButton");
+    divs.forEach(function(div) {
+        div.style.boxShadow = "5px 5px 5px rgb(121, 121, 121)";
+    })
+    element.style.boxShadow = "5px 5px 5px greenyellow";
+    }
+  const membersHandler = (currentTarget) => {
+    colorChange(currentTarget);
     setMembers(true);
     setFridges(false);
     setFreezers(false);
   }
-  const fridgesHandler = () => {
+  const fridgesHandler = (currentTarget) => {
+    colorChange(currentTarget);
+    currentTarget.style.boxShadow = "5px 5px 5px greenyellow";
     setMembers(false);
     setFridges(true);
     setFreezers(false);
   }
-  const freezersHandler = () => {
+  const freezersHandler = (currentTarget) => {
+    colorChange(currentTarget);
+    currentTarget.style.boxShadow = "5px 5px 5px greenyellow";
     setMembers(false);
     setFridges(false);
     setFreezers(true);
@@ -91,9 +105,9 @@ function Dash(){
                     <img src = {headerImage} alt = "header"></img>
                 </div>
                 <div className='iconHolder' tabIndex="0">
-                    <div className='membersButton' onClick = {membersHandler}><p>Members</p></div>
-                    <div className='fridgesButton' onClick = {fridgesHandler}><p>Fridges</p></div>
-                    <div className='freezersButton' onClick={freezersHandler}><p>Freezers</p></div>
+                    <div className='elementButton' onClick = {(e)=> {membersHandler(e.currentTarget)}}><p>Members</p></div>
+                    <div className='elementButton' onClick = {(e)=> {fridgesHandler(e.currentTarget)}}><p>Fridges</p></div>
+                    <div className='elementButton' onClick={(e)=>{freezersHandler(e.currentTarget)}}><p>Freezers</p></div>
                 </div>
                 <div className = 'mainBodyWrapper'>
                 {showMembers && <Members />}
