@@ -1,3 +1,9 @@
+## Testing
+
+Admin Test account : admin@ft.com
+Family Test account: family@ft.com
+
+
 ## UI Flow
 
 ![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/6707c0c2-8b0e-45cb-ab12-15359d6d4bbe)
