@@ -1,5 +1,5 @@
 
-import "./styles/content.css";
+import "../styles/content.css";
 
 import React from "react";
 

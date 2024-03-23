@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import "./styles/content.css";
+import "../styles/content.css";
 
 import axios from 'axios';
 
 import Fridge from './fridge.js';
-import Item from './item.js';
+import Item from '../item/item.js';
 import plus_sign from "../assets/plus_sign.png";
 
 

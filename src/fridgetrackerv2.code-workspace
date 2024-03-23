@@ -1,9 +1,7 @@
 {
-	"folders": [
-		{
-			"name": "fridgetrackerv2",
-			"path": ".."
-		}
-	],
-	"settings": {}
+    "folders": [
+        {
+            "path": ".."
+        }
+    ]
 }
