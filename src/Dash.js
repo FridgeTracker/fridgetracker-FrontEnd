@@ -1,16 +1,16 @@
 import { useState } from 'react';
 //import axios from 'axios';
 import './Dash.css';
-import logo from "./assets/Fridge_logo.png";
+import logo from "./components/assets/Fridge_logo.png";
 import headerImage from "./components/assets/image.png";
 import Freezers from './components/freezer/freezers';
 import Fridges from './components/fridge/fridges';
 import Members from './components/members/members';
 
-import dashIcon from "./assets/dashIcon.png";
-import mealIcon from "./assets/mealIcon.png";
-import setIcon from "./assets/setIcon.png";
-import powerIcon from "./assets/powerIcon.png";
+import dashIcon from "./components/assets/dashIcon.png";
+import mealIcon from "./components/assets/mealIcon.png";
+import setIcon from "./components/assets/setIcon.png";
+import powerIcon from "./components/assets/powerIcon.png";
 
 function Dash(){
 
@@ -34,7 +34,7 @@ function Dash(){
         };
         fetchUserData();
     }, []);*/
-    
+
     const [showMembers, setMembers] = useState(false);
     const [showFridges, setFridges] = useState(false);
     const [showFreezers, setFreezers] = useState(false);
