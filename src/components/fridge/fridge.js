@@ -1,5 +1,5 @@
 
-import "../styles/content.css";
+import "./fridge.css";
 
 import React from "react";
 

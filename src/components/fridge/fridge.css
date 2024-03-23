@@ -1,0 +1,108 @@
+.fridge2Holder{
+    width: 80%;
+    height: 40px;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border: 1px solid rgb(133, 133, 133);
+}
+
+.fridgeListWrapper{
+    width: 30%;
+    height: 100%;
+    background-color: #F3F3F3;
+    overflow-y: auto;
+
+}
+
+.fridgeListHolder{
+    width: 100%;
+    height: auto;
+}
+
+.fridgeListHolder div {
+    width: 80%;
+    height: 40px;
+    margin :10% 10%;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content:baseline; 
+}
+
+.fridgeListHolder div:hover{
+    box-shadow: 5px 5px 5px greenyellow;
+    cursor: pointer;
+}
+
+.fridge1Holder{
+    width: 80%;
+    height: 40px;
+    background-color: lightgrey;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    border: 1px solid rgb(133, 133, 133);
+}
+
+
+.fridge1Holder img{
+    max-width:60%;
+    max-height:60%;
+
+}
+
+.itemContainer{
+    height: 100%;
+    width: 100%;
+}
+
+.itemListContainer{
+    width: 60%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content:center; 
+}
+
+.itemWrapper{
+    width: 95%;
+    height: 95%;
+    background-color: #e4e4e4;
+    overflow-y: auto;
+    border-radius: 30px;
+    overflow-wrap: hidden;
+    border: 1px solid black;
+ 
+}
+
+.itemListHolder{
+    width: 100%;
+    height: auto;
+    display: inline;
+    align-items: center;
+    justify-content:center; 
+    
+}
+
+.itemListHolder div:hover{
+    background-color: green;
+    cursor: pointer;
+}
+
+.itemButton{
+    width: 90%;
+    height: 8%;
+    margin: 5% 5% 1%;
+    margin-top: 20px;
+    border-radius: 20px;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(133, 133, 133);
+}

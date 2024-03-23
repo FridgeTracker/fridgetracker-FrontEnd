@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import "../styles/content.css";
+
+import "./fridge.css";
 
 import axios from 'axios';
 
