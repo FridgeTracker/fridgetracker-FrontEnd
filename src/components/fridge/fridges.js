@@ -26,10 +26,6 @@ function Fridges() {
     fetchUserData();
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
-  /*const fridge1Handler = () => {
-    setFridge1(true);
-    console.log("button pressed");
-  };*/
 
   useEffect(() => {
     console.log(userData); // Log userData when it changes
