@@ -48,6 +48,8 @@ function Dash(){
     })
     element.style.boxShadow = "5px 5px 5px greenyellow";
     }
+
+    // This needs to be simplified
   const membersHandler = (currentTarget) => {
     colorChange(currentTarget);
     setMembers(true);
@@ -71,18 +73,7 @@ function Dash(){
  
 
     return (
-       /* <div>
-            {userData ? (
-                <div>
-                    <p>ID: {userData.id}</p>
-                    <p>Email: {userData.email}</p>
-                    <p>Rank: {userData.rank}</p>
-                </div>
-            ) : (
-                <p>Loading user data...</p>
-            )}
-            <img src = {logo} alt = "fridge logo"/>
-        </div>*/
+
 
         <div className = 'wrapper'>
             
