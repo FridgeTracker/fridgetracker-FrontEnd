@@ -1,0 +1,82 @@
+body, html {
+    margin: 0;
+    font-family: 'Rokkitt', serif;
+  }
+
+.registerWrapper {
+    background-image: url(../assets/moon.png);
+    background-size: 150vw 120vh; /* 100% of viewport width and height */
+    background-position: left center;
+    height: 100vh; 
+    width: 100vw; 
+    display: flex; 
+}
+
+.fridgeWrapper{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+.fridgeWrapper img{
+  height: 100%;
+  object-fit: cover; 
+}
+
+.rightSideSection{
+   width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formContainers{
+    width: 50%;
+}
+
+.formTitles{
+    color: white;
+    font-size:x-large;
+    text-align: center;
+}
+
+.inputWrappers{
+    margin-top: 30px;
+}
+.formWrappers input{
+    width: 100%;
+    height: 5vh;
+    border-radius: 50px;
+    background-color: rgb(58, 58, 58);
+    color: white;
+    border: 1px solid white;
+    flex: 1;
+    margin-top: 10px;
+    font-family: 'Rokkitt', serif;
+    font-size: large;
+
+}
+.formWrappers input::placeholder{
+    color: white;
+    padding-left: 30px;
+}
+
+.buttonWrappers {
+    margin-top: 40px;
+    width: 100%;
+    height: 5vh;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.buttonWrappers button{
+    width: 80%;
+    height: 100%;
+    border-radius: 30px;
+    border: none;
+}

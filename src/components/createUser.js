@@ -1,70 +1,63 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './styles/createUser.css';
+import './styles/create.css';
+
+import closeFridge from './assets/closeFridge.png';
 
 function CreateUser(){
 
-    const[formData, setFormData] = useState({
-        email: '',
-        password: '',
-        rank: 0
-    })
+      return(
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
+        <div className='registerWrapper'>
+          
+          <div className='fridgeWrapper'>
 
-    const [message, setMessage] = useState([]);
+            <img src={closeFridge} alt='wow'/>
+            
+          </div>
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+          <div className='rightSideSection'>
 
-        axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/register', formData)
-            .then(response => {
+            <div className='formContainers'>
 
-                setMessage('Registration successful');
+              <span className='formTitles'>
+                <p>Welcome!</p>
+                <p><strong>Register a new Account</strong></p>
+              </span>
 
-            })
-            .catch(error => {
-                console.error('Registration failed', error);
+              <form className='formWrappers'>
 
-            });
-    };
+                <div className='inputWrappers'>
 
-    return (
-        <div className='createWrapper'>
+                  <input className='familyName' type="text" name="familyName" placeholder="Enter Family Name Here"  required />
 
-            <div className='progressTracker'>
-                <div className='progressContent'>
-                    <div><p>Create User</p></div>
-                    <div><p>Add Info</p></div>
-                    <div><p>Confirm</p></div>
+                  <br></br>
+
+                  <input className='emailInput' type="text" name="email" placeholder="Enter Email Here" required />
+
+                    <br></br>
+
+                    <input className='passInput' type="password" name="password" placeholder="Enter Password Here" required />
+
+                    <br></br>
+
+                  <input className='passInput' type="password" name="password2" placeholder="Re-Enter Password Here" required />
+                
                 </div>
+
+                
+                <div className='buttonWrappers'>
+                  <button>Register</button>
+                </div>
+          
+              </form>
+            
+
             </div>
-            <form onSubmit={handleSubmit}>
-                <div className='leftWrapper'>
-                    <li>
-                        <p>Enter Email</p>
-                        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
-                        <p>Enter password</p>
-                        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
-                       
-                    </li>
-                </div>
-            
-                <div className='rightWrapper'>
-                    <p>{message}</p>
-                    <button type="submit">Sign Up</button>
-                </div>
-            
-            </form>
-            
-        </div>
-    )   
-}
+          </div>
+          
 
-export default CreateUser;
+          
+        </div>
+      )
+    };
+    
+    export default CreateUser;

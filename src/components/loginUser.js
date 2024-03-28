@@ -2,7 +2,9 @@
 import React, { useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './styles/loginUser.css';
+import './styles/login.css';
+
+import openFridge from './assets/openFridge2.png';
 
 function LoginUser(){
 
@@ -41,34 +43,53 @@ function LoginUser(){
     }
 
       return(
+
         <div className='loginWrapper'>
-          <form onSubmit={loginInWithEmailAndPassword} className='formWrapper'>
-            <p>Email</p>
-            <input
-              className='emailInput'
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <br></br>
-            <p>Password</p>
-            <input
-              className='passInput'
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <br></br>
-            <div className='buttonWrapper'>
-              <button type="submit">Login</button>
-             </div>
-          </form>
+          
+          <div className='fridgeContainer'>
+            <img src={openFridge} alt='wow'/>
+            
+          </div>
+
+          <div className='rightSide'>
+            <div className='formContainer'>
+              <span className='formTitle'>
+                <p>Welcome Back!</p>
+                <p><strong>Sign in to your account</strong></p>
+              </span>
+              
+              <form onSubmit={loginInWithEmailAndPassword} className='formWrapper'>
+
+                <div className='inputWrapper'>
+                  <input className='emailInput' type="email" name="email" placeholder="Enter Email Here" 
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+
+                  <br></br>
+
+                  <input className='passInput' type="password" name="password" placeholder="Enter Password Here"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <span className='forgotButton'><p> Forgot Password? </p></span>
+                
+                <div className='buttonWrapper'>
+                  <button type="submit" id='signIn'>Sign In</button>
+                  <button id='signUp' onClick={() => navigate("../Register")}>Sign Up</button>
+                </div>
+          
+              </form>
+
+            </div>
+          </div>
+          
+
+          
         </div>
       )
     };

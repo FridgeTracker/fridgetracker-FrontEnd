@@ -1,0 +1,107 @@
+body, html {
+    margin: 0;
+    font-family: 'Rokkitt', serif;
+  }
+.loginWrapper {
+    background-image: url(../assets/moon.png);
+    background-size: 150vw 120vh; /* 100% of viewport width and height */
+    background-position: left center;
+    height: 100vh; 
+    width: 100vw; 
+    display: flex; 
+}
+
+.fridgeContainer {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    right: 10px;
+
+}
+
+.fridgeContainer img{
+    height: 80%;
+
+}
+
+.rightSide{
+    width: 45%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formContainer{
+    width: 50%;
+}
+
+.formTitle{
+    color: white;
+    font-size:x-large;
+    text-align: center;
+  
+}
+
+.inputWrapper{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: auto;
+    height: auto;
+}
+
+.formWrapper input{
+    width: 100%;
+    height: 5vh;
+    border-radius: 50px;
+    background-color: rgb(58, 58, 58);
+    color: white;
+    border: 1px solid white;
+    flex: 1;
+    margin-top: 30px;
+    font-family: 'Rokkitt', serif;
+    font-size: large;
+
+}
+
+
+.formWrapper input::placeholder{
+    color: white;
+    padding-left: 30px;
+}
+
+.forgotButton {
+    color: white;
+    font-size: large;
+    text-align: center;
+}
+
+.buttonWrapper{
+    margin-top: 40px;
+    width: 100%;
+    height: auto;
+    display: flex; /* Use flexbox */
+    justify-content: space-between;
+}
+
+.buttonWrapper button{
+    height: 5vh;
+    width: 45%;
+    border-radius: 30px;
+    font-size: larger;
+    font-family: 'Rokkitt', serif;
+    cursor: pointer;
+}
+
+.buttonWrapper #signIn{
+    background-color: white;
+    border: none;
+}
+
+.buttonWrapper #signUp{
+    background-color: rgb(53, 53, 53);
+    border: none;
+    color:white;
+}
