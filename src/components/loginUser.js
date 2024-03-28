@@ -5,6 +5,7 @@ import axios from 'axios';
 import './styles/login.css';
 
 import openFridge from './assets/openFridge2.png';
+import logo from './assets/ftlogo.png';
 
 function LoginUser(){
 
@@ -46,6 +47,8 @@ function LoginUser(){
 
         <div className='loginWrapper'>
           
+          <img src={logo} alt="logo" id="logo" onClick={() => {navigate("/")}}/>
+
           <div className='fridgeContainer'>
             <img src={openFridge} alt='wow'/>
             

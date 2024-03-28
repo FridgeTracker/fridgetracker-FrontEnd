@@ -3,6 +3,11 @@ body, html {
     font-family: 'Rokkitt', serif;
   }
 
+  #logo{
+    position: absolute;
+    height: 15%;
+  }
+
 .registerWrapper {
     background-image: url(../assets/moon.png);
     background-size: 150vw 120vh; /* 100% of viewport width and height */
@@ -79,6 +84,7 @@ body, html {
     height: 100%;
     border-radius: 30px;
     border: none;
+    cursor: pointer;
 }
 
 .errorMessage p{

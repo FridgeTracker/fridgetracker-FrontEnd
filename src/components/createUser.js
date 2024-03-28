@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {  useNavigate } from 'react-router-dom';
 import './styles/create.css';
 
 import closeFridge from './assets/closeFridge.png';
+import logo from './assets/ftlogo.png';
 
 function CreateUser(){
+
+    const navigate = useNavigate();
 
     const[formData, setFormData] = useState({
         familyName: '',
@@ -44,6 +48,8 @@ function CreateUser(){
 
         <div className='registerWrapper'>
           
+          <img src={logo} alt="logo" id="logo" onClick={() => {navigate("/")}}/>
+
           <div className='fridgeWrapper'>
 
             <img src={closeFridge} alt='wow'/>
