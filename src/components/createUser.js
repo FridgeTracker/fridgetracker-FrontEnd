@@ -29,10 +29,12 @@ function CreateUser(){
         axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/register', formData)
             .then(response => {
 
-                setMessage('Registration successful');
+                console.log(response);
+                setMessage(response.data);
 
             })
             .catch(error => {
+                setMessage(error.response.data);
                 console.error('Registration failed', error);
 
             });
@@ -84,7 +86,10 @@ function CreateUser(){
           
               </form>
             
+              <span className='errorMessage'>
                 <p>{message}</p>
+              </span>
+
             </div>
           </div>
           
