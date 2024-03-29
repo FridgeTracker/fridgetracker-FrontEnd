@@ -45,10 +45,10 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             
             <div className="cardContent">
                 <table className="cardTable">
-                    <td>Name: </td><td> {Item.foodName}</td>
+                    <td>Name: </td><td> <input type="text" placeholder={Item.foodName}/></td>
                     <tr><td>Quantity: </td><td>{Item.quantity}</td></tr>
-                    <tr>Calories: </tr><tr>{Item.calories}</tr>
-                    <tr>Type:</tr><tr> {Item.type}</tr>
+                    <tr><td>Calories: </td><td>{Item.calories}</td></tr>
+                    <tr><td>Type:</td><td> {Item.type}</td></tr>
                 </table>
             </div>
             
