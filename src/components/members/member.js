@@ -4,12 +4,16 @@ import React from "react";
 
 import memberIcon from '../assets/memberIcon.png'
 
-const Member = ({ member, onMemberClick }) => {
+const Member = ({ member }) => {
 
     return (
-    <div className="memberHolder" onClick={() => onMemberClick(member)}>
-        <img src={memberIcon} alt = "a" />
+    <div className="memberContentData">
         <p>{member.name}</p>
+        <p>Age: {member.age}</p>
+        <p>allergies: {member.allergies}</p>
+        <p>height: {member.height}</p>
+        <p>weight: {member.weight}</p>
+        {console.log(member)}
     </div>
     );
 }

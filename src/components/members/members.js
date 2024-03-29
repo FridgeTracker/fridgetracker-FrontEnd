@@ -1,5 +1,6 @@
 import "./member.css";
 import { useState, useEffect } from 'react';
+import memberIcon from '../assets/memberIcon.png'
 
 
 import axios from 'axios';
@@ -12,7 +13,7 @@ function Members(){
 
 
     const [userData, setUserData] = useState({});
-    //const [selectedMember, setSelectedMember] = useState(null);
+    const [selectedMember, setSelectedMember] = useState(null);
 
 
     useEffect(() => {
@@ -46,13 +47,16 @@ function Members(){
     return (
 
         <div className="member">
-
             <div className="memberListContainer">
-
                 <div className="memberListHolder">
 
                     {userData.members && userData.members.map((member) => (
-                        <Member key={member.id} member={member} onMemberClick={memberHandler} />
+
+                        <div className="memberHolder" onClick={() => setSelectedMember(member)}>
+                          <img src={memberIcon} alt = "a" />
+                          <p>{member.name}</p>
+                      </div>
+
                     ))}
 
                 </div>
@@ -65,8 +69,11 @@ function Members(){
                     <p>Members</p>
                 </div>
                 
+
                 <div className="memberContent">
 
+                  {selectedMember && <Member key={selectedMember.id} member={selectedMember}/>}
+                  
                 </div>
 
             </div>

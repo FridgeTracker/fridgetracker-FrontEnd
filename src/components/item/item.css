@@ -10,6 +10,26 @@
     align-items: center;
 }
 
+.itemCardContainer{
+    width: 100%;
+    height: 100%;
+}
+
+
 .itemButton p{
     margin-left: 20px;
+}
+
+.itemButton img{
+    height:25px;
+}
+
+.addItemForm{
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
