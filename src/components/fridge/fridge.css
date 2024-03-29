@@ -82,7 +82,7 @@
 }
 
 .itemListHolder div:hover{
-    background-color: green;
+    background-color: #677B79;
     cursor: pointer;
 }
 
@@ -130,4 +130,11 @@
     height: 80%;
     background-color: #656464;
     
+}
+
+.cardTable{
+
+    color:white;
+    font-size: x-large;
+    padding: 20px;
 }

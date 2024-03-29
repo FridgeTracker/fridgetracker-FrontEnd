@@ -12,8 +12,6 @@ const Item = ({Item, fridgeId, updateFridge}) => {
         // Get form data
         const formData = new FormData(event.target);
 
-        console.log(fridgeId);
-
         const itemToAdd = {
             item: {
                 fridgeID: formData.get('id'),
@@ -41,12 +39,19 @@ const Item = ({Item, fridgeId, updateFridge}) => {
     <div className= "itemCardContainer">
         {Item ? (
             <>
-            <table>
-            <tr><p>Name: {Item.foodName}</p></tr>
-            <tr><p>Quantity: {Item.quantity}</p></tr>
-            <tr><p>Calories: {Item.calories}</p></tr>
-            <tr><p>Type: {Item.type}</p></tr>
-            </table>
+            <div className="cardTitle">
+                <p><u>  {Item.foodName}  </u></p>
+            </div>
+            
+            <div className="cardContent">
+                <table className="cardTable">
+                    <td>Name: </td><td> {Item.foodName}</td>
+                    <tr><td>Quantity: </td><td>{Item.quantity}</td></tr>
+                    <tr>Calories: </tr><tr>{Item.calories}</tr>
+                    <tr>Type:</tr><tr> {Item.type}</tr>
+                </table>
+            </div>
+            
             </>
         ) 
         : (
