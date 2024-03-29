@@ -1,0 +1,14 @@
+<div className = 'headerWrapper'>
+                    <img src = {headerImage} alt = "header"></img>
+                </div>
+                <div className='iconHolder' tabIndex="0">
+                    <div className='elementButton' onClick = {(e)=> {membersHandler(e.currentTarget)}}><p>Members</p></div>
+                    <div className='elementButton' onClick = {(e)=> {fridgesHandler(e.currentTarget)}}><p>Fridges</p></div>
+                    <div className='elementButton' onClick={(e)=>{freezersHandler(e.currentTarget)}}><p>Freezers</p></div>
+                </div>
+                <div className = 'mainBodyWrapper'>
+                {showMembers && <Members />}
+                {showFridges && <Fridges />}
+                {showFreezers && <Freezers />}
+         
+                </div>

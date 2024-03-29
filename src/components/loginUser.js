@@ -6,6 +6,7 @@ import './styles/login.css';
 
 import openFridge from './assets/openFridge2.png';
 import logo from './assets/ftlogo.png';
+import { authenticateUser } from './authService';
 
 function LoginUser(){
 
@@ -30,16 +31,15 @@ function LoginUser(){
         
         try {
           const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);
-          console.log(response.data); 
-          localStorage.setItem('userEmail', formData.email);
+          
+          authenticateUser(response.data);
+          
           navigate("../Dash")
           
       } catch (error) {
           console.error('Login failed:', error);
          
       }
-
-        
         
     }
 

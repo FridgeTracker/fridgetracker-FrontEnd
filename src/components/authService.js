@@ -1,12 +1,12 @@
 
-export const authenticateUser = (userEmail) => {
-    localStorage.setItem('userEmail', userEmail);
+export const authenticateUser = (UUID) => {
+    localStorage.setItem('UUID', UUID);
 }
 
 export const logoutUser = () => {
-    localStorage.removeItem('userEmail');
+    localStorage.removeItem('UUID');
 }
 
 export const getAuthToken = () => {
-    return localStorage.getItem('userEmail');
+    return localStorage.getItem('UUID');
 }
