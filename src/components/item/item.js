@@ -1,5 +1,5 @@
 
-import "../styles/content.css";
+import "./item.css";
 
 import React from "react";
 
@@ -7,7 +7,7 @@ const Item = ({Item}) => {
 
     return (
     <div className= "itemButton">
-        <p>{Item.foodName}</p>
+        <p>Name: {Item.foodName} | Quantity: {Item.quantity}</p>
     </div>
     );
 }

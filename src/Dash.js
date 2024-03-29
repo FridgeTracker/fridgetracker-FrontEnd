@@ -12,9 +12,12 @@ import mealIcon from "./components/assets/mealIcon.png";
 import setIcon from "./components/assets/setIcon.png";
 import listIcon from "./components/assets/listIcon.png";
 import powerIcon from "./components/assets/powerIcon.png";
-import { getAuthToken } from './components/authService';
+import { getAuthToken, logoutUser} from './components/authService';
+import { useNavigate } from 'react-router-dom';
 
 function Dash(){
+
+const navigate = useNavigate();
 
 const [userData, setUserData] = useState(null);
 
@@ -38,7 +41,6 @@ const [userData, setUserData] = useState(null);
     const [showMembers, setMembers] = useState(false);
     const [showFridges, setFridges] = useState(false);
     const [showFreezers, setFreezers] = useState(false);
-
 
     // This needs to be simplified
   const membersHandler = (currentTarget) => {
@@ -78,7 +80,8 @@ const [userData, setUserData] = useState(null);
                 <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
                 <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
                 <div className = 'settingsButton'><img src={setIcon} alt="s"/><p>Settings</p></div>
-                <div className = 'logoutButton'><img src={powerIcon} alt="s"/><p>Logout</p></div>
+
+                <div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>
            
             </div>
             <div className='contentWrapper'>

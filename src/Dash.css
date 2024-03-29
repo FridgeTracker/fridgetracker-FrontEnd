@@ -95,7 +95,7 @@ float:left
 .searchBarWrapper{
     width: 100%;
     height: 7%;
-    background-color: #E4E4E4;
+    background-color: black;
     display:flex;
     align-items: center;
     justify-content: center;

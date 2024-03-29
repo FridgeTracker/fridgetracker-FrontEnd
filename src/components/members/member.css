@@ -1,0 +1,50 @@
+.memberListContainer{
+    height: 100%;
+    width: 22%;
+    overflow: hidden;
+}
+
+.memberListHolder{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content:center; 
+}
+
+.memberHolder{
+    width: 40%;
+    margin-top: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.memberHolder img{
+    width: 100%;
+}
+
+.memberHolder:hover{
+    border: 1px solid black;
+}
+
+.memberContentContainer{
+    width: 100%;
+    height: 100%;
+}
+
+.titleHolder{
+    width: 95%;
+    height: 8%;
+    text-align: center;
+    color: white;
+    font-size: xx-large;
+    margin-top: 20px;
+}
+
+.memberContent{
+    width: 95%;
+    height: 80%;
+    background-color: #626262;
+}
