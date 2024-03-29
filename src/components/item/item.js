@@ -13,7 +13,7 @@ const Item = ({Item, fridgeId, updateFridge}) => {
         const formData = new FormData(event.target);
 
         console.log(fridgeId);
-        
+
         const itemToAdd = {
             item: {
                 fridgeID: formData.get('id'),
@@ -27,15 +27,13 @@ const Item = ({Item, fridgeId, updateFridge}) => {
 
         try {
             const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addItem`,itemToAdd);
-
+            console.log(response);
             updateFridge(itemToAdd.id);
     
           } catch (error) {
             console.error('Failed to fetch user data:', error);
           }
         };
-
-    
 
 
     return (
@@ -46,6 +44,8 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             <table>
             <tr><p>Name: {Item.foodName}</p></tr>
             <tr><p>Quantity: {Item.quantity}</p></tr>
+            <tr><p>Calories: {Item.calories}</p></tr>
+            <tr><p>Type: {Item.type}</p></tr>
             </table>
             </>
         ) 

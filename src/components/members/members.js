@@ -37,11 +37,11 @@ function Members(){
         console.log(userData); // Log userData when it changes
       }, [userData]);
 
-      const memberHandler = (clickedMember) => {
+      /*const memberHandler = (clickedMember) => {
     
        // setSelectedMember(clickedMember);
      
-        };
+        };*/
 
 
     return (

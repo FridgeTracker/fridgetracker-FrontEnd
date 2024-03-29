@@ -8,6 +8,7 @@ const Member = ({ member }) => {
 
     return (
     <div className="memberContentData">
+        <img style={{"width":"10%"}}src={memberIcon} alt="m"/>
         <p>{member.name}</p>
         <p>Age: {member.age}</p>
         <p>allergies: {member.allergies}</p>
