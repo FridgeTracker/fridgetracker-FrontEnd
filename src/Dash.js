@@ -40,40 +40,27 @@ const [userData, setUserData] = useState(null);
     const [showFreezers, setFreezers] = useState(false);
 
 
-
-    function colorChange(element){
-        const divs = document.querySelectorAll(".elementButton");
-    divs.forEach(function(div) {
-        div.style.boxShadow = "5px 5px 5px rgb(121, 121, 121)";
-    })
-    element.style.boxShadow = "5px 5px 5px greenyellow";
-    }
-
     // This needs to be simplified
   const membersHandler = (currentTarget) => {
-    colorChange(currentTarget);
+
     setMembers(true);
     setFridges(false);
     setFreezers(false);
+    console.log(userData);
   }
   const fridgesHandler = (currentTarget) => {
-    colorChange(currentTarget);
-    currentTarget.style.boxShadow = "5px 5px 5px greenyellow";
     setMembers(false);
     setFridges(true);
     setFreezers(false);
   }
   const freezersHandler = (currentTarget) => {
-    colorChange(currentTarget);
-    currentTarget.style.boxShadow = "5px 5px 5px greenyellow";
+
     setMembers(false);
     setFridges(false);
     setFreezers(true);
   }
  
-
     return (
-
 
         <div className = 'wrapper'>
             
