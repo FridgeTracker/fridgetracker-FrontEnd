@@ -65,11 +65,6 @@ function Members(){
 
             <div className="memberContentContainer">
 
-                <div className="titleHolder">
-                    <p>Members</p>
-                </div>
-                
-
                 <div className="memberContent">
 
                   {selectedMember && <Member key={selectedMember.id} member={selectedMember}/>}

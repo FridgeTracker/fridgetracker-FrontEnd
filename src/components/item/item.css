@@ -1,10 +1,10 @@
 .itemButton{
-    color: white;
+    color: black;
     width: 90%;
     height: 8%;
     margin: 5% 5% 1%;
     margin-top: 20px;
-    background-color: #656464;
+    background-color: #C9C5BF;
     overflow: hidden;
     display: flex;
     align-items: center;

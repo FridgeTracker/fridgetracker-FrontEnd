@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dash.css';
 import logo from "./components/assets/ftlogo.png";
-import headerImage from "./components/assets/moon2.png";
+//import headerImage from "./components/assets/moon2.png";
+import lightBck from "./components/assets/light_bck.png";
+
+
 import Freezers from './components/freezer/freezers';
 import Fridges from './components/fridge/fridges';
 import Members from './components/members/members';
@@ -90,7 +93,7 @@ const [userData, setUserData] = useState(null);
                     <input type= 'text'/>
                 </div>
                 <div className = 'headerWrapper'>
-                    <img src = {headerImage} alt = "header"></img>
+                    <img src = {lightBck} alt = "header"></img>
                 </div>
 
                 <div className='mainSelectionArea'>

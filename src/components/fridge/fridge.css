@@ -20,13 +20,18 @@
 .fridgeListWrapper{
     width: 30%;
     height: 100%;
-    background-color: #373737;
+    background-color: #65737E;
     overflow-y: hidden;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
 }
 
 .fridgeListHolder{
     width: 100%;
-    height: 100%;
+    height: 90%;
+ 
 }
 
 .fridgeListHolder div {
@@ -38,7 +43,7 @@
 .itemContainer{
     height: 100%;
     width: 100%;
-    background-color: #373737;
+    background-color: #65737E;
     display: flex;
 }
 
@@ -64,7 +69,7 @@
 .itemWrapper{
     width: 90%;
     height: 85%;
-    background-color: #272727;
+    background-color: #4F5B66;
     overflow-y: auto;
     overflow-wrap: hidden;
     margin-top: auto; 
@@ -93,7 +98,7 @@
     height: 8%;
     margin: 5% 5%;
     margin-top: 20px;
-    background-color: #656464;
+    background-color: #8da19f;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -128,7 +133,7 @@
 
     width: 90%;
     height: 80%;
-    background-color: #656464;
+    background-color: #A7ADBA;
     
 }
 
