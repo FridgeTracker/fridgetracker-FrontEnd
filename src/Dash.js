@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dash.css';
+
+
 import logo from "./components/assets/ftlogo.png";
-//import headerImage from "./components/assets/moon2.png";
+import darkbck from "./components/assets/moon2.png";
 import lightBck from "./components/assets/light_bck.png";
+import themeIcon from "./components/assets/iconSwitch.png";
 
 
 import Freezers from './components/freezer/freezers';
@@ -21,6 +24,11 @@ import { useNavigate } from 'react-router-dom';
 function Dash(){
 
 const navigate = useNavigate();
+const [theme, setTheme] = useState('light');
+
+const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
 const [userData, setUserData] = useState(null);
 
@@ -67,7 +75,7 @@ const [userData, setUserData] = useState(null);
  
     return (
 
-        <div className = 'wrapper'>
+        <div className={`wrapper ${theme === 'dark' ? 'dark-theme' : ''}`}>
             
             <div className= 'sideBarWrapper'>
 
@@ -85,15 +93,17 @@ const [userData, setUserData] = useState(null);
                 <div className = 'settingsButton'><img src={setIcon} alt="s"/><p>Settings</p></div>
 
                 <div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>
+                
            
             </div>
             <div className='contentWrapper'>
                 
                 <div className= 'searchBarWrapper'>
                     <input type= 'text'/>
+                    <img className="themeChanger" src={themeIcon} onClick={toggleTheme} alt="theme"></img>
                 </div>
                 <div className = 'headerWrapper'>
-                    <img src = {lightBck} alt = "header"></img>
+                    <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
                 </div>
 
                 <div className='mainSelectionArea'>

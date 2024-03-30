@@ -10,13 +10,49 @@ p {
     font-family: 'Rokkitt', serif;
 }
 
+/* Light Theme */
+:root {
+    --background-color: #65737E;
+    --sidebar-color: #4F5B66;
+    --sidebardiv-color: #A7ADBA;
+    --sidebarchild-color: #C0C5CE;
+    --searchbar-color: #343D46;
+    --text-color: black;
+    --fridgecontent-color: #4F5B66;
+    --selecteddivs-color: #C9C5BF;
+    --card-color: #A7ADBA;
+    --member-color: #4F5B66;
+
+  }
+  
+  /* Dark theme */
+  .dark-theme {
+    --background-color: #373737 ;
+    --sidebar-color: #1F1F1F;
+    --sidebardiv-color: #171717;
+    --sidebarchild-color: #3A3A3A;
+    --searchbar-color: #000000;
+    --text-color: white;
+    --fridgecontent-color: #272727;
+    --selecteddivs-color: #656464;
+    --card-color: #656464;
+    --member-color: #2E2E2E;
+
+}
+
+.themeChanger{
+    height: 50%;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
 .wrapper{
-background-color: #65737E ;
+background-color: var(--background-color) ;
 width: 100%;
 }
 
 .sideBarWrapper{
-background-color: #4F5B66;
+background-color: var(--sidebar-color);
 height: 100%;
 width: 18%;
 overflow: hidden;
@@ -50,8 +86,8 @@ float:left
 
 
 .dashboardButtonC{
-    background-color: #C0C5CE;
-    color: black;
+    background-color: var(--sidebarchild-color);
+    color: var(--text-color);
     display: flex;
     height: 6%;
     align-items: center;
@@ -63,8 +99,8 @@ float:left
     height: 7%;
     display: flex;
     align-items: center;
-    background-color: #A7ADBA;
-    color: black;
+    background-color: var(--sidebardiv-color);;
+    color: var(--text-color);
 }
 
 .sideBarWrapper div:hover:not(.fridgeLogoWrapper){
@@ -95,7 +131,7 @@ float:left
 .searchBarWrapper{
     width: 100%;
     height: 7%;
-    background-color: #343D46;
+    background-color: var(--searchbar-color);;
     display:flex;
     align-items: center;
     justify-content: center;

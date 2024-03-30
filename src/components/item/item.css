@@ -1,10 +1,10 @@
 .itemButton{
-    color: black;
+    color: var(--text-color);
     width: 90%;
     height: 8%;
     margin: 5% 5% 1%;
     margin-top: 20px;
-    background-color: #C9C5BF;
+    background-color: var(--selecteddivs-color);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -35,7 +35,7 @@
 }
 
 .cardTitle{
-    color:white;
+    color:var(--text-color);
     text-align: center;
     height: 15%;
     display: flex;
@@ -50,6 +50,6 @@
 }
 .cardContent p {
     padding:10px;
-    color: white;
+    color: var(--text-color);
     font-size: x-large;
 }

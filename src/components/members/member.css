@@ -17,7 +17,7 @@
 .memberHolder{
     width: 40%;
     margin-top: 20px;
-    color: white;
+    color: var(--text-color);
     cursor: pointer;
 }
 
@@ -40,5 +40,6 @@
 .memberContent{
     width: 95%;
     height: 80%;
-    background-color: #A7ADBA;
+    background-color: var(--member-color);
+    color: var(--text-color);
 }
