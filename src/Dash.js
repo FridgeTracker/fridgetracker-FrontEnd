@@ -21,6 +21,15 @@ import powerIcon from "./components/assets/powerIcon.png";
 import { getAuthToken, logoutUser} from './components/authService';
 import { useNavigate } from 'react-router-dom';
 
+
+//Child sidebar under Dashboard
+const SidebarButton = ({ icon, text, onClick }) => (
+    <div className="dashboardButtonC" onClick={onClick}>
+        <img src={icon} alt="icon" />
+        <p>{text}</p>
+    </div>
+);
+
 function Dash(){
 
 const navigate = useNavigate();
@@ -41,6 +50,7 @@ const [userData, setUserData] = useState(null);
                 const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
  
                 setUserData(response.data);
+                
 
             } catch (error) {
                 console.error('Failed to fetch user data:', error);
@@ -53,25 +63,12 @@ const [userData, setUserData] = useState(null);
     const [showFridges, setFridges] = useState(false);
     const [showFreezers, setFreezers] = useState(false);
 
-    // This needs to be simplified
-  const membersHandler = (currentTarget) => {
-
-    setMembers(true);
-    setFridges(false);
-    setFreezers(false);
-    console.log(userData);
-  }
-  const fridgesHandler = (currentTarget) => {
-    setMembers(false);
-    setFridges(true);
-    setFreezers(false);
-  }
-  const freezersHandler = (currentTarget) => {
-
-    setMembers(false);
-    setFridges(false);
-    setFreezers(true);
-  }
+    const handleItemClick = (item) => {
+        console.log(userData);
+        setMembers(item === 'Members');
+        setFridges(item === 'Fridges');
+        setFreezers(item === 'Freezers');
+    };
  
     return (
 
@@ -84,9 +81,10 @@ const [userData, setUserData] = useState(null);
                 </div>
                 
                 <div className = 'dashboardButton'><img src={dashIcon} alt="d"/><p>Dashboard</p></div>
-                <div className = 'dashboardButtonC' onClick = {(e)=> {membersHandler(e.currentTarget)}}><img src={dashIcon} alt="d"/><p>Members</p></div>
-                <div className = 'dashboardButtonC' onClick = {(e)=> {fridgesHandler(e.currentTarget)}}><img src={dashIcon} alt="d"/><p>Fridges</p></div>
-                <div className = 'dashboardButtonC' onClick={(e)=>{freezersHandler(e.currentTarget)}}><img src={dashIcon} alt="d"/><p>Freezers</p></div>
+
+                <SidebarButton icon={dashIcon} text="Members" onClick={() => handleItemClick('Members')} />
+                <SidebarButton icon={dashIcon} text="Fridges" onClick={() => handleItemClick('Fridges')} />
+                <SidebarButton icon={dashIcon} text="Freezers" onClick={() => handleItemClick('Freezers')} />
 
                 <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
                 <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
