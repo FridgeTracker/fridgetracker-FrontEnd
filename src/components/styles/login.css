@@ -63,13 +63,13 @@ body, html {
     margin-top: 30px;
     font-family: 'Rokkitt', serif;
     font-size: large;
+    padding-left: 30px;
 
 }
 
 
 .formWrapper input::placeholder{
     color: white;
-    padding-left: 30px;
 }
 
 .forgotButton {
