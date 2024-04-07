@@ -18,6 +18,7 @@ function Fridges() {
   const [selectedFridge, setSelectedFridge] = useState(null);
   const [selectedItem, setItem] = useState(null);
   const [addItem, setAdd] = useState(false);
+  const [addFridge,setAddFridge] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -80,6 +81,32 @@ const handleUpdateFridge = async () => {
   }
 };
 
+const handleAddFridge = async (event) => {
+
+  event.preventDefault(); 
+
+  const formData = new FormData(event.target);
+
+  const addFridge = {
+      fridgeName:formData.get("fridgeName"),
+      capacity:formData.get("capacity"),
+      userEmail:userData.email
+  };
+
+  console.log(addFridge);
+
+  try {
+      const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addFridge`,addFridge);
+      console.log(response);
+      handleUpdateFridge();
+
+    } catch (error) {
+      console.error('Failed to save data:', error);
+    } 
+
+
+}
+
 
   return (
 
@@ -92,6 +119,26 @@ const handleUpdateFridge = async () => {
           {userData.fridges && userData.fridges.map((fridge) => (
           <Fridge key={fridge.id} fridge={fridge} onFridgeClick={fridgeHandler} />
           ))}
+
+          {userData.fridges && userData.fridges.length < 3 && (
+            <div className='addFridgeButtonWrapper'>
+              {addFridge ? (
+                <div className='submitAddFridgeWrapper'>
+                  <form onSubmit={handleAddFridge}>
+                    <input type="text" name="fridgeName" placeholder='Enter fridge Name Here' />
+                    <input type="number" name="capacity" placeholder='Enter fridge Capacity Here' />
+                    <input type="submit" placeholder='Add Fridge' />
+                  </form>
+                </div>
+              ) :
+              (
+                <div className='addFridgeButton' onClick={() => {setAddFridge(true)}}>
+                  <img src={addImage} alt="plus"/>
+                  <p>Add Fridge</p>
+                </div>
+              )}
+            </div>
+          )}
 
         </div>
 

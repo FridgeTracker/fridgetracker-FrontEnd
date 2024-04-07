@@ -50,6 +50,48 @@
  
 }
 
+.addFridgeButtonWrapper{
+    width: 60%;
+    height: 30%;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 15px;
+}
+
+.submitAddFridgeWrapper{
+    height: 100%;
+    width: 100%;
+}
+
+.submitAddFridgeWrapper form{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.addFridgeButton{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+
+}
+
+.addFridgeButton p{
+    margin-top: 15px;
+    font-size: 2.5vh;
+}
+
+.addFridgeButton:hover{
+    cursor: pointer;
+    background-color: #677B79;
+}
+
 
 .itemContainer{
     height: 100%;
