@@ -12,7 +12,7 @@
 }
 
 .fridge2Holder:hover{
-    background-color: rgb(119, 119, 119);
+    background-color: #677B79;
 }
 .selectedFridge{
     border: 1px solid rgb(255, 255, 255);
@@ -69,7 +69,7 @@
 .title{
     width: 100%;
     height: auto;
-    font-size: xx-large;
+    font-size: 4vh;
     margin-top: 20px;
     color: var(--text-color);
 }
@@ -99,6 +99,9 @@
     cursor: pointer;
 }
 
+.itemButton{
+    font-size: 2vh;
+}
 
 .addItemButton{
     color: var(--text-color);
@@ -133,7 +136,7 @@
     text-align: center;
     width: 100%;
     height: 8%;
-    font-size: xx-large;
+    font-size: 4vh;
     color: var(--text-color);
 }
 
@@ -143,11 +146,4 @@
     height: 80%;
     background-color: var(--card-color);
     
-}
-
-.cardTable{
-
-    color:var(--text-color);
-    font-size: x-large;
-    padding: 20px;
 }
