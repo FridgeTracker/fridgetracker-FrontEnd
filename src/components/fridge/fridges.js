@@ -66,6 +66,13 @@ const handleUpdateFridge = async () => {
       if (selectedFridge) {
         const updatedFridge = response.data.fridges.find(fridge => fridge.id === selectedFridge.id);
         setSelectedFridge(updatedFridge); // Update selectedFridge with the new data
+        setUserData((userData) => ({
+          ...userData,
+          fridges: userData.fridges.map((fridge) => ({
+            ...fridge,
+            selected: fridge.id === selectedFridge.id,
+          })),
+        }));
     }
 
   } catch (error) {
@@ -129,7 +136,7 @@ const handleUpdateFridge = async () => {
                 <>
                   <p className='itemTitle'>Item</p>
                   <div className='itemCard'>
-                    <Item key={selectedItem.id} Item={selectedItem}/>
+                    <Item key={selectedItem.id} fridgeId={selectedFridge.id} Item={selectedItem} updateFridge={handleUpdateFridge}/>
                   </div>
                 </>
                 }

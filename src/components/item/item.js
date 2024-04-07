@@ -37,19 +37,23 @@ const Item = ({Item, fridgeId, updateFridge}) => {
     const handleSave = async (event) => {
         event.preventDefault(); 
 
-
+        const formData = new FormData(event.target);
         const savedItem = {
-            ...editedItem,
+            itemID: Item.fridgeID,
+            foodName: formData.get('foodName'),
+            quantity: formData.get('quantity'),
+            calories: formData.get('calories'),
+            type: formData.get('type'),
             id: fridgeId // Set the id value here
-        }
+        };
 
         try {
-            const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/saveItem`,savedItem);
+            const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateItem`,savedItem);
             console.log(response);
             updateFridge(savedItem.id);
     
           } catch (error) {
-            console.error('Failed to fetch user data:', error);
+            console.error('Failed to save data:', error);
           } 
     }
 
@@ -61,16 +65,13 @@ const Item = ({Item, fridgeId, updateFridge}) => {
         const formData = new FormData(event.target);
 
         const itemToAdd = {
-            item: {
-                fridgeID: formData.get('id'),
-                foodName: formData.get('foodName'),
-                quantity: formData.get('quantity'),
-                calories: formData.get('calories'),
-                type: formData.get('type')
-            },
+            foodName: formData.get('foodName'),
+            quantity: formData.get('quantity'),
+            calories: formData.get('calories'),
+            type: formData.get('type'),
             id: fridgeId // Set the id value here
         };
-
+ 
         try {
             const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addItem`,itemToAdd);
             console.log(response);
@@ -112,7 +113,6 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             <>
                 <form className="addItemForm" onSubmit={handleSubmit}>
 
-                    <input id="addItem" type="number" name="id" placeholder="Enter id"/>
                     <input id="addItem" type="text" name="foodName" placeholder="Enter Food Name"/>
                     <input id="addItem" type="number" name="quantity" placeholder="Enter Quantity"/>
                     <input id="addItem" type="number" name="calories" placeholder="Enter calories"/>
