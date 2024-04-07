@@ -37,6 +37,20 @@ const Item = ({Item, fridgeId, updateFridge}) => {
     const handleSave = async (event) => {
         event.preventDefault(); 
 
+
+        const savedItem = {
+            ...editedItem,
+            id: fridgeId // Set the id value here
+        }
+
+        try {
+            const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/saveItem`,savedItem);
+            console.log(response);
+            updateFridge(savedItem.id);
+    
+          } catch (error) {
+            console.error('Failed to fetch user data:', error);
+          } 
     }
 
 
