@@ -44,6 +44,7 @@ function Fridges() {
   const fridgeHandler = (clickedFridge) => {
     setItem(null);
     setAdd(false);
+    setAddFridge(false);
   
     if (!selectedFridge || selectedFridge.id !== clickedFridge.id) {
       setSelectedFridge(clickedFridge);
@@ -75,6 +76,7 @@ const handleUpdateFridge = async () => {
           })),
         }));
     }
+    setItem(null);
 
   } catch (error) {
       console.error('Failed to fetch user data:', error);
@@ -83,6 +85,7 @@ const handleUpdateFridge = async () => {
 
 const handleAddFridge = async (event) => {
 
+  setAddFridge(false);
   event.preventDefault(); 
 
   const formData = new FormData(event.target);
@@ -103,7 +106,6 @@ const handleAddFridge = async (event) => {
     } catch (error) {
       console.error('Failed to save data:', error);
     } 
-
 
 }
 
@@ -147,14 +149,13 @@ const handleAddFridge = async (event) => {
       <div className='itemContainer'>
 
         <div className='itemListContainer'>
-            <p className='title'>Items</p>
             <div className = "itemWrapper">
               <div className='itemListHolder'>
 
               {selectedFridge && 
                 <>
                   {selectedFridge.items.map((item) => (
-                    <div className="itemButton" onClick={() => {setItem(item); setAdd(false)}}>
+                    <div className={`itemButton ${selectedItem === item ? 'selected' : ''}`} onClick={() => {setItem(item); setAdd(false)}}>
                       <p>Name: {item.foodName} | Quantity: {item.quantity}</p>
                     </div>
                   ))}
@@ -171,9 +172,7 @@ const handleAddFridge = async (event) => {
         <div className='itemDetailWrapper'>
           {addItem ? (
             <>
-               <p className='itemTitle'>Add Item</p>
                   <div className='itemCard'>
-                    {console.log(selectedFridge.id)}
                       <Item fridgeId={selectedFridge.id} updateFridge={handleUpdateFridge}></Item>
                   </div>
             </>
@@ -181,7 +180,6 @@ const handleAddFridge = async (event) => {
               <>
                 {selectedItem && 
                 <>
-                  <p className='itemTitle'>Item</p>
                   <div className='itemCard'>
                     <Item key={selectedItem.id} fridgeId={selectedFridge.id} Item={selectedItem} updateFridge={handleUpdateFridge}/>
                   </div>

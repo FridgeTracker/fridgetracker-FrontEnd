@@ -51,12 +51,31 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateItem`,savedItem);
             console.log(response);
             updateFridge(savedItem.id);
+            
     
           } catch (error) {
             console.error('Failed to save data:', error);
-          } 
+        } 
     }
+    
+    const removeItemHandler = async () => {
 
+            const deleteItem = {
+                itemID:Item.fridgeID,
+                id: fridgeId 
+            }
+
+        try {
+            const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteItem`,deleteItem);
+            console.log(response);
+            updateFridge(deleteItem.id);
+    
+          } catch (error) {
+            console.error('Failed to delete data:', error);
+        } 
+
+    }
+    
 
     // Add Item Section
     const handleSubmit = async (event) => {
@@ -76,6 +95,7 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addItem`,itemToAdd);
             console.log(response);
             updateFridge(itemToAdd.id);
+
     
           } catch (error) {
             console.error('Failed to fetch user data:', error);
@@ -101,10 +121,14 @@ const Item = ({Item, fridgeId, updateFridge}) => {
                         <tr><td>Calories: </td><td><input type="text" name="calories" value={editedItem.calories} onChange={handleInputChange}/></td></tr>
                         <tr><td>Type:</td><td><input type="text" name="type" value={editedItem.type} onChange={handleInputChange}/></td></tr>
                     </table>
-                    <div className="submitEditButton">
+                    <div className="submitEditButton">   
                         <input type="submit" name="submitButton" value="Save"/>
                     </div>
                 </form>
+                <div className="submitRemoveButton">   
+                    < button value="Remove" className="removeItemButton" onClick={removeItemHandler}>Remove</button>
+                </div>
+          
             </div>
             
             </>
