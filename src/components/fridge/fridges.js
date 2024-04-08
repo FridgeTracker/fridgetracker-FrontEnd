@@ -34,14 +34,11 @@ function Fridges() {
     };
 
     fetchUserData();
-  }, []); // Empty dependency array ensures the effect runs only once on mount
+  }, []); 
 
-/*
-  useEffect(() => {
-    console.log(userData); // Log userData when it changes
-  }, [userData]);*/
 
   const fridgeHandler = (clickedFridge) => {
+    
     setItem(null);
     setAdd(false);
     setAddFridge(false);
