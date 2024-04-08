@@ -43,3 +43,14 @@
     background-color: var(--member-color);
     color: var(--text-color);
 }
+
+.addMemberButtonWrapper{
+    width: 60%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor: pointer;
+}

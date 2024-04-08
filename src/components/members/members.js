@@ -8,13 +8,15 @@ import { getAuthToken } from '../authService.js';
 
 import Member from "./member.js";
 
+import addImage from '../assets/plus_sign.png';
+
 
 function Members(){
 
 
     const [userData, setUserData] = useState({});
     const [selectedMember, setSelectedMember] = useState(null);
-
+    const [addMember, setAddMember] = useState(false);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -32,12 +34,41 @@ function Members(){
         fetchUserData();
       }, []); // Empty dependency array ensures the effect runs only once on mount
     
+
+      const handleAddMember = async (event) => {
+
+        setAddMember(false);
+        event.preventDefault(); 
       
-      /*
+        const formData = new FormData(event.target);
+
+        const member = {
+              name: formData.get("memberName"),
+              age:0,
+              allergies:"",
+              height:0,
+              weight:0
+        }
+
+        const addMember = {
+            member:member,
+            userID:getAuthToken()
+        };
+      
+        try {
+            const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addMember`,addMember);
+            console.log(response);
+      
+          } catch (error) {
+            console.error('Failed to Add new Member:', error);
+          } 
+      
+      }
+
       useEffect(() => {
         setUserData(userData); // Log userData when it changes
       }, [userData]);
-      */
+      
 
 
       /*const memberHandler = (clickedMember) => {
@@ -61,6 +92,27 @@ function Members(){
                       </div>
 
                     ))}
+
+                    {userData.members && userData.members.length < 5 && (
+
+                        <div className='addMemberButtonWrapper'>
+                          
+                        {addMember ? (
+                          <div className='submitAddMemberWrapper'>
+                            <form onSubmit={handleAddMember}>
+                              <input type="text" name="memberName" placeholder='Enter Member Name Here' required/>
+                              <input type="submit" placeholder='Add Member' />
+                            </form>
+                          </div>
+                        ) :
+                        (
+                          <div className='addMemberButton' onClick={() => {setAddMember(true)}}>
+                            <img src={addImage} alt="plus"/>
+                            <p>New Member</p>
+                          </div>
+                        )}
+                        </div>
+                        )}
 
                 </div>
 
