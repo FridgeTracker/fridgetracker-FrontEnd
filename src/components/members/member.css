@@ -11,17 +11,22 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .memberHolder{
-    width: 40%;
-    margin-top: 20px;
+    margin-top: 4%;
     color: var(--text-color);
     cursor: pointer;
+    height: 20%;
+    width: 50%;
 }
 
 .memberHolder img{
-    width: 100%;
+    width: 55%;
+}
+.memberHolder p {
+    font-size: 2vh;
 }
 
 .memberHolder:hover{
@@ -70,12 +75,7 @@
     width: 100%;
     height: 30%;
 }
-.memberContentData img{
-    position: absolute;
-    top: 22%; /* Adjust as needed */
-    left: 10px; 
-    height: auto;
-}
+
 
 .styleBar{
     width: 100%;
@@ -145,8 +145,39 @@
 .choosenEdit{
     height: 80%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .choosenEdit p{
     font-size: 2vh;
+}
+
+
+.memberContentData img{
+    top: 22%;   
+    left: 4vh; 
+    width: 10vh;
+    height: 10vh;
+    position: absolute;
+}
+
+.editFormLayout{
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 100%;
+}
+
+.editFormLayout input{
+    margin-top: 3%;
+    height: 13%;
+}
+
+.editFormLayout button{
+
+    margin-top: 5%;
+    height: 13%;
 }

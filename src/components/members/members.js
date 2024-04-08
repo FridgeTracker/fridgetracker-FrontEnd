@@ -1,6 +1,6 @@
 import "./member.css";
 import { useState, useEffect } from 'react';
-import memberIcon from '../assets/memberIcon.png'
+import memberIcon from '../assets/memberIcons/pigIcon.png'
 
 
 import axios from 'axios';

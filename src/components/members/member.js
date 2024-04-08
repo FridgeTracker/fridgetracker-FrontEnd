@@ -2,40 +2,63 @@ import "./member.css";
 
 import React, { useState } from "react";
 
-import memberIcon from '../assets/memberIcon.png'
+import memberIcon from '../assets/memberIcons/pigIcon.png'
 
 const Member = ({ member }) => {
 
     const [selectedEdit, setSelectedEdit] = useState(null);
+    const [currentValue, setCurrentValue] = useState("");
+    const [newValue, setNewValue] = useState("");
+    const [password, setPassword] = useState("");
 
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        // Logic to handle form submission (e.g., send data to backend)
+        console.log("Current Value:", currentValue);
+        console.log("New Value:", newValue);
+        console.log("Password:", password);
+        // Reset form fields after submission
+        setCurrentValue("");
+        setNewValue("");
+        setPassword("");
+    };
 
 
     return (
     <div className="memberContentData">
         <div className="topBar">
             <div className="styleBar"></div>
-            <img style={{"width":"13%"}}src={memberIcon} alt="m"/>
+            <img src={memberIcon} alt="m"/>
             <span className="memberName"><p>{member.name}</p></span>
         </div>
 
         <div className="memberContentSection">
             <div className="editNavBar">
-                <h2>General</h2><br></br>
+                <br></br><h2>General</h2>
                 
-                <div className="editAge" onClick={() => {setSelectedEdit("Age")}}><p>Edit Age</p></div>
-                <div className="editName" onClick={() => {setSelectedEdit("Name")}}><p>Edit Name</p></div>
-                <div className="editHeight" onClick={() => {setSelectedEdit("Height")}}><p>Edit Height</p></div>
-                <div className="editWeight" onClick={() => {setSelectedEdit("Weight")}}><p>Edit Weight</p></div>
-                <div className="editAllergies" onClick={() => {setSelectedEdit("Allergies")}}><p>Edit Allergies</p></div>
-                <div className="editFood" onClick={() => {setSelectedEdit("Food Preferences")}}><p>Preferred Food</p></div>
+                <div className="editProfile" onClick={() => {setSelectedEdit("Profile")}}><p>Edit Profile</p></div>
+                <div className="editBody" onClick={() => {setSelectedEdit("Body")}}><p>Edit Body</p></div>
+                <div className="editFood" onClick={() => {setSelectedEdit("Food Preferences")}}><p>Edit Food Preferences</p></div>
+                <div className="profilePicture" onClick={() => {setSelectedEdit("Profile Picture")}}><p>Edit Profile Picture</p></div>
+
             </div>
+
             <div className="editSelectionWrapper">
                 <div className="editSelection">
                     <h1>{selectedEdit || 'General'}</h1>
                     <div className="choosenEdit">
                         {selectedEdit ? (
-                        <p>Editing {selectedEdit}</p>
-                        
+                            <>
+                                <p>Editing {selectedEdit}</p>
+
+                                <form onSubmit={handleFormSubmit} className="editFormLayout">
+
+                                    <input type="text" id="currentValue" value={currentValue} placeholder={`Enter Current ${selectedEdit}`} onChange={(e) => setCurrentValue(e.target.value)} required />
+                                    <input type="text" id="newValue" value={newValue} placeholder={`Enter New ${selectedEdit}`} onChange={(e) => setNewValue(e.target.value)} required />
+                                    
+                                    <button type="submit">Submit</button>
+                                </form>
+                            </>
                     
                         ):(
                         <> 
