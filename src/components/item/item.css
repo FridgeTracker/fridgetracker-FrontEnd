@@ -24,19 +24,25 @@
     height:25px;
 }
 
-.addItemForm{
-
-    height: 100%;
+.cardContent form{
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
+
 .cardTable{
     color:var(--text-color);
     padding: 20px;
     font-size: 2.5vh;
+    height: 60%;
+    width: 100%;
+}
+.cardTable input{
+    height: 60%;
+    width: 80%;
+}
+.cardTable select{
+    width: 80%;
+    height: 60%;
+   
 }
 
 .cardTitle{
@@ -100,4 +106,46 @@
     width: 100%;
     background-color: rgb(137, 185, 137);
     border: none;
+}
+
+.itemFormContainer{
+    width: 100%;
+    height: 85%;
+}
+
+.addItemForm{
+
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.addItemForm p{
+    width: 80%;
+}
+
+.addItemForm input:not(.submitButtonItem){
+    height: 8%;
+    width: 80%;
+    margin-bottom: 5%;
+}
+
+.addItemForm select{
+    width: 80%;
+    height: 8%;
+}
+
+.addItemForm .submitButtonItem{
+    position: absolute;
+    height: 10%;
+    width: 50%;
+    bottom: 0;
+    margin-bottom: 5%;
+    background-color: rgb(222, 243, 190);
+    border: none;
+    cursor: pointer;
+
 }

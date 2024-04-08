@@ -57,19 +57,7 @@
     border-radius: 15px;
 }
 
-.submitAddFridgeWrapper{
-    height: 100%;
-    width: 100%;
-}
 
-.submitAddFridgeWrapper form{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
 .addFridgeButton{
     height: 100%;
@@ -197,3 +185,44 @@
 .itemButton.selected {
     background-color: #7d8382; 
   }
+
+.submitAddFridgeWrapper{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.addFridgeForm{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    margin-left: 5%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.addFridgeForm input:not(.addFridgeSubmit){
+    height: 18%;
+    width: 90%;
+    border-radius: 5px;
+    margin-bottom: 5%;
+    border: none;
+
+}
+
+.addFridgeSubmit{
+
+   width: 90%;
+   height: 18%;
+   margin-top: 10%;
+   border-radius: 5px;
+   border: none;
+   cursor: pointer;
+
+}
+
+

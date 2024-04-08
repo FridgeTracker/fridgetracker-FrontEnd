@@ -124,10 +124,10 @@ const handleAddFridge = async (event) => {
             <div className='addFridgeButtonWrapper'>
               {addFridge ? (
                 <div className='submitAddFridgeWrapper'>
-                  <form onSubmit={handleAddFridge}>
-                    <input type="text" name="fridgeName" placeholder='Enter fridge Name Here' />
-                    <input type="number" name="capacity" placeholder='Enter fridge Capacity Here' />
-                    <input type="submit" placeholder='Add Fridge' />
+                  <form onSubmit={handleAddFridge} className='addFridgeForm'>
+                    <input type="text" name="fridgeName" placeholder='Enter fridge Name' />
+                    <input type="number" name="capacity" placeholder='Enter fridge Capacity' />
+                    <input type="submit" placeholder='Add Fridge' className='addFridgeSubmit'/>
                   </form>
                 </div>
               ) :
@@ -157,7 +157,7 @@ const handleAddFridge = async (event) => {
                       <p>Name: {item.foodName} | Quantity: {item.quantity}</p>
                     </div>
                   ))}
-                  <div className="addItemButton" onClick={() => setAdd(true)}>
+                  <div className="addItemButton" onClick={() => {setAdd(true); setItem(null);}}>
                     <p><img src={addImage} alt='add' className='addItem' /></p>
                   </div>
                 </>

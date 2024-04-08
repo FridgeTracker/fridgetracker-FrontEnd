@@ -122,10 +122,18 @@ const Item = ({Item, storageId, updateFridge}) => {
                 <form onSubmit={handleSave}>
                     <table className="cardTable">
                         <tbody>
-                        <tr><td>Name: </td><td> <input type="text" name="foodName" value={editedItem.foodName} onChange={handleInputChange}/></td></tr>
-                        <tr><td>Quantity: </td><td><input type="text" name="quantity" value={editedItem.quantity} onChange={handleInputChange}/></td></tr>
-                        <tr><td>Calories: </td><td><input type="text" name="calories" value={editedItem.calories} onChange={handleInputChange}/></td></tr>
-                        <tr><td>Type:</td><td><input type="text" name="type" value={editedItem.type} onChange={handleInputChange}/></td></tr>
+                            <tr><td>Name: </td><td> <input type="text" name="foodName" value={editedItem.foodName} onChange={handleInputChange}/></td></tr>
+                            <tr><td>Quantity: </td><td><input type="text" name="quantity" value={editedItem.quantity} onChange={handleInputChange}/></td></tr>
+                            <tr><td>Calories: </td><td><input type="text" name="calories" value={editedItem.calories} onChange={handleInputChange}/></td></tr>
+                            <tr><td>Type:</td><td>  <select name="type" value={editedItem.type} onChange={handleInputChange}>
+                                                        <option value="fruit">Fruit</option>
+                                                        <option value="vegetable">Vegetable</option>
+                                                        <option value="grain">Grain</option>
+                                                        <option value="protein">Protein</option>
+                                                        <option value="dairy">Dairy</option>
+                                                        <option value="other">Other</option>
+                                                    </select>
+                            </td></tr>
                         </tbody>
                     </table>
                     <div className="submitEditButton">   
@@ -142,16 +150,32 @@ const Item = ({Item, storageId, updateFridge}) => {
         ) 
         : (
             <>
-                <form className="addItemForm" onSubmit={handleSubmit}>
 
-                    <input id="addItem" type="text" name="foodName" placeholder="Enter Food Name"/>
-                    <input id="addItem" type="number" name="quantity" placeholder="Enter Quantity"/>
-                    <input id="addItem" type="number" name="calories" placeholder="Enter calories"/>
-                    <input id="addItem" type="text" name="type" placeholder="Enter Food Type"/>
+                <div className="cardTitle">
+                    <p><u> Add Item  </u></p>
+                </div>
+                <div className="itemFormContainer">
+                    <form className="addItemForm" onSubmit={handleSubmit}>
+                        <p>Food Name</p>
+                        <input id="addItem" type="text" name="foodName" placeholder="Enter Food Name"/>
+                        <p>Quantity</p>
+                        <input id="addItem" type="number" name="quantity" placeholder="Enter Quantity"/>
+                        <p>Calories</p>
+                        <input id="addItem" type="number" name="calories" placeholder="Enter calories"/>
+                        <p>Food Type</p>
+                        <select name="type">
+                            <option value="fruit">Fruit</option>
+                            <option value="vegetable">Vegetable</option>
+                            <option value="grain">Grain</option>
+                            <option value="protein">Protein</option>
+                            <option value="dairy">Dairy</option>
+                            <option value="other">Other</option>
+                        </select>
 
-                    <input type="submit" value="Submit"/>
+                        <input type="submit" value="Submit" className="submitButtonItem"/>
 
-                </form>
+                    </form>
+                </div>
             </>
         )
             
