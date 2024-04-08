@@ -91,12 +91,10 @@ const handleAddFridge = async (event) => {
   const formData = new FormData(event.target);
 
   const addFridge = {
-      fridgeName:formData.get("fridgeName"),
+      storageName:formData.get("fridgeName"),
       capacity:formData.get("capacity"),
-      userEmail:userData.email
+      userID:getAuthToken()
   };
-
-  console.log(addFridge);
 
   try {
       const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addFridge`,addFridge);

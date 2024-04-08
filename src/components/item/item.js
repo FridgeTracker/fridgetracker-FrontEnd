@@ -4,8 +4,8 @@ import axios from 'axios';
 
 const Item = ({Item, fridgeId, updateFridge}) => {
 
-    // Edit Item Section
 
+    // Edit Item Section
     const [editedItem, setEditedItem] = useState({
         foodName: "",
         quantity: "",
@@ -23,7 +23,6 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             });
         }
      }, [Item]);
-   
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -34,12 +33,15 @@ const Item = ({Item, fridgeId, updateFridge}) => {
     };
     // End of edit item section
 
+
+    
+    //Save updated item in fridge
     const handleSave = async (event) => {
         event.preventDefault(); 
 
         const formData = new FormData(event.target);
         const savedItem = {
-            itemID: Item.fridgeID,
+            itemID: Item.itemID,
             foodName: formData.get('foodName'),
             quantity: formData.get('quantity'),
             calories: formData.get('calories'),
@@ -58,10 +60,12 @@ const Item = ({Item, fridgeId, updateFridge}) => {
         } 
     }
     
+
+    //Delete Item from fridge
     const removeItemHandler = async () => {
 
             const deleteItem = {
-                itemID:Item.fridgeID,
+                itemID:Item.itemID,
                 id: fridgeId 
             }
 

@@ -10,7 +10,7 @@ const Fridge = ({ fridge, onFridgeClick }) => {
         <div className={`fridge2Holder ${fridge.selected ? 'selectedFridge' : ''}`}
         onClick={() => onFridgeClick(fridge)}>
         <img src ={fridge.selected ? openFridge : closeFridge} alt ="c" />
-        <p className="caption">{fridge.fridgeName}</p>
+        <p className="caption">{fridge.storageName}</p>
     </div>
     );
 }
