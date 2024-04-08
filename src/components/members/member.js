@@ -36,10 +36,10 @@ const Member = ({ member }) => {
             <div className="editNavBar">
                 <br></br><h2>General</h2>
                 
-                <div className="editProfile" onClick={() => {setSelectedEdit("Profile")}}><p>Edit Profile</p></div>
-                <div className="editBody" onClick={() => {setSelectedEdit("Body")}}><p>Edit Body</p></div>
+                <div className="editProfile" onClick={() => {setSelectedEdit("Profile")}}><p>Edit Profile Settings</p></div>
+                <div className="editBody" onClick={() => {setSelectedEdit("Body")}}><p>Edit Body Details</p></div>
                 <div className="editFood" onClick={() => {setSelectedEdit("Food Preferences")}}><p>Edit Food Preferences</p></div>
-                <div className="profilePicture" onClick={() => {setSelectedEdit("Profile Picture")}}><p>Edit Profile Picture</p></div>
+                <div className="profilePicture" onClick={() => {setSelectedEdit("Profile Picture")}}><p>Change Profile Picture</p></div>
 
             </div>
 

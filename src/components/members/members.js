@@ -88,7 +88,7 @@ function Members(){
 
                     {userData.members && userData.members.map((member) => (
 
-                        <div className="memberHolder" onClick={() => setSelectedMember(member)}>
+                        <div className={"memberHolder" + (selectedMember === member ? " selected" : "")} onClick={() => setSelectedMember(member)}>
                           <img src={memberIcon} alt = "a" />
                           <p>{member.name}</p>
                       </div>
