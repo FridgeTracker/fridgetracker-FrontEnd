@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import "./item.css";
 import axios from 'axios';
 
-const Item = ({Item, fridgeId, updateFridge}) => {
+const Item = ({Item, storageId, updateFridge}) => {
 
 
     // Edit Item Section
@@ -34,7 +34,7 @@ const Item = ({Item, fridgeId, updateFridge}) => {
     // End of edit item section
 
 
-    
+
     //Save updated item in fridge
     const handleSave = async (event) => {
         event.preventDefault(); 
@@ -46,7 +46,7 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             quantity: formData.get('quantity'),
             calories: formData.get('calories'),
             type: formData.get('type'),
-            id: fridgeId // Set the id value here
+            id: storageId // Set the id value here
         };
 
         try {
@@ -66,7 +66,7 @@ const Item = ({Item, fridgeId, updateFridge}) => {
 
             const deleteItem = {
                 itemID:Item.itemID,
-                id: fridgeId 
+                id: storageId 
             }
 
         try {
@@ -92,10 +92,11 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             quantity: formData.get('quantity'),
             calories: formData.get('calories'),
             type: formData.get('type'),
-            id: fridgeId // Set the id value here
+            id: storageId // Set the id value here
         };
  
         try {
+
             const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addItem`,itemToAdd);
             console.log(response);
             updateFridge(itemToAdd.id);
@@ -120,10 +121,12 @@ const Item = ({Item, fridgeId, updateFridge}) => {
             <div className="cardContent">
                 <form onSubmit={handleSave}>
                     <table className="cardTable">
-                        <td>Name: </td><td> <input type="text" name="foodName" value={editedItem.foodName} onChange={handleInputChange}/></td>
+                        <tbody>
+                        <tr><td>Name: </td><td> <input type="text" name="foodName" value={editedItem.foodName} onChange={handleInputChange}/></td></tr>
                         <tr><td>Quantity: </td><td><input type="text" name="quantity" value={editedItem.quantity} onChange={handleInputChange}/></td></tr>
                         <tr><td>Calories: </td><td><input type="text" name="calories" value={editedItem.calories} onChange={handleInputChange}/></td></tr>
                         <tr><td>Type:</td><td><input type="text" name="type" value={editedItem.type} onChange={handleInputChange}/></td></tr>
+                        </tbody>
                     </table>
                     <div className="submitEditButton">   
                         <input type="submit" name="submitButton" value="Save"/>

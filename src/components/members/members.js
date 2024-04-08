@@ -32,10 +32,13 @@ function Members(){
         fetchUserData();
       }, []); // Empty dependency array ensures the effect runs only once on mount
     
-    
+      
+      /*
       useEffect(() => {
-        console.log(userData); // Log userData when it changes
+        setUserData(userData); // Log userData when it changes
       }, [userData]);
+      */
+
 
       /*const memberHandler = (clickedMember) => {
     

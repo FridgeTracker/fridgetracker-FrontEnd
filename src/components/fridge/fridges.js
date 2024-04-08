@@ -36,10 +36,10 @@ function Fridges() {
     fetchUserData();
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
-
+/*
   useEffect(() => {
     console.log(userData); // Log userData when it changes
-  }, [userData]);
+  }, [userData]);*/
 
   const fridgeHandler = (clickedFridge) => {
     setItem(null);
@@ -152,8 +152,8 @@ const handleAddFridge = async (event) => {
 
               {selectedFridge && 
                 <>
-                  {selectedFridge.items.map((item) => (
-                    <div className={`itemButton ${selectedItem === item ? 'selected' : ''}`} onClick={() => {setItem(item); setAdd(false)}}>
+                  {selectedFridge.items.map((item, index) => (
+                    <div key={index} className={`itemButton ${selectedItem === item ? 'selected' : ''}`} onClick={() => {setItem(item); setAdd(false)}}>
                       <p>Name: {item.foodName} | Quantity: {item.quantity}</p>
                     </div>
                   ))}
@@ -171,7 +171,7 @@ const handleAddFridge = async (event) => {
           {addItem ? (
             <>
                   <div className='itemCard'>
-                      <Item fridgeId={selectedFridge.id} updateFridge={handleUpdateFridge}></Item>
+                      <Item storageId={selectedFridge.id} updateFridge={handleUpdateFridge}></Item>
                   </div>
             </>
           ) : (
@@ -179,7 +179,7 @@ const handleAddFridge = async (event) => {
                 {selectedItem && 
                 <>
                   <div className='itemCard'>
-                    <Item key={selectedItem.id} fridgeId={selectedFridge.id} Item={selectedItem} updateFridge={handleUpdateFridge}/>
+                    <Item key={selectedItem.id} storageId={selectedFridge.id} Item={selectedItem} updateFridge={handleUpdateFridge}/>
                   </div>
                 </>
                 }

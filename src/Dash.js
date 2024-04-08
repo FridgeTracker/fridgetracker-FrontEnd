@@ -39,7 +39,7 @@ const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-const [userData, setUserData] = useState(null);
+// const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -47,9 +47,9 @@ const [userData, setUserData] = useState(null);
 
                 const UUID = getAuthToken();
 
-                const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
- 
-                setUserData(response.data);
+                await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
+
+                // setUserData(response.data);
                 
 
             } catch (error) {
@@ -64,7 +64,6 @@ const [userData, setUserData] = useState(null);
     const [showFreezers, setFreezers] = useState(false);
 
     const handleItemClick = (item) => {
-        console.log(userData);
         setMembers(item === 'Members');
         setFridges(item === 'Fridges');
         setFreezers(item === 'Freezers');
