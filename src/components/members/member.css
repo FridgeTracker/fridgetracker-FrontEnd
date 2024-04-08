@@ -11,7 +11,6 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
-    justify-content:center; 
 }
 
 .memberHolder{
@@ -26,7 +25,7 @@
 }
 
 .memberHolder:hover{
-    border: 1px solid black;
+    background-color: azure;
 }
 
 .memberContentContainer{
@@ -39,12 +38,13 @@
 
 .memberContent{
     width: 95%;
-    height: 80%;
+    height: 90%;
     background-color: var(--member-color);
     color: var(--text-color);
 }
 
 .addMemberButtonWrapper{
+    margin-top: 20px;
     width: 60%;
     height: 20%;
     display: flex;
@@ -53,4 +53,100 @@
     border: 1px solid black;
     border-radius: 15px;
     cursor: pointer;
+}
+
+/* Member js */
+.memberContentData{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+
+}
+
+.topBar{
+    position: relative;
+    width: 100%;
+    height: 30%;
+}
+.memberContentData img{
+    position: absolute;
+    top: 22%; /* Adjust as needed */
+    left: 10px; 
+    height: auto;
+}
+
+.styleBar{
+    width: 100%;
+    background-color: var(--searchbar-color);
+    height: 60%;
+}
+
+.memberName{
+    display: flex;
+    position: absolute;
+    left:13%;
+    font-size: 4vh;
+    font-weight: bold;
+    color:white;
+}
+
+.memberContentSection{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.editNavBar{
+    height: 100%;
+    width: 20%;
+    color:var(--text-color);
+
+}
+
+.editNavBar h2{
+    margin-left: 10%;
+    font-size: 3.5vh;
+    color:white;
+}
+
+.editNavBar p{
+    margin-left: 10%;
+    font-size: 2vh;
+    cursor: pointer;
+}
+
+.editNavBar div{
+    width: 100%;
+    height: 10%;
+}
+
+.editSelectionWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.editSelection{
+    width: 80%;
+    height: 90%;  
+    background-color: var(--sidebar-color);
+    text-align: center;
+}
+
+.editSelection h1{
+    color:var(--text-color)
+}
+
+
+.choosenEdit{
+    height: 80%;
+    width: 100%;
+}
+
+.choosenEdit p{
+    font-size: 2vh;
 }

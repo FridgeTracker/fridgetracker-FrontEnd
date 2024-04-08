@@ -56,8 +56,10 @@ function Members(){
         };
       
         try {
-            const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addMember`,addMember);
-            console.log(response);
+            await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addMember`,addMember);    
+            const updatedResponse = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${getAuthToken()}`);
+            setUserData(updatedResponse.data);
+           
       
           } catch (error) {
             console.error('Failed to Add new Member:', error);
