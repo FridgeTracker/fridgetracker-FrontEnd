@@ -3,7 +3,6 @@ import "./member.css";
 import React, { useState } from "react";
 import axios from 'axios';
 
-import memberIcon from '../assets/memberIcons/pigIcon.png'
 import renderForm from "./renderForm";
 import { getAuthToken } from "../authService";
 
@@ -18,19 +17,19 @@ const Member = ({ member, updateMember }) => {
             userID: getAuthToken()
         });
             
-        const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateMember`,newData);
+        await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateMember`,newData);
 
-        console.log(response);
         updateMember();
        
     };
 
+    const testIcon = require(`../assets/memberIcons/${member.imageURL}`);
 
     return (
     <div className="memberContentData">
         <div className="topBar">
             <div className="styleBar"></div>
-            <img src={memberIcon} alt="m"/>
+            <img src={testIcon} alt="m"/>
             <span className="memberName"><p>{member.name}</p></span>
         </div>
 

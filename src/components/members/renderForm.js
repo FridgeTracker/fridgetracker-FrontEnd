@@ -1,5 +1,12 @@
 import React from "react";
 
+import selection2 from '../assets/memberIcons/dogIcon.png'
+import selection3 from '../assets/memberIcons/fox.png'
+import selection4 from '../assets/memberIcons/hippo.png'
+import selection5 from '../assets/memberIcons/pandaIcon.png'
+import selection6 from '../assets/memberIcons/pigIcon.png'
+import selection7 from '../assets/memberIcons/tigerIcon.png'
+
 const renderForm = (member, selectedEdit, handleFormSubmit) => {
     switch (selectedEdit) {
         case "Edit Profile":
@@ -9,7 +16,7 @@ const renderForm = (member, selectedEdit, handleFormSubmit) => {
         case "Edit Food Preferences":
             return <FoodForm handleFormSubmit={handleFormSubmit} />;
         case "Change Profile Picture":
-            return <ProfilePictureForm handleFormSubmit={handleFormSubmit} />;
+            return <ProfilePictureForm handleFormSubmit={handleFormSubmit} member={member} />;
         default:
             return <GeneralInfo />;
     }
@@ -84,18 +91,34 @@ const FoodForm = ({ handleFormSubmit }) => {
     );
 };
 
-const ProfilePictureForm = ({ handleFormSubmit }) => {
+const ProfilePictureForm = ({ handleFormSubmit, member }) => {
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+
+        const newData = ({
+            imageURL:e
+        });
+
+        handleFormSubmit(newData);
       
     };
 
+    const memberProfile = require(`../assets/memberIcons/${member.imageURL}`);
+
     return (
-        <form onSubmit={handleSubmit} className="editFormLayout">
-            {/* Add your form fields for Profile Picture here */}
-            <button type="submit">Submit</button>
-        </form>
+        <div className="changeProfilePictureWrapper">
+            <div className="currentProfile">
+                <img src={memberProfile} alt="pig"/>
+            </div>
+            <div className="selectionIcon">
+                <img src={selection7} alt="s1" onClick={() => handleSubmit('tigerIcon.png')}/>
+                <img src={selection2} alt="s1" onClick={() => handleSubmit('dogIcon.png')}/>
+                <img src={selection3} alt="s1" onClick={() => handleSubmit('fox.png')}/>
+                <img src={selection4} alt="s1" onClick={() => handleSubmit('hippo.png')}/>
+                <img src={selection5} alt="s1" onClick={() => handleSubmit('pandaIcon.png')}/>
+                <img src={selection6} alt="s1" onClick={() => handleSubmit('pigIcon.png')}/>
+            </div>
+        </div>
     );
 };
 

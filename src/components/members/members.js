@@ -1,7 +1,5 @@
 import "./member.css";
 import { useState, useEffect } from 'react';
-import memberIcon from '../assets/memberIcons/pigIcon.png'
-
 
 import axios from 'axios';
 import { getAuthToken } from '../authService.js';
@@ -107,7 +105,7 @@ function Members(){
                     {userData.members && userData.members.map((member) => (
 
                         <div className={"memberHolder" + (selectedMember === member ? " selected" : "")} onClick={() => setSelectedMember(member)}>
-                          <img src={memberIcon} alt = "a" />
+                          <img src={require(`../assets/memberIcons/${member.imageURL}`)} alt = "a" />
                           <p>{member.name}</p>
                       </div>
 
@@ -147,8 +145,6 @@ function Members(){
                 </div>
 
             </div>
-        
-        
         
         
         </div>
