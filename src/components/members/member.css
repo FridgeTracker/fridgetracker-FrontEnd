@@ -143,7 +143,8 @@
 }
 
 .editSelection h1{
-    color:var(--text-color)
+    color:var(--text-color);
+    font-size: 4vh;
 }
 
 
@@ -159,6 +160,47 @@
     font-size: 2vh;
 }
 
+.memberProfileSettings{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.memberProfileSettings form{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;  
+}
+
+.memberProfileSettings table{
+    height: 90%;
+    width: 100%;
+    text-align: left;
+    margin-left: 5%;
+    font-size: 2vh;
+}
+
+.memberProfileSettings input{
+    height: 50%;
+    width: 80%;
+
+}
+
+.memberProfileSettings button{
+    height: 60%;
+    width: 40%;
+    margin-bottom: 1%;
+    background-color: rgb(193, 255, 193);
+    border: none;
+    cursor: pointer;
+}
 
 .memberContentData img{
     top: 22%;   
@@ -190,4 +232,9 @@
 .memberHolder.selected {
     border: 2px solid black;
     background-color: #7d8382; 
+}
+
+.currentDetails{
+    width: 100%;
+    height: 20%;
 }
