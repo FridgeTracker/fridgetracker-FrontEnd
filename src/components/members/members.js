@@ -18,6 +18,24 @@ function Members(){
     const [selectedMember, setSelectedMember] = useState(null);
     const [addMember, setAddMember] = useState(false);
 
+    const handleUpdateMember = async () => {
+      try {
+        const UUID = getAuthToken();
+        const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
+        const updatedUserData = response.data;
+        setUserData(updatedUserData);
+        
+        const updatedSelectedMember = updatedUserData.members.find(member => member.id === selectedMember.id);
+        if (updatedSelectedMember) {
+            setSelectedMember(updatedSelectedMember);
+        }
+
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    }
+
+
     useEffect(() => {
         const fetchUserData = async () => {
           try {
@@ -124,7 +142,7 @@ function Members(){
 
                 <div className="memberContent">
 
-                  {selectedMember && <Member key={selectedMember.id} member={selectedMember}/>}
+                  {selectedMember && <Member key={selectedMember.id} member={selectedMember} updateMember={handleUpdateMember}/>}
                   
                 </div>
 
