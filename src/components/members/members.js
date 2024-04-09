@@ -63,7 +63,8 @@ function Members(){
               age:0,
               allergies:"",
               height:0,
-              weight:0
+              weight:0,
+              imageURL:'ftlogo.png'
         }
 
         const addMember = {

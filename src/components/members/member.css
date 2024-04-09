@@ -267,16 +267,17 @@
     height: 60%;
     display: flex;
     position: relative;
-    margin-top: 10px;
+    margin-top: 5%;
+    
 }
 
 .selectionIcon img{
     position: relative;
-    width: 15%;
-    height: 60%;
+    width: 10%;
+    height: 40%;
     left:0;
-    margin-left: 1vh;
     cursor: pointer;
+    margin-left: 6%;
 }
 
 .selectionIcon img:hover{
