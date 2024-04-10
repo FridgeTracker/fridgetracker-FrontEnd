@@ -1,17 +1,63 @@
-.outerborder{
-    width : 100%;
-    height:100%;
-    background-color: blue;      
+
+.settingTopBar{
+    width: 100%;
+    height: 15%;
+    background-color: var(--background-color);
 }
-.generalsidebar{
-    width : 20%;
-    height:100%;
-    background-color: white;
-    padding-left: 15px;  
+.settingIcon{
+    position: absolute;
+    margin-top: 3%;
+    width: 15%;
+    height: 12%;
+    display: flex;
 }
-.EditingContent{
-    width:800px;
-    height:750px;
-    background-color: antiquewhite;
+.settingIcon img{
+    height:80%;
+    width :60%;
+    margin-top: 5%;
+    
+}
+
+.settingIcon p{
+    display: flex;
+    bottom: 30%;
+    right: 0;
+    position: absolute;
+    font-size: 3vh;
+}
+
+
+.settingWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.generalsidebar {
+    width: 20%;
+    height: 100%;
+    margin-top: 5%;
+}
+
+.generalsidebar div,h2{
+    margin-left:25%;
+}
+
+.EditingContent {
+    width: 100%;
+    height: 100%;
+    background-color: var(--sidebarchild-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.EditingSection{
+    width: 80%;
+    height: 80%;
+    background-color: var(--background-color);;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
+

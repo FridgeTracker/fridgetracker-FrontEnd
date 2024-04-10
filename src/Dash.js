@@ -40,7 +40,7 @@ const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-// const [userData, setUserData] = useState(null);
+ const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -48,9 +48,9 @@ const toggleTheme = () => {
 
                 const UUID = getAuthToken();
 
-                await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
+                const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
 
-                // setUserData(response.data);
+                 setUserData(response.data);
                 
 
             } catch (error) {
@@ -102,16 +102,20 @@ const toggleTheme = () => {
                     <input type= 'text'/>
                     <img className="themeChanger" src={themeIcon} onClick={toggleTheme} alt="theme"></img>
                 </div>
-                <div className = 'headerWrapper'>
+                
+                {showSettings ? (
+                <><Setting userData={userData}/></>
+                ):(
+                    <div className = 'headerWrapper'>
                     <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
                 </div>
+                )}
 
-                <div className='mainSelectionArea'>
-                    {showMembers && <Members />}
-                    {showFridges && <Fridges />}
-                    {showFreezers && <Freezers />}
-                    {showSettings && <Setting/>}
-                </div>
+                
+                {showMembers && <Members />}
+                {showFridges && <Fridges />}
+                {showFreezers && <Freezers />}
+                
 
             </div>
             
