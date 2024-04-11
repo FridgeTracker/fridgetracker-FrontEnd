@@ -60,12 +60,15 @@ const toggleTheme = () => {
         fetchUserData();
     }, []);
 
+    const [showSelectedNav, setNav] = useState(false);
+
     const [showMembers, setMembers] = useState(false);
     const [showFridges, setFridges] = useState(false);
     const [showFreezers, setFreezers] = useState(false);
     const [showSettings, setSettings] = useState(false);
 
     const handleItemClick = (item) => {
+        setNav(true);
         setMembers(item === 'Members');
         setFridges(item === 'Fridges');
         setFreezers(item === 'Freezers');
@@ -123,19 +126,18 @@ const toggleTheme = () => {
                     <img className="themeChanger" src={themeIcon} onClick={toggleTheme} alt="theme"></img>
                 </div>
                 
-                {showSettings ? (
-                <><Setting userData={userData}/></>
+                {showSelectedNav ? (
+                    <>  
+                        {showSettings && <Setting userData={userData}/>}
+                        {showMembers && <Members />}
+                        {showFridges && <Fridges />}
+                        {showFreezers && <Freezers />}
+                    </>
                 ):(
                     <div className = 'headerWrapper'>
-                    <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
-                </div>
+                        <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
+                    </div>
                 )}
-
-                
-                {showMembers && <Members />}
-                {showFridges && <Fridges />}
-                {showFreezers && <Freezers />}
-                
 
             </div>
             
