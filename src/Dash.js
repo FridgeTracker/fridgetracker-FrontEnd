@@ -12,6 +12,7 @@ import themeIcon from "./components/assets/iconSwitch.png";
 import Freezers from './components/freezer/freezers';
 import Fridges from './components/fridge/fridges';
 import Members from './components/members/members';
+import Setting from './components/setting/setting';
 
 import dashIcon from "./components/assets/dashIcon.png";
 import mealIcon from "./components/assets/mealIcon.png";
@@ -39,7 +40,7 @@ const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-// const [userData, setUserData] = useState(null);
+ const [userData, setUserData] = useState(null);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -47,9 +48,9 @@ const toggleTheme = () => {
 
                 const UUID = getAuthToken();
 
-                await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
+                const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
 
-                // setUserData(response.data);
+                 setUserData(response.data);
                 
 
             } catch (error) {
@@ -62,11 +63,13 @@ const toggleTheme = () => {
     const [showMembers, setMembers] = useState(false);
     const [showFridges, setFridges] = useState(false);
     const [showFreezers, setFreezers] = useState(false);
+    const [showSettings, setSettings] = useState(false);
 
     const handleItemClick = (item) => {
         setMembers(item === 'Members');
         setFridges(item === 'Fridges');
         setFreezers(item === 'Freezers');
+        setSettings(item === 'Settings');
     };
  
     return (
@@ -84,10 +87,10 @@ const toggleTheme = () => {
                 <SidebarButton icon={dashIcon} text="Members" onClick={() => handleItemClick('Members')} />
                 <SidebarButton icon={dashIcon} text="Fridges" onClick={() => handleItemClick('Fridges')} />
                 <SidebarButton icon={dashIcon} text="Freezers" onClick={() => handleItemClick('Freezers')} />
-
                 <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
                 <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
-                <div className = 'settingsButton'><img src={setIcon} alt="s"/><p>Settings</p></div>
+                <SidebarButton icon={setIcon} text="Settings" onClick={() => handleItemClick('Settings')} />
+
 
                 <div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>
                 
@@ -99,15 +102,20 @@ const toggleTheme = () => {
                     <input type= 'text'/>
                     <img className="themeChanger" src={themeIcon} onClick={toggleTheme} alt="theme"></img>
                 </div>
-                <div className = 'headerWrapper'>
+                
+                {showSettings ? (
+                <><Setting userData={userData}/></>
+                ):(
+                    <div className = 'headerWrapper'>
                     <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
                 </div>
+                )}
 
-                <div className='mainSelectionArea'>
-                    {showMembers && <Members />}
-                    {showFridges && <Fridges />}
-                    {showFreezers && <Freezers />}
-                </div>
+                
+                {showMembers && <Members />}
+                {showFridges && <Fridges />}
+                {showFreezers && <Freezers />}
+                
 
             </div>
             
