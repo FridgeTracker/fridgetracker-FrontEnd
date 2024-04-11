@@ -71,12 +71,26 @@ const toggleTheme = () => {
         setFreezers(item === 'Freezers');
         setSettings(item === 'Settings');
     };
+
+    const [isOpen, setNavBar] = useState(false);
+
+    const handleNavBar = (e) => {
+        const container = e.currentTarget;
+        container.classList.toggle("change");
+        
+        if(isOpen){
+            setNavBar(false);
+        } else{
+            setNavBar(true);
+        }
+    }
+    
  
     return (
 
         <div className={`wrapper ${theme === 'dark' ? 'dark-theme' : ''}`}>
             
-            <div className= 'sideBarWrapper'>
+            <div className={`sideBarWrapper ${isOpen ? 'open' : ''}`}>
 
                 <div className='fridgeLogoWrapper'>
                 <img src = {logo} alt = "fridge logo"/>
@@ -96,9 +110,15 @@ const toggleTheme = () => {
                 
            
             </div>
-            <div className='contentWrapper'>
+            <div className={`contentWrapper ${isOpen ? 'open' : ''}`}>
                 
                 <div className= 'searchBarWrapper'>
+ 
+                    <div class="container" onClick={handleNavBar}>
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
                     <input type= 'text'/>
                     <img className="themeChanger" src={themeIcon} onClick={toggleTheme} alt="theme"></img>
                 </div>
@@ -124,5 +144,5 @@ const toggleTheme = () => {
     );
 }
 
-//poh is here ..... Rank was here
+//poh is here ..... Rank was here...Poh was here first
 export default Dash;
