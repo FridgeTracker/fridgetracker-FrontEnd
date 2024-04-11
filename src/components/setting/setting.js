@@ -1,6 +1,4 @@
 import "./setting.css";
-import {useState, useEffect } from 'react';
-import axios from 'axios';
 
 import userIcon from "../assets/memberIcons/memberIcon.png";
 
