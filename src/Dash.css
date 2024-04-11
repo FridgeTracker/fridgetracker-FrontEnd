@@ -44,10 +44,15 @@ p {
     height: 50%;
     margin-left: 10px;
     cursor: pointer;
+    position: absolute;
+    right:0;
+    margin-right: 1%;
 }
 
 .wrapper{
 background-color: var(--background-color) ;
+height: 100%;
+position: relative;
 width: 100%;
 }
 
@@ -57,7 +62,15 @@ height: 100%;
 width: 18%;
 overflow: hidden;
 position: absolute;
-float:left
+float:left;
+position: absolute;
+left:-18%;
+transition: left 0.3s ease;
+z-index: 2;
+}
+
+.sideBarWrapper.open {
+    left: 0; 
 }
 
 .sideBarWrapper img:not(.fridgeLogoWrapper img){
@@ -94,6 +107,32 @@ float:left
 }
 
 
+/* NAV BAR BUTTON COMPONENT TAKEN FROM W3 */
+.container {
+    display: inline-block;
+    cursor: pointer;
+    position: absolute;
+    left:0;
+    margin-left: 1%;
+  }
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: var(--text-color);
+    margin: 6px 0;
+    transition: 0.4s;
+}
+.change .bar1 {
+    transform: translate(0, 11px) rotate(-45deg);
+}
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+    transform: translate(0, -11px) rotate(45deg);
+}
+/* END */
+
+
 .sideBarWrapper div:not(.fridgeLogoWrapper, .logoutButton, .dashboardButtonC){
     width:100%;
     height: 7%;
@@ -122,7 +161,15 @@ float:left
 .logoutButton p{
     color: white;
 }
+
 .contentWrapper{
+    width:100%;
+    height:100%;
+    left: 0;
+    transition: left 0.5s ease;
+}
+
+.contentWrapper.open{
     width:82%;
     height:100%;
     margin-left: 18%;
@@ -135,14 +182,18 @@ float:left
     display:flex;
     align-items: center;
     justify-content: center;
+    position: relative;
    
 }
+
 .searchBarWrapper input{
-    width: 95%;
+    width: 90%;
     height: 45%;
     border: none;
     border-radius: 10px;
 }
+
+
 .headerWrapper{
     width:100%;
     height: 24%;
