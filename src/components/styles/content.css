@@ -1,20 +1,27 @@
 
 .member{
     width: 100%;
-    height: 100%;
+    height: 69%;
     display: flex;
     background-color: var(--background-color);;
 }
 .fridge{
     width: 100%;
-    height: 100%;
+    height: 69%;
     display: flex;
 }
 .freezer{
     width: 100%;
-    height: 100%;
+    height: 69%;
 }
-
+.setting{
+    width: 100%;
+    height: 93%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--sidebarchild-color);
+    overflow: hidden;
+}
 
 
 
