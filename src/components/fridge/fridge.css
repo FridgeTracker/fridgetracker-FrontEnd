@@ -43,11 +43,15 @@
 
 .fridgeListHolder{
     width: 100%;
-    height: 90%;
+    height: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
- 
+    justify-content: center;
+}
+
+.fridgeListHolder div{
+    margin-top: 10%;
 }
 
 .addFridgeButtonWrapper{
@@ -110,7 +114,7 @@
 
 .itemWrapper{
     width: 90%;
-    height: 100%;
+    height: 80%;
     background-color: var(--fridgecontent-color);
     overflow-y: auto;
     overflow-wrap: hidden;
@@ -121,10 +125,10 @@
 
 .itemListHolder{
     width: 100%;
-    height: auto;
-    display: inline;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content:center; 
     
 }
 
@@ -140,7 +144,7 @@
 .addItemButton{
     color: var(--text-color);
     width: 90%;
-    height: 8%;
+    height: 7%;
     margin: 5% 5%;
     margin-top: 20px;
     background-color: #8da19f;
@@ -177,7 +181,7 @@
 .itemCard{
 
     width: 90%;
-    height: 80%;
+    height: 60%;
     background-color: var(--card-color);
     
 }
