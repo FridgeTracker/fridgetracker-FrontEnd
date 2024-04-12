@@ -11,6 +11,7 @@ import { authenticateUser } from './authService';
 function LoginUser(){
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
       email: '',
@@ -28,6 +29,7 @@ function LoginUser(){
 
     const loginInWithEmailAndPassword = async (e) => {
         e.preventDefault();
+        setLoading(true);
         
         try {
           const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);
@@ -37,8 +39,9 @@ function LoginUser(){
           navigate("../Dash")
           
       } catch (error) {
-          console.error('Login failed:', error);
-         
+          console.error('Login failed:', error);       
+      } finally {
+          setLoading(false);
       }
         
     }
@@ -82,7 +85,7 @@ function LoginUser(){
                 <span className='forgotButton'><p> Forgot Password? </p></span>
                 
                 <div className='buttonWrapper'>
-                  <button type="submit" id='signIn'>Sign In</button>
+                  <button type="submit" id='signIn'>{loading ? 'Signing In...' : 'Sign In'}</button>
                   <button id='signUp' onClick={() => navigate("../Register")}>Sign Up</button>
                 </div>
           

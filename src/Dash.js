@@ -72,11 +72,8 @@ const toggleTheme = () => {
         setMembers(item === 'Members');
         setFridges(item === 'Fridges');
         setSettings(item === 'Settings');
-
-        if(item==='Dashboard'){
-            setNav(false);
-            setDashboard(item);
-        }
+        setDashboard(item === 'Dashboard');
+      
     };
 
     const [isOpen, setNavBar] = useState(false);
@@ -136,13 +133,13 @@ const toggleTheme = () => {
                         {showSettings && <Setting userData={userData}/>}
                         {showMembers && <Members />}
                         {showFridges && <Storage />}
+                        {showDashboard && <Dashboard />}
                     </>
                 ):(
                     <>
                         <div className = 'headerWrapper'>
                             <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
                         </div>
-                        {showDashboard && <Dashboard />}
                     </>
                 )}
 

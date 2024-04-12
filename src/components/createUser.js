@@ -9,6 +9,7 @@ import logo from './assets/ftlogo.png';
 function CreateUser(){
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const[formData, setFormData] = useState({
         familyName: '',
@@ -29,19 +30,21 @@ function CreateUser(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
 
-        axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/register', formData)
-            .then(response => {
+        try{
 
-                console.log(response);
-                setMessage(response.data);
+            const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/register', formData);
+            console.log(response);
+            setMessage(response.data);
 
-            })
-            .catch(error => {
-                setMessage(error.response.data);
-                console.error('Registration failed', error);
+        }catch(error){
 
-            });
+            setMessage(error.response.data);
+            console.error('Registration failed', error);
+        } finally {
+          setLoading(false);
+        }
     };
 
       return(
@@ -87,7 +90,7 @@ function CreateUser(){
 
                 
                 <div className='buttonWrappers'>
-                  <button type="submit">Register</button>
+                  <button type="submit">{loading ? 'Creating User...' : 'Register'}</button>
                 </div>
           
               </form>

@@ -34,6 +34,7 @@
 .memberHolder img{
     width: 25%;
 }
+
 .memberHolder p {
     font-size: 2vh;
 }
@@ -67,6 +68,14 @@
     background-color: rgb(180, 180, 180);
     border-radius: 5px;
     cursor: pointer;
+}
+
+.addMemberButton img{
+    height: 5vh;
+}
+
+.addMemberButton p{
+    font-size: 2vh;
 }
 
 .submitAddMemberWrapper{
