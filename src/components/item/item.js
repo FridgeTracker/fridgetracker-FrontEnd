@@ -86,6 +86,7 @@ const Item = ({Item, storageId, updateFridge}) => {
 
         event.preventDefault(); 
         const formData = new FormData(event.target);
+        console.log(storageId);
 
         const itemToAdd = {
             foodName: formData.get('foodName'),

@@ -1,0 +1,47 @@
+.freezerListHolder{
+    width: 100%;
+    height: 49%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.freezerListHolder div:not(.addFridgeButton, .submitAddFridgeWrapper){
+    margin-top: 5%;
+}
+
+.freezerHolder{
+    display: flex;
+    align-items: center;
+    color: black;
+    background-color: white;
+    font-size: 1.5vh;
+    cursor: pointer;
+    height: 26%;
+    width: 60%;
+    padding: 3px;
+    border-radius: 1px;
+}
+
+.freezerHolder img{
+    object-fit: contain;
+    height: 83%;
+    margin-left: 5%;
+}
+
+.freezerHolder:hover{
+    background-color: #a8a8a8;
+}
+.selectedfreezer{
+    background-color: rgb(237, 255, 235);
+}
+
+#freezerDetailsp{
+    border: 1px solid black;
+    width: auto;
+    position: absolute;
+    right:0;
+    padding: 3px;
+    background-color: rgb(237, 255, 235);
+
+}

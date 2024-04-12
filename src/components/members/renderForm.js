@@ -1,11 +1,17 @@
 import React from "react";
 
+import selection1 from '../assets/memberIcons/penguinIcon.png'
 import selection2 from '../assets/memberIcons/dogIcon.png'
 import selection3 from '../assets/memberIcons/fox.png'
 import selection4 from '../assets/memberIcons/hippo.png'
 import selection5 from '../assets/memberIcons/pandaIcon.png'
 import selection6 from '../assets/memberIcons/pigIcon.png'
 import selection7 from '../assets/memberIcons/tigerIcon.png'
+import selection8 from '../assets/memberIcons/puppyIcon.png'
+import selection9 from '../assets/memberIcons/birdIcon.png'
+import selection10 from '../assets/memberIcons/bearIcon.png'
+import selection11 from '../assets/memberIcons/sealIcon.png'
+import selection12 from '../assets/memberIcons/deerIcon.png'
 
 const renderForm = (member, selectedEdit, handleFormSubmit) => {
     switch (selectedEdit) {
@@ -110,13 +116,21 @@ const ProfilePictureForm = ({ handleFormSubmit, member }) => {
             <div className="currentProfile">
                 <img src={memberProfile} alt="pig"/>
             </div>
+            <p>Choose Icon</p>
             <div className="selectionIcon">
+                <img src={selection1} alt="s1" onClick={() => handleSubmit('penguinIcon.png')}/>
+                <img src={selection8} alt="s1" onClick={() => handleSubmit('puppyIcon.png')}/>
+                <img src={selection9} alt="s1" onClick={() => handleSubmit('birdIcon.png')}/>
+                <img src={selection10} alt="s1" onClick={() => handleSubmit('bearIcon.png')}/>
+                <img src={selection11} alt="s1" onClick={() => handleSubmit('sealIcon.png')}/>
+                <img src={selection12} alt="s1" onClick={() => handleSubmit('deerIcon.png')}/>
                 <img src={selection7} alt="s1" onClick={() => handleSubmit('tigerIcon.png')}/>
                 <img src={selection2} alt="s1" onClick={() => handleSubmit('dogIcon.png')}/>
                 <img src={selection3} alt="s1" onClick={() => handleSubmit('fox.png')}/>
                 <img src={selection4} alt="s1" onClick={() => handleSubmit('hippo.png')}/>
                 <img src={selection5} alt="s1" onClick={() => handleSubmit('pandaIcon.png')}/>
                 <img src={selection6} alt="s1" onClick={() => handleSubmit('pigIcon.png')}/>
+                
             </div>
         </div>
     );
