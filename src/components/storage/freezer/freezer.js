@@ -12,7 +12,7 @@ function Freezer({freezer, onFreezerClick}){
 
             <img src ={freezer.selected ? openFridge : closeFridge} alt ="c" />
             <span className="fridgeDetails">
-                <p id="fridgeDetailsp">FREEZER</p>
+                <p id="freezerDetailsp">FREEZER</p>
                 <p id="fridgeDetailsName">Name</p>
                 <p className="caption">{freezer.storageName}</p>
                 <p id="fridgeDetailsCapacity">Capacity</p>

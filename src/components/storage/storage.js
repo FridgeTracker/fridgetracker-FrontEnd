@@ -10,10 +10,11 @@ import Item from '../item/item.js';
 import { getAuthToken } from '../authService.js';
 
 import addImage from '../assets/addIcon.png';
+import accessItem from '../assets/accessItem.png';
 import Freezer from './freezer/freezer.js';
 
 
-function Fridges() {
+function Storage() {
 
   const [userData, setUserData] = useState({});
   const [selectedStorage, setselectedStorage] = useState(null);
@@ -236,8 +237,9 @@ const handleAddFreezer = async (event) => {
       </div>
 
       <div className='itemContainer'>
-
+        
         <div className='itemListContainer'>
+            <p id="storageTitle">Name: {selectedStorage ? selectedStorage.storageName : 'Not Selected'}</p>
             <div className = "itemWrapper">
               <div className='itemListHolder'>
 
@@ -246,6 +248,7 @@ const handleAddFreezer = async (event) => {
                   {selectedStorage.items.map((item, index) => (
                     <div key={index} className={`itemButton ${selectedItem === item ? 'selected' : ''}`} onClick={() => {setItem(item); setAdd(false)}}>
                       <p>Name: {item.foodName} | Quantity: {item.quantity}</p>
+                      <img src={accessItem} alt="a"/>
                     </div>
                   ))}
                   <div className="addItemButton" onClick={() => {setAdd(true); setItem(null);}}>
@@ -284,4 +287,4 @@ const handleAddFreezer = async (event) => {
   );
 }
 
-export default Fridges;
+export default Storage;

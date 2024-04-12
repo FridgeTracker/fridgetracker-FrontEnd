@@ -3,11 +3,12 @@ import axios from 'axios';
 import './Dash.css';
 
 import logo from "./components/assets/FridgeTLogo.png";
+import user from "./components/assets/memberIcons/memberIcon.png";
 import darkbck from "./components/assets/moon2.png";
 import lightBck from "./components/assets/light_bck.png";
 import themeIcon from "./components/assets/iconSwitch.png";
 
-import Fridges from './components/fridge/storage';
+import Storage from './components/storage/storage';
 import Members from './components/members/members';
 import Setting from './components/setting/setting';
 
@@ -16,7 +17,7 @@ import mealIcon from "./components/assets/mealIcon.png";
 import setIcon from "./components/assets/setIcon.png";
 import listIcon from "./components/assets/listIcon.png";
 import { getAuthToken} from './components/authService';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 
 //Child sidebar under Dashboard
@@ -29,7 +30,7 @@ const SidebarButton = ({ icon, text, onClick }) => (
 
 function Dash(){
 
-const navigate = useNavigate();
+//const navigate = useNavigate();
 const [theme, setTheme] = useState('light');
 
 const toggleTheme = () => {
@@ -116,6 +117,7 @@ const toggleTheme = () => {
                         <div class="bar3"></div>
                     </div>
                     <input type= 'text'/>
+                    <p><img className="userIcon" src={user} alt=""/> {userData && userData.familyName}</p>
                     <img className="themeChanger" src={themeIcon} onClick={toggleTheme} alt="theme"></img>
                 </div>
                 
@@ -123,7 +125,7 @@ const toggleTheme = () => {
                     <>  
                         {showSettings && <Setting userData={userData}/>}
                         {showMembers && <Members />}
-                        {showFridges && <Fridges />}
+                        {showFridges && <Storage />}
                     </>
                 ):(
                     <div className = 'headerWrapper'>

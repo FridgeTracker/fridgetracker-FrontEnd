@@ -202,8 +202,27 @@ z-index: 2;
     height: 45%;
     border: none;
     border-radius: 10px;
+    position: absolute;
+    left:0;
+    margin-left: 5%;
 }
 
+.searchBarWrapper p{
+    color: white;
+    background-color: #1b8b60;
+    width: 9%;
+    height: 60%;
+    position: absolute;
+    right:0;
+    margin-right: 5%;
+    font-size: 2vh;
+    display: flex;
+    align-items: center;
+}
+
+.userIcon{
+    height: 80%;
+}
 
 .headerWrapper{
     width:100%;
