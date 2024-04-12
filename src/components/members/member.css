@@ -117,20 +117,21 @@
     display: flex;
     flex-direction: column;
     background-color: white;
+    position: relative;
 
 }
 
 .topBar{
-    position: relative;
+    position: absolute;
     width: 100%;
-    height: 30%;
+    height: 15%;
 }
 
 
 .styleBar{
     width: 100%;
     background-color: #00271d;
-    height: 60%;
+    height: 70%;
 }
 
 .memberName{
@@ -143,13 +144,16 @@
 }
 
 .memberContentSection{
-    height: 100%;
+    height: 85%;
     width: 100%;
     display: flex;
+    position: absolute;
+    bottom: 0;
 }
 
 .editNavBar{
-    height: 100%;
+    margin-top: 5%;
+    height: 80%;
     width: 20%;
     color:var(--text-color);
 
@@ -252,9 +256,10 @@
 }
 
 .memberContentData img{
+    
     top: 30%;   
     left: 4vh; 
-    height: 12vh;
+    width: 9%;
     position: absolute;
 }
 
@@ -291,6 +296,15 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    align-items: center;
+}
+
+.changeProfilePictureWrapper p{
+    text-align: center;
+    margin-top: 13%;
+    font-size: 3vh;
+    font-weight: 600;
 }
 
 .currentProfile{
@@ -306,27 +320,42 @@
     position: relative;
     top:0;
     left:0;
-    
+    width: 15%;
 }
 
 .selectionIcon{
     width: 100%;
-    height: 60%;
+    height: 40%;
     display: flex;
-    position: relative;
+    position: absolute;
     margin-top: 5%;
-    
+    overflow-x: scroll;
+    bottom: 0;
 }
 
 .selectionIcon img{
     position: relative;
-    width: 10%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
     left:0;
     cursor: pointer;
     margin-left: 6%;
+
 }
 
 .selectionIcon img:hover{
     scale: 1.1;
+}
+
+::-webkit-scrollbar {
+
+    height:15px;
+    background-color: rgb(70, 70, 70);
+  
+}
+
+::-webkit-scrollbar-thumb {
+
+    background-color: darkgreen;
+
 }
