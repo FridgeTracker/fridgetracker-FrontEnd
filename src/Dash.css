@@ -1,13 +1,13 @@
 
 html, body, #root, .wrapper {
     height:100%;
-    font-family: 'Rokkitt', serif;
+    font-family: 'Figtree', sans-serif;
   }
 
 p {
     margin: 0px;
     padding:0px;
-    font-family: 'Rokkitt', serif;
+    font-family: 'Figtree', sans-serif;
 }
 
 /* Light Theme */
@@ -50,23 +50,34 @@ p {
 }
 
 .wrapper{
-background-color: var(--background-color) ;
+background-color: rgb(230, 230, 230);
 height: 100%;
 position: relative;
 width: 100%;
 }
 
 .sideBarWrapper{
-background-color: var(--sidebar-color);
+background-color: white;
 height: 100%;
-width: 18%;
+width: 15%;
 overflow: hidden;
 position: absolute;
 float:left;
 position: absolute;
-left:-18%;
+left:-15%;
 transition: left 0.3s ease;
 z-index: 2;
+}
+
+.sidebarSpacer{
+    height: 4.5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2vh;
+    background-color: #1b8b60;
+    color:white;
+    font-family: 'Figtree', sans-serif;
 }
 
 .sideBarWrapper.open {
@@ -77,7 +88,7 @@ z-index: 2;
 
     margin-left: 5%; 
     margin-right: 5%;
-    max-width:10%;
+    max-width:7%;
     max-height:80%;
 
 }
@@ -85,25 +96,28 @@ z-index: 2;
 .fridgeLogoWrapper{
 
     width: 100%;
+    height: 7%;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #00271d;
+    
 
 }
 .fridgeLogoWrapper img{
     
-    height: 90%;
-    width: 75%;
+    height: 80%;
 
 }
 
-
 .dashboardButtonC{
-    background-color: var(--sidebarchild-color);
+    background-color: #ffffff;
     color: var(--text-color);
     display: flex;
     height: 6%;
     align-items: center;
+    margin-left: 5%;
+    color: rgb(0, 63, 0);
 }
 
 
@@ -116,38 +130,39 @@ z-index: 2;
     margin-left: 1%;
   }
 .bar1, .bar2, .bar3 {
-    width: 35px;
-    height: 5px;
-    background-color: var(--text-color);
-    margin: 6px 0;
+    width: 3vh;
+    height: 0.3vh;
+    background-color: white;
+    margin: 0.92vh 0;
     transition: 0.4s;
 }
 .change .bar1 {
-    transform: translate(0, 11px) rotate(-45deg);
+    transform: translate(0, 1.5vh) rotate(-45deg);
 }
 .change .bar2 {opacity: 0;}
 
 .change .bar3 {
-    transform: translate(0, -11px) rotate(45deg);
+    transform: translate(0, -1vh) rotate(45deg);
 }
 /* END */
 
 
-.sideBarWrapper div:not(.fridgeLogoWrapper, .logoutButton, .dashboardButtonC){
+.sideBarWrapper div:not(.fridgeLogoWrapper, .logoutButton, .dashboardButtonC, .sidebarSpacer){
     width:100%;
     height: 7%;
     display: flex;
     align-items: center;
-    background-color: var(--sidebardiv-color);;
-    color: var(--text-color);
+    background-color: white;
+    color: rgb(0, 63, 0);
+    margin-left: 5%;
 }
 
-.sideBarWrapper div:hover:not(.fridgeLogoWrapper){
+.sideBarWrapper div:hover:not(.fridgeLogoWrapper, .sidebarSpacer){
     background-color: #F8FFF4;
     cursor: pointer;
 }
 
-
+/*
 .logoutButton {
     margin-bottom: 15%;
     position :absolute;
@@ -155,12 +170,8 @@ z-index: 2;
     display: flex;
     align-items: center;
     height: 5%;
-    bottom:0;
-    background-color: #3E362F;
-}
-.logoutButton p{
-    color: white;
-}
+    color: rgb(0, 63, 0);
+}*/
 
 .contentWrapper{
     width:100%;
@@ -170,15 +181,15 @@ z-index: 2;
 }
 
 .contentWrapper.open{
-    width:82%;
+    width:85%;
     height:100%;
-    margin-left: 18%;
+    margin-left: 15%;
 }
 
 .searchBarWrapper{
     width: 100%;
     height: 7%;
-    background-color: var(--searchbar-color);;
+    background-image: url(./components/assets/testbck.png);
     display:flex;
     align-items: center;
     justify-content: center;
@@ -187,16 +198,36 @@ z-index: 2;
 }
 
 .searchBarWrapper input{
-    width: 90%;
+    width: 40%;
     height: 45%;
     border: none;
     border-radius: 10px;
+    position: absolute;
+    left:0;
+    margin-left: 30%;
+    padding-left: 2%;
 }
 
+.searchBarWrapper p{
+    color: white;
+    background-color: #1b8b60;
+    width: 9%;
+    height: 60%;
+    position: absolute;
+    right:0;
+    margin-right: 5%;
+    font-size: 2vh;
+    display: flex;
+    align-items: center;
+}
+
+.userIcon{
+    height: 80%;
+}
 
 .headerWrapper{
     width:100%;
-    height: 24%;
+    height: 23%;
     overflow: hidden;
 }
 .headerWrapper img{
@@ -210,7 +241,13 @@ z-index: 2;
     width: 100%;
 }
 
-
+.searchIcon{
+    height: 30%;
+    z-index: 2;
+    position: absolute;
+    left:0;
+    margin-left: 30.5%;
+}
 
 
 

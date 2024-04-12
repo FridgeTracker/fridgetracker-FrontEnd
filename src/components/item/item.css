@@ -1,13 +1,13 @@
 .itemButton{
     color: var(--text-color);
     width: 90%;
-    height: 8%;
-    margin: 5% 5% 1%;
-    margin-top: 20px;
-    background-color: var(--selecteddivs-color);
-    overflow: hidden;
+    height: 5%;
+    margin-top: 2%;
+    background-color: rgb(230, 230, 230);
     display: flex;
     align-items: center;
+    position: relative;
+    font-size: 1.5vh;
 }
 
 .itemCardContainer{
@@ -17,11 +17,15 @@
 
 
 .itemButton p{
-    margin-left: 20px;
+    color: darkgreen;
+    margin-left: 3%;
 }
 
 .itemButton img{
-    height:25px;
+    height:70%;
+    right:0;
+    margin-right: 1%;
+    position: absolute;
 }
 
 .cardContent form{

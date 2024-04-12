@@ -1,11 +1,14 @@
 .memberListContainer{
     height: 100%;
-    width: 22%;
+    width: 25%;
     overflow: hidden;
+    display: flex;
+    text-align: center;
+    align-items: center;
 }
 
 .memberListHolder{
-    height: 100%;
+    height: 70%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -18,18 +21,20 @@
     margin-top: 3%;
     color: var(--text-color);
     cursor: pointer;
-    height: 18%;
-    width: 50%;
+    height: 20%;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-radius: 15px;
+    border-radius: 5px;
+    background-color: white;
 }
 
 .memberHolder img{
-    width: 40%;
+    width: 25%;
 }
+
 .memberHolder p {
     font-size: 2vh;
 }
@@ -49,20 +54,60 @@
 .memberContent{
     width: 95%;
     height: 90%;
-    background-color: var(--member-color);
-    color: var(--text-color);
+    background-color: white;
+    color: black;
 }
 
 .addMemberButtonWrapper{
-    margin-top: 20px;
-    width: 60%;
+    margin-top: 3%;
+    width: 70%;
     height: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
-    border-radius: 15px;
+    background-color: rgb(180, 180, 180);
+    border-radius: 5px;
     cursor: pointer;
+}
+
+.addMemberButton img{
+    height: 5vh;
+}
+
+.addMemberButton p{
+    font-size: 2vh;
+}
+
+.submitAddMemberWrapper{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submitAddMemberWrapper form{
+    width: 90%;
+    height: 80%;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.submitAddMemberWrapper input{
+    width: 95%;
+    height: 40%;
+}
+
+#memberAddSubmit{
+    background-color: #dcffdc;
+    border: none;
+    position: absolute;
+    bottom:0;
+    width: 100%;
+    height: 30%;
 }
 
 /* Member js */
@@ -71,7 +116,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: var(--background-color);
+    background-color: white;
 
 }
 
@@ -84,7 +129,7 @@
 
 .styleBar{
     width: 100%;
-    background-color: var(--searchbar-color);
+    background-color: #00271d;
     height: 60%;
 }
 
@@ -94,7 +139,7 @@
     left:13%;
     font-size: 4vh;
     font-weight: bold;
-    color:white;
+    color:black;
 }
 
 .memberContentSection{
@@ -113,13 +158,15 @@
 .editNavBar h2{
     margin-left: 10%;
     font-size: 3.5vh;
-    color:white;
+    color:black;
+    margin-bottom: 20%;
 }
 
 .editNavBar p{
     margin-left: 10%;
     font-size: 2vh;
     cursor: pointer;
+    color: rgb(17, 46, 21);
 }
 
 .editNavBar div{
@@ -138,13 +185,15 @@
 .editSelection{
     width: 80%;
     height: 90%;  
-    background-color: var(--sidebar-color);
+    background-color: #cbd4d1;
     text-align: center;
 }
 
 .editSelection h1{
+    margin-top: 3%;
     color:var(--text-color);
     font-size: 4vh;
+    margin-bottom: 2%;
 }
 
 
@@ -203,10 +252,9 @@
 }
 
 .memberContentData img{
-    top: 22%;   
+    top: 30%;   
     left: 4vh; 
-    width: 10vh;
-    height: 10vh;
+    height: 12vh;
     position: absolute;
 }
 
@@ -230,8 +278,7 @@
 }
 
 .memberHolder.selected {
-    border: 2px solid black;
-    background-color: #7d8382; 
+    background-color: #ebfdec; 
 }
 
 .currentDetails{
