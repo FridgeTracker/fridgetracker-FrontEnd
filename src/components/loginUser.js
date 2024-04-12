@@ -1,16 +1,25 @@
 
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/login.css';
 
 import openFridge from './assets/openFridge2.png';
 import logo from './assets/ftlogo.png';
-import { authenticateUser } from './authService';
+import { authenticateUser, getAuthToken } from './authService';
 
 function LoginUser(){
 
     const navigate = useNavigate();
+
+    // If User didnt logout token stays stored and relog automatically
+    useEffect(() => {
+      if(getAuthToken() != null){
+          navigate("../Dash");
+      }
+    },[navigate]);
+
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
       email: '',
@@ -28,6 +37,7 @@ function LoginUser(){
 
     const loginInWithEmailAndPassword = async (e) => {
         e.preventDefault();
+        setLoading(true);
         
         try {
           const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);
@@ -37,8 +47,9 @@ function LoginUser(){
           navigate("../Dash")
           
       } catch (error) {
-          console.error('Login failed:', error);
-         
+          console.error('Login failed:', error);       
+      } finally {
+          setLoading(false);
       }
         
     }
@@ -82,7 +93,7 @@ function LoginUser(){
                 <span className='forgotButton'><p> Forgot Password? </p></span>
                 
                 <div className='buttonWrapper'>
-                  <button type="submit" id='signIn'>Sign In</button>
+                  <button type="submit" id='signIn'>{loading ? 'Signing In...' : 'Sign In'}</button>
                   <button id='signUp' onClick={() => navigate("../Register")}>Sign Up</button>
                 </div>
           

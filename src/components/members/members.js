@@ -89,14 +89,6 @@ function Members(){
       }, [userData]);
       
 
-
-      /*const memberHandler = (clickedMember) => {
-    
-       // setSelectedMember(clickedMember);
-     
-        };*/
-
-
     return (
 
         <div className="member">
@@ -105,7 +97,7 @@ function Members(){
 
                     {userData.members && userData.members.map((member) => (
 
-                        <div className={"memberHolder" + (selectedMember === member ? " selected" : "")} onClick={() => setSelectedMember(member)}>
+                        <div className={"memberHolder" + (selectedMember === member ? " selected" : "")} onClick={() => {setSelectedMember(member); setAddMember(false);}}>
                           <img src={require(`../assets/memberIcons/${member.imageURL}`)} alt = "a" />
                           <p>{member.name}</p>
                       </div>
@@ -120,7 +112,7 @@ function Members(){
                           <div className='submitAddMemberWrapper'>
                             <form onSubmit={handleAddMember}>
                               <input type="text" name="memberName" placeholder='Enter Member Name Here' required/>
-                              <input type="submit" placeholder='Add Member' />
+                              <input id="memberAddSubmit" type="submit" value='Add Member' />
                             </form>
                           </div>
                         ) :
