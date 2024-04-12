@@ -1,0 +1,265 @@
+.fridge2Holder{
+    display: flex;
+    align-items: center;
+    color: black;
+    background-color: white;
+    font-size: 1.5vh;
+    cursor: pointer;
+    height: 26%;
+    width: 60%;
+    padding: 3px;
+    border-radius: 1px;
+}
+
+.fridge2Holder:hover{
+    background-color: #a8a8a8;
+}
+
+.fridgeDetails{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+#fridgeDetailsp{
+    border: 1px solid black;
+    width: auto;
+    position: absolute;
+    right:0;
+    padding: 3px;
+    background-color: rgb(235, 255, 255);
+}
+
+#fridgeDetailsName{
+    margin-top: 12%;
+    margin-left: 10%;
+    color: darkgreen;
+    font-weight: bold;
+}
+
+#fridgeDetailsCapacity{
+    margin-top: 5%;
+    margin-left: 10%;
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.selectedFridge{
+    background-color: rgb(239, 251, 255);
+}
+
+.caption{
+    position: relative;
+    margin-left: 10%;
+}
+
+.fridge2Holder img{
+    object-fit: contain;
+    height: 83%;
+    margin-left: 5%;
+}
+
+
+.fridgeListWrapper{
+    width: 30%;
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fridgeListHolder{
+    width: 100%;
+    height: 49%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fridgeListHolder div:not(.addFridgeButton){
+    margin-top: 4%;
+}
+
+.addFridgeButtonWrapper{
+    width: 60%;
+    height: 25%;
+}
+
+.addFridgeButton{
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.addFridgeButton:hover{
+    background-color: #a8a8a8;
+    cursor: pointer;
+}
+
+
+.addFridgeButton img{
+    width: 20%;
+    margin-bottom: 3%;
+}
+
+.addFridgeButton p{
+    font-size: 1.5vh;
+    color:var(--text-color);
+}
+
+
+.itemContainer{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.itemListContainer{
+    width: 60%;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content:center; 
+}
+
+.title{
+    width: 100%;
+    height: auto;
+    font-size: 4vh;
+    margin-top: 20px;
+    color: var(--text-color);
+}
+
+.itemWrapper{
+    width: 90%;
+    height: 80%;
+    background-color: white;
+    overflow-y: auto;
+    overflow-wrap: hidden;
+    margin-top: 25px; 
+    margin-bottom: 25px;
+ 
+}
+
+.itemListHolder{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.itemListHolder div:hover{
+    background-color: #677B79;
+    cursor: pointer;
+}
+
+.itemButton{
+    font-size: 2vh;
+}
+
+.addItemButton{
+    color: var(--text-color);
+    width: 90%;
+    height: 7%;
+    margin: 5% 5%;
+    margin-top: 20px;
+    background-color: #8da19f;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addItemButton img{
+    height:3vh;
+}
+
+
+.itemDetailWrapper{
+
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.itemTitle{
+    text-align: center;
+    width: 100%;
+    height: 8%;
+    font-size: 4vh;
+    color: var(--text-color);
+}
+
+.itemCard{
+
+    width: 90%;
+    height: 60%;
+    background-color: var(--card-color);
+    
+}
+
+.itemButton.selected {
+    background-color: #7d8382; 
+  }
+
+  
+.submitAddFridgeWrapper{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.addFridgeForm{
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.addFridgeForm input:not(.addFridgeSubmit){
+    height: 18%;
+    width: 90%;
+    border-radius: 5px;
+    margin-bottom: 5%;
+    border: none;
+
+}
+
+.addFridgeSubmit{
+
+   width: 90%;
+   height: 18%;
+   margin-top: 10%;
+   border-radius: 5px;
+   border: none;
+   cursor: pointer;
+
+}
+
+.storageDivider{
+    width: 100%;
+    background-color: rgb(97, 97, 97);
+    height: 1px;
+    margin-top: 3%;
+}

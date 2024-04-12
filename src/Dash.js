@@ -2,15 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dash.css';
 
-
-import logo from "./components/assets/ftlogo.png";
+import logo from "./components/assets/FridgeTLogo.png";
 import darkbck from "./components/assets/moon2.png";
 import lightBck from "./components/assets/light_bck.png";
 import themeIcon from "./components/assets/iconSwitch.png";
 
-
-import Freezers from './components/freezer/freezers';
-import Fridges from './components/fridge/fridges';
+import Fridges from './components/fridge/storage';
 import Members from './components/members/members';
 import Setting from './components/setting/setting';
 
@@ -18,8 +15,7 @@ import dashIcon from "./components/assets/dashIcon.png";
 import mealIcon from "./components/assets/mealIcon.png";
 import setIcon from "./components/assets/setIcon.png";
 import listIcon from "./components/assets/listIcon.png";
-import powerIcon from "./components/assets/powerIcon.png";
-import { getAuthToken, logoutUser} from './components/authService';
+import { getAuthToken} from './components/authService';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -64,14 +60,12 @@ const toggleTheme = () => {
 
     const [showMembers, setMembers] = useState(false);
     const [showFridges, setFridges] = useState(false);
-    const [showFreezers, setFreezers] = useState(false);
     const [showSettings, setSettings] = useState(false);
 
     const handleItemClick = (item) => {
         setNav(true);
         setMembers(item === 'Members');
         setFridges(item === 'Fridges');
-        setFreezers(item === 'Freezers');
         setSettings(item === 'Settings');
     };
 
@@ -96,20 +90,19 @@ const toggleTheme = () => {
             <div className={`sideBarWrapper ${isOpen ? 'open' : ''}`}>
 
                 <div className='fridgeLogoWrapper'>
-                <img src = {logo} alt = "fridge logo"/>
+                 <img src = {logo} alt = "fridge logo"/>
                 </div>
-                
+                <div className='sidebarSpacer'><p>Fridge Tracker V2</p></div>
                 <div className = 'dashboardButton'><img src={dashIcon} alt="d"/><p>Dashboard</p></div>
 
                 <SidebarButton icon={dashIcon} text="Members" onClick={() => handleItemClick('Members')} />
-                <SidebarButton icon={dashIcon} text="Fridges" onClick={() => handleItemClick('Fridges')} />
-                <SidebarButton icon={dashIcon} text="Freezers" onClick={() => handleItemClick('Freezers')} />
+                <SidebarButton icon={dashIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
                 <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
                 <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
-                <SidebarButton icon={setIcon} text="Settings" onClick={() => handleItemClick('Settings')} />
+                <div className="SettingsDivButton" onClick={() => handleItemClick('Settings')}><img src={setIcon} alt="m"/><p>Settings</p></div>
 
 
-                <div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>
+                {/*<div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>*/}
                 
            
             </div>
@@ -131,7 +124,6 @@ const toggleTheme = () => {
                         {showSettings && <Setting userData={userData}/>}
                         {showMembers && <Members />}
                         {showFridges && <Fridges />}
-                        {showFreezers && <Freezers />}
                     </>
                 ):(
                     <div className = 'headerWrapper'>
