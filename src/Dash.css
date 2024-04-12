@@ -106,7 +106,7 @@ z-index: 2;
 }
 .fridgeLogoWrapper img{
     height: 150%;
-    width: 50%;
+    width: 40%;
 }
 
 .dashboardButtonC{
@@ -203,7 +203,7 @@ z-index: 2;
     border-radius: 10px;
     position: absolute;
     left:0;
-    margin-left: 30%;
+    margin-left: 25%;
     padding-left: 2%;
 }
 
@@ -245,7 +245,7 @@ z-index: 2;
     z-index: 2;
     position: absolute;
     left:0;
-    margin-left: 30.5%;
+    margin-left: 25.5%;
 }
 
 
