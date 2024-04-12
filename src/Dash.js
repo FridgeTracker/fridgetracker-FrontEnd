@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Dash.css';
 
-import logo from "./components/assets/FridgeTLogo.png";
+import logo from "./components/assets/fridgeLogo.png";
 import user from "./components/assets/memberIcons/memberIcon.png";
 import darkbck from "./components/assets/moon2.png";
 import lightBck from "./components/assets/light_bck.png";
