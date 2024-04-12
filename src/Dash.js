@@ -11,6 +11,7 @@ import themeIcon from "./components/assets/iconSwitch.png";
 import Storage from './components/storage/storage';
 import Members from './components/members/members';
 import Setting from './components/setting/setting';
+import Dashboard from './components/dashboard/dashboard';
 
 import dashIcon from "./components/assets/dashIcon.png";
 import mealIcon from "./components/assets/mealIcon.png";
@@ -40,6 +41,7 @@ const toggleTheme = () => {
  const [userData, setUserData] = useState(null);
 
     useEffect(() => {
+        setDashboard(true);
         const fetchUserData = async () => {
             try {
 
@@ -62,12 +64,19 @@ const toggleTheme = () => {
     const [showMembers, setMembers] = useState(false);
     const [showFridges, setFridges] = useState(false);
     const [showSettings, setSettings] = useState(false);
+    const [showDashboard, setDashboard] = useState(false);
+
 
     const handleItemClick = (item) => {
         setNav(true);
         setMembers(item === 'Members');
         setFridges(item === 'Fridges');
         setSettings(item === 'Settings');
+
+        if(item==='Dashboard'){
+            setNav(false);
+            setDashboard(item);
+        }
     };
 
     const [isOpen, setNavBar] = useState(false);
@@ -94,8 +103,9 @@ const toggleTheme = () => {
                  <img src = {logo} alt = "fridge logo"/>
                 </div>
                 <div className='sidebarSpacer'><p>Fridge Tracker V2</p></div>
-                <div className = 'dashboardButton'><img src={dashIcon} alt="d"/><p>Dashboard</p></div>
 
+
+                <SidebarButton icon={dashIcon} text="Dashboard" onClick={() => handleItemClick('Dashboard')}/>
                 <SidebarButton icon={dashIcon} text="Members" onClick={() => handleItemClick('Members')} />
                 <SidebarButton icon={dashIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
                 <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
@@ -128,9 +138,12 @@ const toggleTheme = () => {
                         {showFridges && <Storage />}
                     </>
                 ):(
-                    <div className = 'headerWrapper'>
-                        <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
-                    </div>
+                    <>
+                        <div className = 'headerWrapper'>
+                            <img src = {theme === 'light' ? lightBck : darkbck} alt = "header"></img>
+                        </div>
+                        {showDashboard && <Dashboard />}
+                    </>
                 )}
 
             </div>
