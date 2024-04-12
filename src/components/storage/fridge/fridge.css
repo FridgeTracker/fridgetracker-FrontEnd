@@ -123,12 +123,12 @@
 .itemListContainer{
     width: 60%;
     height: 100%;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:center; 
     position: relative;
+
 }
 
 #storageTitle{
@@ -155,18 +155,16 @@
     width: 90%;
     height: 85%;
     background-color: white;
-    overflow-y: auto;
-    overflow-wrap: hidden;
     margin-top: 1%;
- 
 }
 
 .itemListHolder{
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    display: block;
+    justify-content: center;
     align-items: center;   
+    overflow-y: scroll;
 }
 
 .itemListHolder div:hover{
