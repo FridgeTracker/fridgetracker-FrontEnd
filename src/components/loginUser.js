@@ -1,16 +1,24 @@
 
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/login.css';
 
 import openFridge from './assets/openFridge2.png';
 import logo from './assets/ftlogo.png';
-import { authenticateUser } from './authService';
+import { authenticateUser, getAuthToken } from './authService';
 
 function LoginUser(){
 
     const navigate = useNavigate();
+
+    // If User didnt logout token stays stored and relog automatically
+    useEffect(() => {
+      if(getAuthToken() != null){
+          navigate("../Dash");
+      }
+    },[navigate]);
+
     const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
