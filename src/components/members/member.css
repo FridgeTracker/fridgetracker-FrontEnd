@@ -137,7 +137,7 @@
 .memberName{
     display: flex;
     position: absolute;
-    left:13%;
+    left:15%;
     font-size: 4vh;
     font-weight: bold;
     color:black;
@@ -168,7 +168,7 @@
 
 .editNavBar p{
     margin-left: 10%;
-    font-size: 2vh;
+    font-size: 1.7vh;
     cursor: pointer;
     color: rgb(17, 46, 21);
 }
@@ -248,7 +248,7 @@
 }
 
 .memberProfileSettings button{
-    height: 60%;
+    height: 35%;
     width: 40%;
     margin-bottom: 1%;
     background-color: rgb(193, 255, 193);
