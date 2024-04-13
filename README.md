@@ -1,8 +1,12 @@
 ## Testing
 
-Admin Test account : admin@ft.com
+Admin Test account
+- Email: admin@ft.com
+- Password: admin
 
-Family Test account: family@ft.com
+Family Test Account
+- Email: family@ft.com
+- Password: family
 
 
 ## UI Flow
