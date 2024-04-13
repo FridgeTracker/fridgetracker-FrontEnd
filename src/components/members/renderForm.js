@@ -17,8 +17,8 @@ const renderForm = (member, selectedEdit, handleFormSubmit) => {
     switch (selectedEdit) {
         case "Edit Profile":
             return <ProfileForm handleFormSubmit={handleFormSubmit} member={member} />;
-        case "Edit Body":
-            return <BodyForm handleFormSubmit={handleFormSubmit} />;
+        case "Edit Body Details":
+            return <BodyForm handleFormSubmit={handleFormSubmit} member={member} />;
         case "Edit Food Preferences":
             return <FoodForm handleFormSubmit={handleFormSubmit} />;
         case "Change Profile Picture":
@@ -61,24 +61,66 @@ const ProfileForm = ({ member, handleFormSubmit }) => {
                     <tr><td>Change Age:</td>
                     <td><input type="number" placeholder="Enter new age here" name="memberAge" required/></td></tr>
                     <tr><td colSpan="2" style={{ textAlign: 'center' }}><button type="submit">Save</button></td></tr>
-
-                    </table>
+                </table>
             </form>
         </div>
     );
 };
 
-const BodyForm = ({ handleFormSubmit }) => {
+const BodyForm = ({ member, handleFormSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const newData = ({
+            weight:formData.get("memberWeight"),
+            height:formData.get("memberHeight")
+        });
+
+        handleFormSubmit(newData);
+
     };
 
+    const calculateBMR = () => {
+        const BMR = 88.362 + (13.397 * member.weight) + (4.799 * member.height) - (5.677 * member.age);
+        return BMR.toFixed(0);
+    }
+
+    const calculateBMI = () => {
+        const height = (member.height / 100) * (member.height / 100);
+        const BMI = member.weight / height;
+        return BMI.toFixed(1);
+    }
+
+    console.log(member);
+
     return (
-        <form onSubmit={handleSubmit} className="editFormLayout">
-            {/* Add your form fields for Body here */}
-            <button type="submit">Submit</button>
-        </form>
+        <div className="bodySettingsWrapper">
+
+            <div className="currentDetails">
+                <p>Current Member Weight: {member.weight} kg</p>
+                <p>Current Member Height: {member.height} cm</p>
+            </div>
+            <form onSubmit={handleSubmit} className="editBodySettingsForm">     
+                <p>Change Weight: <input type="text" placeholder="Enter new height here" name="memberWeight" required/> </p>
+                <p>Change Height: <input type="number" placeholder="Enter new weight here" name="memberHeight" required/></p>
+
+                <button type="submit">Save</button>
+            </form>
+
+            <div className="bmrWrapper">
+                <div className="bmr">
+                    <h2>BMR</h2>
+                    <p>{calculateBMR()} calories</p>
+                </div>
+                <div className="bmi">
+                    <h2>BMI</h2>
+                    <p>{calculateBMI()} BMI</p>
+                </div>
+            </div>
+        </div>
     );
 };
 
@@ -91,7 +133,7 @@ const FoodForm = ({ handleFormSubmit }) => {
 
     return (
         <form onSubmit={handleSubmit} className="editFormLayout">
-            {/* Add your form fields for Food Preferences here */}
+
             <button type="submit">Submit</button>
         </form>
     );
