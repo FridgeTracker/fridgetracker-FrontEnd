@@ -29,7 +29,7 @@ function SecuritySettings() {
             <button>Change Password</button>
         <br></br>
         <div className="notifications-settings">
-            <h2>Notifications</h2>
+            <h4>Notifications</h4>
             <p>Customize the type of alerts you will receive</p>
         <div className="notifications-grid">
             <label>
