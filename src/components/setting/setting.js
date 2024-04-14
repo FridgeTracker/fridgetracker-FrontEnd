@@ -1,48 +1,6 @@
 import "./setting.css";
 
-
-
-
-
-
-/*import userIcon from "../assets/memberIcons/memberIcon.png";
-
-const Setting = ({}) => {
-    const [newEmail, setNewEmail] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
-
-    const handleChangeEmail = async () => {
-      
-            const newData = { 
-                newEmail, 
-                userID: getAuthToken() 
-            };
-            
-                await axios.post('https://example.com/api/changeEmail',newData);
-                setSuccessMessage("Email changed Successfully.");
-            
-                setNewEmail();
-        };
-        const hangleChangePassword = async () => {
-            try{
-                const newData = { 
-                    newPassword, 
-                    userID: getAuthToken() 
-                };
-                
-                    await axios.post('https://example.com/api/changeEmail',newData);
-                    setSuccessMessage("Password changed Successfully.");
-                    
-                    
-                }
-            };
-
-        
-
-    
-}*/
+import userIcon from "../assets/memberIcons/memberIcon.png";
 
 function Setting({userData}){
     return(
