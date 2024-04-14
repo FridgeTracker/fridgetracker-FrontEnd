@@ -19,6 +19,7 @@ import userIcon from "../assets/memberIcons/memberIcon.png";
 }
 */
 function Setting({userData}){
+    console.log(userData);
     return(
         <div className="setting">
 

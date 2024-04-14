@@ -111,16 +111,18 @@ const toggleTheme = () => {
                 </div>
                 <div className='sidebarSpacer'><p>Fridge Tracker V2</p></div>
 
-
-                <SidebarButton icon={dashIcon} text="Dashboard" onClick={() => handleItemClick('Dashboard')}/>
+                <div className='navBarTitle'> <p>DASHBOARD</p></div>
+                <SidebarButton icon={dashIcon} text="Overview" onClick={() => handleItemClick('Dashboard')}/>
                 <SidebarButton icon={membersIcon} text="Members" onClick={() => handleItemClick('Members')} />
                 <SidebarButton icon={ffIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
-                <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
-                <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
-                <div className="SettingsDivButton" onClick={() => handleItemClick('Settings')}><img src={setIcon} alt="m"/><p>Settings</p></div>
 
+                <div className='navBarTitle'> <p>EXTRAS</p></div>
+                <SidebarButton icon={mealIcon} text="Meals" onClick={() => handleItemClick('Meals')} />
+                <SidebarButton icon={listIcon} text="Shopping List" onClick={() => handleItemClick('Shopping List')} />
 
-                <div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>
+                <div className='navBarTitle'> <p>ACCOUNT</p></div>
+                <SidebarButton icon={setIcon} text="Account Settings" onClick={() => handleItemClick('Settings')} />
+                <SidebarButton icon={powerIcon} text="Logout" onClick={() => {logoutUser(); navigate("/")}} />
                 
            
             </div>
