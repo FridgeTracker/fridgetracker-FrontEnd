@@ -41,23 +41,56 @@
 .generalsidebar div,h2{
     margin-left:25%;
 }
+  
 
-.EditingContent {
+.settings {
+    background-color:#a8a8a8 ;
     width: 100%;
-    height: 100%;
-    background-color: var(--sidebarchild-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.EditingSection{
-    width: 80%;
-    height: 80%;
-    background-color: var(--background-color);;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 20px auto;
+    justify-content: space-between;
+    padding: 20px;
 
 }
+.settings-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px; 
+}
 
+.settings-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.account-settings, .security-settings {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: #fff;     
+}
+
+#family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password, input[type="checkbox"]{
+    margin: 10px;
+    padding: 10px;
+    display: block;
+    width: calc(100% - 22px);
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input[type="checkbox"] {
+    width: 20px; 
+    height: 20px; 
+    margin-right: 10px;
+    cursor: pointer
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
