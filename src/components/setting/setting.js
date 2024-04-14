@@ -4,20 +4,46 @@ import "./setting.css";
 
 
 
-import userIcon from "../assets/memberIcons/memberIcon.png";
 
-/*const Setting = ({ setting, changeSetting }) => {
-    const [chooseEdit, setChangeEdit] = useState(null);
+/*import userIcon from "../assets/memberIcons/memberIcon.png";
 
-    const handleFormSubmit = async (formData) => {
+const Setting = ({}) => {
+    const [newEmail, setNewEmail] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
-        const newData = ({ 
-            setting: {...formData, id: }
-        })
+    const handleChangeEmail = async () => {
+      
+            const newData = { 
+                newEmail, 
+                userID: getAuthToken() 
+            };
+            
+                await axios.post('https://example.com/api/changeEmail',newData);
+                setSuccessMessage("Email changed Successfully.");
+            
+                setNewEmail();
+        };
+        const hangleChangePassword = async () => {
+            try{
+                const newData = { 
+                    newPassword, 
+                    userID: getAuthToken() 
+                };
+                
+                    await axios.post('https://example.com/api/changeEmail',newData);
+                    setSuccessMessage("Password changed Successfully.");
+                    
+                    
+                }
+            };
 
-    }
-}
-*/
+        
+
+    
+}*/
+
 function Setting({userData}){
     return(
         <div className="setting">
@@ -40,10 +66,12 @@ function Setting({userData}){
                             <div className="changeLocation">Change Location</div>
                         <br /><h2>Metric Unit</h2>
                             <div className="changeUnit">Change Units</div>
+                        <br /><h2>Logout</h2>
                     </div>
 
                     <div className="EditingContent">
                         <div className="EditingSection">Change Email</div>
+                        
                     </div>
 
                 </div>
