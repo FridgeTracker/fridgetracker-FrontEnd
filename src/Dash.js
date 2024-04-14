@@ -16,9 +16,11 @@ import Dashboard from './components/dashboard/dashboard';
 import powerIcon from './components/assets/powerIcon.png';
 
 import dashIcon from "./components/assets/dashIcon.png";
+import membersIcon from "./components/assets/membersIcon.png";
 import mealIcon from "./components/assets/mealIcon.png";
 import setIcon from "./components/assets/setIcon.png";
 import listIcon from "./components/assets/listIcon.png";
+import ffIcon from "./components/assets/ffIcon.png";
 import { getAuthToken, logoutUser} from './components/authService';
 import { useNavigate } from 'react-router-dom';
 
@@ -111,8 +113,8 @@ const toggleTheme = () => {
 
 
                 <SidebarButton icon={dashIcon} text="Dashboard" onClick={() => handleItemClick('Dashboard')}/>
-                <SidebarButton icon={dashIcon} text="Members" onClick={() => handleItemClick('Members')} />
-                <SidebarButton icon={dashIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
+                <SidebarButton icon={membersIcon} text="Members" onClick={() => handleItemClick('Members')} />
+                <SidebarButton icon={ffIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
                 <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
                 <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
                 <div className="SettingsDivButton" onClick={() => handleItemClick('Settings')}><img src={setIcon} alt="m"/><p>Settings</p></div>
