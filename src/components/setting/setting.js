@@ -1,7 +1,23 @@
 import "./setting.css";
 
+
+
+
+
 import userIcon from "../assets/memberIcons/memberIcon.png";
 
+/*const Setting = ({ setting, changeSetting }) => {
+    const [chooseEdit, setChangeEdit] = useState(null);
+
+    const handleFormSubmit = async (formData) => {
+
+        const newData = ({ 
+            setting: {...formData, id: }
+        })
+
+    }
+}
+*/
 function Setting({userData}){
     return(
         <div className="setting">
@@ -17,7 +33,7 @@ function Setting({userData}){
                     <div className="generalsidebar">
                         <br /><h2>General</h2>
                             <div className="userInfo">User Info</div>
-                            <div className="changeEmail">Change Email</div>
+                            <div className="changeEmail" /*onClick={()}*/>Change Email</div>
                             <div className="changePassword">Change Password</div>
 
                         <br /><h2>Timezone</h2>
