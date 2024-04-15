@@ -5,31 +5,33 @@ function SecuritySettings() {
     
     return (
         <div className="security-settings">
-            <h4>Security Settings</h4>
+            <h3>Security Settings</h3>
             <p>Change Password and notifications</p>  
+            <hr></hr>
 
         <div className="security-password">
-            <h4>Password</h4>
+            <h3>Password</h3>
             <p>Change your password</p>
         </div>          
         <br></br>
         <div>
-            <label>Current Password:</label><br></br>
+            <label>Current Password:</label>
             <input type="password" id="Current-Password" />
         </div>
         <div>
-            <label>New Password:</label><br></br>
+            <label>New Password:</label>
             <input type="password" id="New-Password" />
         </div>
         <div>
-            <label>Confirm New Password:</label><br></br>
+            <label>Confirm New Password:</label>
             <input type="password" id="Confirm-Password" />
         </div>
         <br></br>
-            <button>Change Password</button>
+            <button className="change-password-button">Change Password</button>
         <br></br>
+        <hr></hr>
         <div className="notifications-settings">
-            <h4>Notifications</h4>
+            <h3>Notifications</h3>
             <p>Customize the type of alerts you will receive</p>
         <div className="notifications-grid">
             <label>
@@ -46,8 +48,9 @@ function SecuritySettings() {
             </label>
         </div>
         <div>
-            <button style={{ marginRight: '10px' }}>Discard</button>
-            <button>Save</button>
+            <button id="Discard-button">Discard</button>
+            
+            <button id="save-button">Save</button>
         </div>
     </div>
 </div>

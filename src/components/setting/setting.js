@@ -3,10 +3,9 @@ import AccountSettings from './accountsettings';
 import SecuritySettings from './securitysettings';
  
 import "./setting.css";
-import React, { useState } from "react";
-import userIcon from "../assets/memberIcons/memberIcon.png";
 
 function Settings({userData}) {
+
 
     return (
         <div className="settings">
@@ -15,14 +14,12 @@ function Settings({userData}) {
             </div>
             <div className="settings-container">
                 <AccountSettings />
-                <SecuritySettings />
-                
+                <SecuritySettings />                
             </div>
         </div>
+
     );
 }
-
-
 export default Settings;
 
     
