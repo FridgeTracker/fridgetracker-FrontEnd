@@ -1,44 +1,30 @@
+
+import AccountSettings from './accountsettings';
+import SecuritySettings from './securitysettings';
+ 
 import "./setting.css";
 
-import userIcon from "../assets/memberIcons/memberIcon.png";
+function Settings({userData}) {
 
-function Setting({userData}){
-    console.log(userData);
-    return(
-        <div className="setting">
 
-            <div className="settingTopBar">
+    return (
+        <div className="settings">
+            <div className="settings-header">
+                <h1>Settings</h1>
             </div>
-            <span className="settingIcon">
-                <img src={userIcon} alt="User Icon"/>
-                <p>{userData.familyName}</p>
-            </span>
-
-                <div className="settingWrapper">
-                    <div className="generalsidebar">
-                        <br /><h2>General</h2>
-                            <div className="userInfo">User Info</div>
-                            <div className="changeEmail" /*onClick={()}*/>Change Email</div>
-                            <div className="changePassword">Change Password</div>
-
-                        <br /><h2>Timezone</h2>
-                            <div className="changeLocation">Change Location</div>
-                        <br /><h2>Metric Unit</h2>
-                            <div className="changeUnit">Change Units</div>
-                        <br /><h2>Logout</h2>
-                    </div>
-
-                    <div className="EditingContent">
-                        <div className="EditingSection">Change Email</div>
-                        
-                    </div>
-
-                </div>
-
+            <div className="settings-container">
+                <AccountSettings />
+                <SecuritySettings />                
+            </div>
         </div>
-    
-    )
+
+    );
 }
-export default Setting;
+export default Settings;
+
+    
 
 
+
+
+                   
