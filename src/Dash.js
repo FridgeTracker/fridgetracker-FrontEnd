@@ -16,9 +16,11 @@ import Dashboard from './components/dashboard/dashboard';
 import powerIcon from './components/assets/powerIcon.png';
 
 import dashIcon from "./components/assets/dashIcon.png";
+import membersIcon from "./components/assets/membersIcon.png";
 import mealIcon from "./components/assets/mealIcon.png";
 import setIcon from "./components/assets/setIcon.png";
 import listIcon from "./components/assets/listIcon.png";
+import ffIcon from "./components/assets/ffIcon.png";
 import { getAuthToken, logoutUser} from './components/authService';
 import { useNavigate } from 'react-router-dom';
 
@@ -109,16 +111,18 @@ const toggleTheme = () => {
                 </div>
                 <div className='sidebarSpacer'><p>Fridge Tracker V2</p></div>
 
+                <div className='navBarTitle'> <p>DASHBOARD</p></div>
+                <SidebarButton icon={dashIcon} text="Overview" onClick={() => handleItemClick('Dashboard')}/>
+                <SidebarButton icon={membersIcon} text="Members" onClick={() => handleItemClick('Members')} />
+                <SidebarButton icon={ffIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
 
-                <SidebarButton icon={dashIcon} text="Dashboard" onClick={() => handleItemClick('Dashboard')}/>
-                <SidebarButton icon={dashIcon} text="Members" onClick={() => handleItemClick('Members')} />
-                <SidebarButton icon={dashIcon} text="Fridge/Freezer" onClick={() => handleItemClick('Fridges')} />
-                <div className = 'mealButton'><img src={mealIcon} alt="m"/><p>Meals</p></div>
-                <div className = 'mealButton'><img src={listIcon} alt="m"/><p>Shopping List</p></div>
-                <div className="SettingsDivButton" onClick={() => handleItemClick('Settings')}><img src={setIcon} alt="m"/><p>Settings</p></div>
+                <div className='navBarTitle'> <p>EXTRAS</p></div>
+                <SidebarButton icon={mealIcon} text="Meals" onClick={() => handleItemClick('Meals')} />
+                <SidebarButton icon={listIcon} text="Shopping List" onClick={() => handleItemClick('Shopping List')} />
 
-
-                <div className = 'logoutButton' onClick={() => {logoutUser(); navigate("/")}}><img src={powerIcon} alt="s"/><p>Logout</p></div>
+                <div className='navBarTitle'> <p>ACCOUNT</p></div>
+                <SidebarButton icon={setIcon} text="Account Settings" onClick={() => handleItemClick('Settings')} />
+                <SidebarButton icon={powerIcon} text="Logout" onClick={() => {logoutUser(); navigate("/")}} />
                 
            
             </div>
