@@ -4,15 +4,18 @@
     padding: 1vh;
 }
 .settings-header {
-    text-align: vertical; 
+    text-align: vertical;
+    font-size: 1.7vh; 
 }
 
 .settings-container {
+    font-size:1.6vh;
     display: flex;
     flex-wrap: wrap; 
     justify-content: space-between;
     align-items: flex-start;
     padding: 1vh;
+    
 }
 
 #profile-image {
@@ -26,7 +29,6 @@ hr {
 
 .account-settings, .security-settings {
     flex: 1;
-    margin-bottom: 1vh;
     border-radius: 0.5vh;
     border: 1px solid #ccc;
     background: #fff; 
@@ -35,6 +37,7 @@ hr {
 
 #family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password{
     width: 95%; 
+    height: auto;
     box-sizing: border-box; 
     margin-bottom: 1vh;    
     display: block;    
@@ -45,8 +48,8 @@ hr {
 }
 
 .input[type="checkbox"] {
-    width: 100vh; 
-    height: 100vh;
+    width: 2vh; 
+    height: 2vh;
     margin-right: 1vh;
     cursor: pointer;
    
@@ -105,7 +108,13 @@ button {
     margin-left: 5%;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
+
+    .settings {
+        width: 95%;
+        justify-content: space-between;
+        padding: 1vh;
+    }
     .settings-container {
         flex-direction: row;
         display: flex;
@@ -117,7 +126,6 @@ button {
 
     .account-settings, .security-settings {
         width: 48%; 
-        margin-bottom: 1vh;
     }
 
     .change-password-button, #Discard-button {
