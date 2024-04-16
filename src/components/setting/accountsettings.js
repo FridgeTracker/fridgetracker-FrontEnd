@@ -30,8 +30,9 @@ function AccountSettings({userData}) {
 
         try {
             
-            await axios.post('https://example.com/api/updateInformation', newUserInfo);
-            const updatedResponse = await axios.get('');
+            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', addNewUserInfo);
+            const updatedResponse = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${getAuthToken()}`);
+            
             
         }
         catch (error) {
