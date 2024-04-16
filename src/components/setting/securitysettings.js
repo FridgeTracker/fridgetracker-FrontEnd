@@ -1,8 +1,26 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 
 function SecuritySettings() {
-    
+
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmNewPassword, setConfirmNewPassword] = useState('');
+    const [error, setError] = useState('');
+
+    const handlePasswordChange = async () => {
+        if (newPassword !== confirmNewPassword) {
+            setError('The New Password does not match.');
+            return;
+        }
+        try {
+
+        } catch (error) {
+            setError('Failed to change the password.');
+            console.error(error);
+        }
+    };
+
     return (
         <div className="security-settings">
             <h3>Security Settings</h3>
@@ -16,18 +34,19 @@ function SecuritySettings() {
         <br></br>
         <div>
             <label>Current Password:</label>
-            <input type="password" id="Current-Password" />
+            <input type="password" id="Current-Password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
         </div>
         <div>
             <label>New Password:</label>
-            <input type="password" id="New-Password" />
+            <input type="password" id="New-Password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)}  />
         </div>
         <div>
             <label>Confirm New Password:</label>
-            <input type="password" id="Confirm-Password" />
+            <input type="password" id="Confirm-Password" value={confirmNewPassword} onChange={(e) => setConfirmNewPassword(e.target.value)} />
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <br></br>
-            <button className="change-password-button">Change Password</button>
+            <button className="change-password-button" onClick={handlePasswordChange}>Change Password</button>
         <br></br>
         <hr></hr>
         <div className="notifications-settings">

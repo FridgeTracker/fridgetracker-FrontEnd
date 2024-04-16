@@ -107,17 +107,27 @@ button {
 
 @media (min-width: 1024px) {
     .settings-container {
-        flex-direction: row; 
+        flex-direction: row;
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 1vh; 
     }
 
     .account-settings, .security-settings {
         width: 48%; 
-        margin: 1%;
+        margin-bottom: 1vh;
     }
 
     .change-password-button, #Discard-button {
         min-width: 20%; 
         margin-left: 4%;
+    }
+
+    #empty-box, #expiry-box, #newMeal-box, #Full-box {
+        width: 3vh; 
+        height: 3vh;
     }
 
     #update-button {
