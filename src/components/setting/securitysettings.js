@@ -35,16 +35,16 @@ function SecuritySettings() {
             <p>Customize the type of alerts you will receive</p>
         <div className="notifications-grid">
             <label>
-                <input type="checkbox" />Food Item Expired
+                <input type="checkbox" id="expiry-box"/>Food Item Expired
             </label>
             <label>
-                <input type="checkbox" />Fridge/Freezer Empty
+                <input type="checkbox" id="empty-box" />Fridge/Freezer Empty
             </label>
             <label>
-                <input type="checkbox" />Fridge/Freezer Full
+                <input type="checkbox" id="Full-box" />Fridge/Freezer Full
             </label>
             <label>
-                <input type="checkbox" />New meals possible
+                <input type="checkbox" id="newMeal-box"/>New meals possible
             </label>
         </div>
         <div>

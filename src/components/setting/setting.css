@@ -1,104 +1,139 @@
 .settings {
     width: 95%;
     justify-content: space-between;
-    padding: 20px;
-
+    padding: 1vh;
 }
 .settings-header {
-    text-align: vertical;
-    margin-bottom: 8px; 
-    margin-top: 2px;
+    text-align: vertical; 
 }
-#profile-image{
-    height:18%;
-    width :18%;    
+
+.settings-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1vh;
+}
+
+#profile-image {
+    width: 15vh;
+    height: auto;
 }
 
 hr {
     border: 1px solid grey; 
 }
 
-.settings-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    align-items: flex-start;
-}
-
 .account-settings, .security-settings {
     flex: 1;
-    padding: 20px;
-    border-radius: 8px;
+    margin-bottom: 1vh;
+    border-radius: 0.5vh;
     border: 1px solid #ccc;
-    background: #fff;     
+    background: #fff; 
+    padding: 2vh;    
 }
 
-#family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password, input[type="checkbox"]{
-    margin: 10px;
-    padding: 10px;
-    display: block;
-    width: calc(100% - 22px);
-    margin-bottom: 10px;
+#family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password{
+    width: 95%; 
+    box-sizing: border-box; 
+    margin-bottom: 1vh;    
+    display: block;    
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 0.5vh;
+    margin: 1vh;
+    padding: 1vh;
 }
 
 .input[type="checkbox"] {
-    width: 20px; 
-    height: 20px; 
-    margin-right: 10px;
+    width: 100vh; 
+    height: 100vh;
+    margin-right: 1vh;
     cursor: pointer;
    
+}
+#empty-box, #expiry-box, #newMeal-box, #Full-box {
+    width: 3vh; 
+    height: 3vh;
 }
 
 .notifications-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
-    gap: 10px; 
-}
-
-input[type="checkbox"] {
-    width: 30px; 
-    height: 30px; 
-    cursor: pointer;
+    gap: 1vh; 
+    margin-top: 2vh;
 }
 
 label {
     display: flex;
     align-items: center; 
-    margin-bottom: 10px; 
+    margin-bottom: 1vh; 
 }
 
 #Discard-button {
     background-color: White;
     border: 1px solid;
-    margin-Left:100px;
+    margin-left: 5%;
 }
 button {
-    padding: 12px 24px;
     background-color: #90EE90;
     color: Black;
     border: none;
     cursor: pointer;
-    font-size: 16px; 
-    border-radius: 4px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+    font-size: 1.5vh; 
+    border-radius: 0.5vh; 
+    box-shadow: 0 0.2vh 0.5vh rgba(0,0,0,0.2); 
+    margin-top: 2vh;
+    padding: 1.2vh 2.4vh;
 }
 .change-password-button {
-    min-width: 760px; 
+    width: 90%; 
     background-color: #90EE90; 
     cursor: pointer;
-    font-size: 16px;
-    border-radius: 4px;
-    padding: 12px 24px; 
+    font-size: 1.5vh;
+    border-radius: 0.5vh;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 #save-button {
-    min-width: 360px;
-    margin-Left: 40px;
+    min-width: 50vh;
+    margin-left: 5%;
 }
 #update-button {
-    min-width: 260px;
-    margin-Left: 240px;
+    min-width: 36vh;
+    margin-top: 1vh;
+    margin-left: 5%;
 }
 
+@media (min-width: 1024px) {
+    .settings-container {
+        flex-direction: row; 
+    }
+
+    .account-settings, .security-settings {
+        width: 48%; 
+        margin: 1%;
+    }
+
+    .change-password-button, #Discard-button {
+        min-width: 20%; 
+        margin-left: 4%;
+    }
+
+    #update-button {
+        min-width: 50%
+    }
+    #save-button {
+        min-width: 30%
+    }
+    #Discard-button {
+        background-color: White;
+        border: 1px solid;
+        margin-left: 18%;
+    }
+
+    .notifications-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
