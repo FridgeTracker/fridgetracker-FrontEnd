@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { getAuthToken } from '../authService.js';
+
 
 
 function SecuritySettings() {
@@ -19,18 +19,12 @@ function SecuritySettings() {
             return;
         }
         try {
-            const token = getAuthToken();
             const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/change-password', {
-                email: token.email,
                 currentPassword,
                 newPassword
             });
-            if (response.status === 200) {
-                alert('Password changed successfully');
-                setError(''); 
-            } else {
-                setError(response.data);
-            }
+            console.log(response);
+            setMessage(response.data);
         } catch (error) {
             setError('Failed to change the password.');
             console.error(error);            
