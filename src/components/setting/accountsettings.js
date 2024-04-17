@@ -11,27 +11,26 @@ function AccountSettings({userData}) {
     const [email, setEmail] = useState(userData.email);
     const [location, setLocation] = useState("");
     const [password, setPassword] = useState("");
-
+   
 
     const handleUpdateInformation = async(event) => {
         event.preventDefault();
 
         const formData = new FormData(event.target);
+        
         const newUserInfo = {
+            id:getAuthToken(),
             familyName  :formData.get("familyName"),
             email       :formData.get("email"),
-            location    :formData.get("email"),
             password    :formData.get("password")
         };
-        const addNewUserInfo ={
-            userData : newUserInfo,
-            userID:getAuthToken()
-        }
+        console.log(newUserInfo);
+     
 
         try {
             
-            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', addNewUserInfo);
-            const updatedResponse = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${getAuthToken()}`);
+            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', newUserInfo);
+           
             
             
         }
