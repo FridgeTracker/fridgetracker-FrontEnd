@@ -19,9 +19,8 @@ function SecuritySettings() {
             return;
         }
         try {
-
             const token = getAuthToken();
-            const response = await axios.post('/api/change-password', {
+            const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/change-password', {
                 email: token.email,
                 currentPassword,
                 newPassword
