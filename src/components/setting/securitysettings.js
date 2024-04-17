@@ -10,6 +10,7 @@ function SecuritySettings() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
 
     const handlePasswordChange = async (event) => {
         event.preventDefault();
