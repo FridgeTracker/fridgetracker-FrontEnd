@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import { getAuthToken } from '../authService.js';
 
 
 function SecuritySettings() {
@@ -19,14 +20,18 @@ function SecuritySettings() {
         }
         try {
 
-            const response = await axios.post('/api/users/change-password', {
+            const token = getAuthToken();
+            const response = await axios.post('/api/change-password', {
+                email: token.email,
                 currentPassword,
                 newPassword
             });
-            if (response.data === 'Password changed successfully') {
+            if (response.status === 200) {
                 alert('Password changed successfully');
+                setError(''); 
+            } else {
+                setError(response.data);
             }
-
         } catch (error) {
             setError('Failed to change the password.');
             console.error(error);            
