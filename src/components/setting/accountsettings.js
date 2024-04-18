@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import userIcon from "../assets/memberIcons/memberIcon.png";
 import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
 function AccountSettings({userData}) {
+    const [profileImage, setProfileImage] = useState(userIcon);
    
 
     const handleUpdateInformation = async(event) => {
@@ -33,6 +34,19 @@ function AccountSettings({userData}) {
             
         }
     };
+
+    const handleProfileImageChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setProfileImage(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
     
     return (
         <div className="account-settings">
@@ -42,8 +56,11 @@ function AccountSettings({userData}) {
 
         <div className="profilepic">
             <h3>Profile Picture</h3>
-            <img src={userIcon} alt="User Icon" id="profile-image"/>
-            <p>Click here to change Profile Picture</p>
+            <img src={profileImage} alt="User Icon" id="profile-image" />
+            <input type="file" accept="image/*" onChange={handleProfileImageChange} style={{ display: 'none' }} id="profile-image-input"/>
+            <label htmlFor="profile-image-input"> Click &nbsp;
+            <span style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}> here </span>
+            &nbsp; to change Profile Picture</label>
             <hr></hr>
         </div>
       
