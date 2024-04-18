@@ -1,16 +1,20 @@
 ## Testing
 
-Admin Test account : admin@ft.com
+Admin Test account
+- Email: admin@ft.com
+- Password: admin
 
-Family Test account: family@ft.com
+Family Test Account
+- Email: family@ft.com
+- Password: family
 
+### Overview
+![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/41b12dde-1dc6-4a0c-8750-d21b8837a55a)
 
-## UI Flow
+### Members
+![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/f15c0621-f09f-4073-9ed8-bf9729094548)
 
-![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/6707c0c2-8b0e-45cb-ab12-15359d6d4bbe)
-
-![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/22a2a524-0614-4d20-8260-c861679a6e14)
-
-![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/6a976b33-bc2d-4521-b324-0ca464ea29bf)
+### Fridge/Freezers
+![image](https://github.com/FridgeTracker/fridgetracker-FrontEnd/assets/116534934/1627e05d-3ef0-4cf7-a2f2-2fb4c53fc420)
 
 

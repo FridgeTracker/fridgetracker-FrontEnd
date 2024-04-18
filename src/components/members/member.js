@@ -38,7 +38,7 @@ const Member = ({ member, updateMember }) => {
                 <br></br><h2>General</h2>
                 
                 <div className="editProfile" onClick={() => {setSelectedEdit("Edit Profile")}}><p>Edit Profile Settings</p></div>
-                <div className="editBody" onClick={() => {setSelectedEdit("Edit Body")}}><p>Edit Body Details</p></div>
+                <div className="editBody" onClick={() => {setSelectedEdit("Edit Body Details")}}><p>Edit Body Details</p></div>
                 <div className="editFood" onClick={() => {setSelectedEdit("Edit Food Preferences")}}><p>Edit Food Preferences</p></div>
                 <div className="profilePicture" onClick={() => {setSelectedEdit("Change Profile Picture")}}><p>Change Profile Picture</p></div>
 
@@ -49,7 +49,7 @@ const Member = ({ member, updateMember }) => {
                     <h1>{selectedEdit || 'General'}</h1>
                     <div className="choosenEdit">
 
-                        {renderForm(member,selectedEdit, handleFormSubmit)}
+                        {renderForm(member, selectedEdit, handleFormSubmit)}
                         
                     </div>
                 </div>
