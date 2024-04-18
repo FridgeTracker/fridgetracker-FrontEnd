@@ -10,7 +10,6 @@ function SecuritySettings() {
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [error, setError] = useState('');
-    const [message, setMessage] = useState('');
 
     const handlePasswordChange = async (event) => {
         event.preventDefault();
@@ -25,7 +24,6 @@ function SecuritySettings() {
                 newPassword
             });
             console.log(response);
-            setMessage(response.data);
         } catch (error) {
             setError('Failed to change the password.');
             console.error(error);            

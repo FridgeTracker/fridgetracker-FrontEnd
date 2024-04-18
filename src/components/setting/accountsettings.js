@@ -1,16 +1,10 @@
 
 import React from 'react';
 import userIcon from "../assets/memberIcons/memberIcon.png";
-import { useState } from 'react';
 import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
 function AccountSettings({userData}) {
-    
-    const [familyName, setFamilyName] = useState(userData.familyName);
-    const [email, setEmail] = useState(userData.email);
-    const [location, setLocation] = useState("");
-    const [password, setPassword] = useState("");
    
 
     const handleUpdateInformation = async(event) => {
