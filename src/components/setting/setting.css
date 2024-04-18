@@ -33,11 +33,12 @@ hr {
     border: 1px solid #ccc;
     background: #fff; 
     padding: 2vh;    
+    height: 80vh;
 }
 
 #family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password{
     width: 95%; 
-    height: auto;
+    height: 3.5vh;
     box-sizing: border-box; 
     margin-bottom: 1vh;    
     display: block;    
@@ -48,11 +49,10 @@ hr {
 }
 
 .input[type="checkbox"] {
-    width: 2vh; 
-    height: 2vh;
+    width: 1vh; 
+    height: 1vh;
     margin-right: 1vh;
     cursor: pointer;
-   
 }
 #empty-box, #expiry-box, #newMeal-box, #Full-box {
     width: 3vh; 
@@ -77,6 +77,7 @@ label {
     border: 1px solid;
     margin-left: 5%;
 }
+
 button {
     background-color: #90EE90;
     color: Black;
@@ -95,11 +96,10 @@ button {
     font-size: 1.5vh;
     border-radius: 0.5vh;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    margin-top: 1vh;
-    margin-bottom: 1vh;
+  
 }
 #save-button {
-    min-width: 50vh;
+    min-width: 40vh;
     margin-left: 5%;
 }
 #update-button {
