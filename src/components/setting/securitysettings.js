@@ -12,24 +12,25 @@ function SecuritySettings() {
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        if (formData.get("CNP")==formData.get("NP")){
-            const newPasswordInfo = {
-                id: getAuthToken(),
-                password: formData.get("CP"),
-                newPw: formData.get("CNP") 
-            };
-            console.log(newPasswordInfo);
+        if (formData.get("CNP")!= null && formData.get("CP")!= null &&formData.get("NP")!= null )
+            if (formData.get("CNP")===formData.get("NP")){
+                const newPasswordInfo = {
+                    id: getAuthToken(),
+                    password: formData.get("CP"),
+                    newPw: formData.get("CNP") 
+                };
+                console.log(newPasswordInfo);
 
-            try {
-                await axios.post('https://localhost:9090/api/changePw', newPasswordInfo);
-            } catch (error) {
-                console.error('Failed to update Password:', error);
-                setError('Failed to update Password');
-            }
-    }else{
-        setError('Password do not match.');
-    }
-    };
+                try {
+                    await axios.post('https://localhost:9090/api/changePw', newPasswordInfo);
+                } catch (error) {
+                    console.error('Failed to update Password:', error);
+                    setError('Failed to update Password');
+                }
+        }else{
+            setError('Password do not match.');
+        }
+        };
 
     return (
         <div className="security-settings">

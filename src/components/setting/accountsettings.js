@@ -53,8 +53,6 @@ function AccountSettings({userData}) {
         }
 
     }
-
-
     return (
         <div className="account-settings">
             <h3>Account Settings</h3>
