@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REACT_APP_FIREBASE_API_KEY: ${{ secrets.REACT_APP_FIREBASE_API_KEY }}
+      REACT_APP_FIREBASE_API_KEY: '${{ secrets.REACT_APP_FIREBASE_API_KEY }}'
+      REACT_APP_CLOUDINARY_UPLOAD_PRESET: '${{ secrets.REACT_APP_CLOUDINARY_UPLOAD_PRESET }}'
+      REACT_APP_CLOUDINARY_CLOUD_NAME: '${{ secrets.REACT_APP_CLOUDINARY_CLOUD_NAME }}'
       
     steps:
       - uses: actions/checkout@v4
