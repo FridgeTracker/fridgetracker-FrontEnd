@@ -15,7 +15,8 @@ function CreateUser(){
         familyName: '',
         email: '',
         password: '',
-        rank: 0
+        rank: 0,
+        imageData:''
     })
 
     const handleChange = (e) => {
