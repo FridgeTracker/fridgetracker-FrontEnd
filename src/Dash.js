@@ -75,7 +75,6 @@ function Dash() {
     setSettings(item === "Settings");
     setDashboard(item === "Dashboard");
     setMealList(item === "MealList");
-    console.log(userData);
   };
 
   const [isOpen, setNavBar] = useState(false);

@@ -4,9 +4,13 @@ import userIcon from "../assets/memberIcons/memberIcon.png";
 import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
+import UploadWidget from './UploadWidget.js';
+
+
 function AccountSettings({userData}) {
-    const [message, setMessage] = useState("");
-    console.log(userData);
+
+    const [imgURL, setURL] = useState(userData.imageData);
+
 
     const handleUpdateInformation = async(event) => {
         event.preventDefault();
@@ -32,49 +36,25 @@ function AccountSettings({userData}) {
         }
     };
 
-    const handleProfileImageChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
+    const updateProfile = async (imageURL) => {
 
-        const maxMB = 0.5;
+        setURL(imageURL);
 
-        if(file && file.size > maxMB * 1024 * 1024){
-            console.log(file.size);
-            document.getElementById("profile-image-input").value = "";
-            setMessage("Image to large");
-
-        } else{
-            setMessage("");
-            reader.onloadend = () => {
-                saveImage(reader.result);
-            };
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
-    };
-
-    const saveImage = async (profileData) => {
-
-        const base64Parts = profileData.split(",");
-        const base64Data = base64Parts[1];
-
-        const imageUpload = {
+        const uploadImage = {
             id:getAuthToken(),
-            imageData: base64Data
+            imageData: imageURL
         };
 
-        try{
-
-            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', imageUpload);
-            
-        } 
-        catch (error) {
-            console.log(error);
+        try {
+            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', uploadImage);
         }
+        catch (error) {
+        console.error('Failed to update information:', error);
+        }
+
     }
-    
+
+
     return (
         <div className="account-settings">
             <h3>Account Settings</h3>
@@ -82,15 +62,13 @@ function AccountSettings({userData}) {
             <hr></hr>
 
         <div className="profilepic">
-            <h3>Profile Picture</h3>
-            {userData.imageData ? (<img src={`data:image/png;base64,${userData.imageData}`} alt="User Icon" id="profile-image" />) :
-            (<img src={userIcon} alt="User Icon" id="profile-image" />)
-            }
-            <input type="file" accept="image/*" onChange={handleProfileImageChange} style={{ display: 'none' }} id="profile-image-input"/>
+            <h3>Profile Picture</h3> 
+            {imgURL ? <img id="profile-image" src={imgURL} alt="profile"/> :
+            <img id="profile-image" src={userIcon} alt="profile"/>}  
             <label htmlFor="profile-image-input"> Click &nbsp;
-            <span style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}> here </span>
+            <span style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}> <UploadWidget updateProfile={updateProfile}/> </span>
             &nbsp; to change Profile Picture</label>
-            {message && message}
+          
             <hr></hr>
         </div>
       
