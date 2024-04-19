@@ -22,7 +22,7 @@ function SecuritySettings() {
                 console.log(newPasswordInfo);
 
                 try {
-                    await axios.post('https://localhost:9090/api/changePw', newPasswordInfo);
+                    await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/changePw', newPasswordInfo);
                 } catch (error) {
                     console.error('Failed to update Password:', error);
                     setError('Failed to update Password');
