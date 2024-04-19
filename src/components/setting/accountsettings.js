@@ -5,12 +5,12 @@ import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
 function AccountSettings({userData}) {
-    const [profileImage, setProfileImage] = useState(userIcon);
-   
+    const [message, setMessage] = useState("");
+    console.log(userData);
 
     const handleUpdateInformation = async(event) => {
         event.preventDefault();
-
+        
         const formData = new FormData(event.target);
         
         const newUserInfo = {
@@ -19,14 +19,11 @@ function AccountSettings({userData}) {
             email       :formData.get("email"),
             password    :formData.get("password")
         };
-        console.log(newUserInfo);
      
 
         try {
             
             await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', newUserInfo);
-           
-            
             
         }
         catch (error) {
@@ -39,14 +36,44 @@ function AccountSettings({userData}) {
         const file = event.target.files[0];
         const reader = new FileReader();
 
-        reader.onloadend = () => {
-            setProfileImage(reader.result);
-        };
+        const maxMB = 0.5;
 
-        if (file) {
-            reader.readAsDataURL(file);
+        if(file && file.size > maxMB * 1024 * 1024){
+            console.log(file.size);
+            document.getElementById("profile-image-input").value = "";
+            setMessage("Image to large");
+
+        } else{
+            setMessage("");
+            reader.onloadend = () => {
+                saveImage(reader.result);
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         }
     };
+
+    const saveImage = async (profileData) => {
+
+        const base64Parts = profileData.split(",");
+        const base64Data = base64Parts[1];
+
+        const imageUpload = {
+            id:getAuthToken(),
+            imageData: base64Data
+        };
+
+        try{
+
+            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', imageUpload);
+            
+        } 
+        catch (error) {
+            console.log(error);
+        }
+    }
     
     return (
         <div className="account-settings">
@@ -56,11 +83,14 @@ function AccountSettings({userData}) {
 
         <div className="profilepic">
             <h3>Profile Picture</h3>
-            <img src={profileImage} alt="User Icon" id="profile-image" />
+            {userData.imageData ? (<img src={`data:image/png;base64,${userData.imageData}`} alt="User Icon" id="profile-image" />) :
+            (<img src={userIcon} alt="User Icon" id="profile-image" />)
+            }
             <input type="file" accept="image/*" onChange={handleProfileImageChange} style={{ display: 'none' }} id="profile-image-input"/>
             <label htmlFor="profile-image-input"> Click &nbsp;
             <span style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}> here </span>
             &nbsp; to change Profile Picture</label>
+            {message && message}
             <hr></hr>
         </div>
       
