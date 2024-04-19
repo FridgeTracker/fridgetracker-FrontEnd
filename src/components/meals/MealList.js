@@ -73,9 +73,9 @@ const MealList = () => {
   }
 
   return (
-    <Container sx={{ marginTop: 4 }}>
+    <Container sx={{ marginTop: 5 }}>
       {/* Horizontal list of member filters */}
-      <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
         <ButtonGroup
           variant="text"
           aria-label="text button group"
