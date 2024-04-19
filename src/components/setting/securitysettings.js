@@ -12,7 +12,7 @@ function SecuritySettings() {
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        if (formData.get("CNP")!= null && formData.get("CP")!= null &&formData.get("NP")!= null )
+        if (formData.get("CNP")!= null && formData.get("CP")!= null &&formData.get("NP")!= null ){
             if (formData.get("CNP")===formData.get("NP")){
                 const newPasswordInfo = {
                     id: getAuthToken(),
@@ -30,6 +30,9 @@ function SecuritySettings() {
         }else{
             setError('Password do not match.');
         }
+        }else{
+            setError('Please fill the password.')
+        }  
         };
 
     return (
