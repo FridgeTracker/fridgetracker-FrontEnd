@@ -75,6 +75,7 @@ function Dash() {
     setSettings(item === "Settings");
     setDashboard(item === "Dashboard");
     setMealList(item === "MealList");
+    console.log(userData);
   };
 
   const [isOpen, setNavBar] = useState(false);
@@ -167,7 +168,7 @@ function Dash() {
             {showMembers && <Members />}
             {showFridges && <Storage />}
             {showDashboard && <Dashboard />}
-            {showMealList && <MealList />}
+            {showMealList && <MealList userData={userData}/>}
           </>
         ) : (
           <div className="headerWrapper">

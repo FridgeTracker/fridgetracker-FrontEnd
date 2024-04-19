@@ -11,18 +11,18 @@ import {
   Button,
   ButtonGroup,
 } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import MealDetails from "./MealDetails"; // Adjust the import path as necessary
 
 import mealService from "../../services/mealService"; // Adjust the import path as necessary
 
-const MealList = () => {
+const MealList = ({userData}) => {
+
   const [meals, setMeals] = useState([]);
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedMemberId, setSelectedMemberId] = useState(1); // Start with the first member
   const [mealsPerPage] = useState(8); // Adjust the number of items per page as needed
-  const [members, setMembers] = useState(mealService.members);
+  const [members] = useState(userData.members);
 
   // Find the selected member's details using the selectedMemberId
   const selectedMember = members.find(
@@ -66,7 +66,7 @@ const MealList = () => {
         <MealDetails
           meal={selectedMeal}
           onGoBack={handleGoBack}
-          memberName={selectedMember.memberName}
+          memberName={selectedMember.name}
         />
       </Container>
     );
@@ -104,7 +104,7 @@ const MealList = () => {
               onClick={() => setSelectedMemberId(member.id)}
               variant={selectedMemberId === member.id ? "contained" : "text"}
             >
-              {member.memberName}
+              {member.name}
             </Button>
           ))}
         </ButtonGroup>
