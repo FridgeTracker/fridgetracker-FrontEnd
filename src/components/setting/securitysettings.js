@@ -12,7 +12,7 @@ function SecuritySettings() {
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        if (formData.get("CNP")==formData.get("NP")){
+        if (formData.get("CNP")===formData.get("NP")){
             const newPasswordInfo = {
                 id: getAuthToken(),
                 password: formData.get("CP"),
@@ -21,7 +21,8 @@ function SecuritySettings() {
             console.log(newPasswordInfo);
 
             try {
-                await axios.post('https://localhost:9090/api/changePw', newPasswordInfo);
+                await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/changePw', newPasswordInfo);
+                setError('Password Sucessfully changed')
             } catch (error) {
                 console.error('Failed to update Password:', error);
                 setError('Failed to update Password');
