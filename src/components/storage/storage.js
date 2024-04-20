@@ -115,6 +115,7 @@ const handleUpdateFridge = async () => {
       }
       
     setItem(null);
+    setAdd(null);
 
   } catch (error) {
       console.error('Failed to fetch user data:', error);
