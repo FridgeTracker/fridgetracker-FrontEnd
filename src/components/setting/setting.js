@@ -5,7 +5,7 @@ import SecuritySettings from './securitysettings';
 import axios from 'axios';
 import "./setting.css";
 
-function Settings({userData}) {
+function Settings({userData,updateUser}) {
 
     const [timezones,setTimeZones] = useState([]);
 
@@ -34,7 +34,7 @@ function Settings({userData}) {
                 <h1>Settings</h1>
             </div>
             <div className="settings-container">
-                <AccountSettings userData={userData} timeZoneOptions={timezones}/>
+                <AccountSettings userData={userData} timeZoneOptions={timezones} updateUser={updateUser}/>
                 <SecuritySettings />                
             </div>
         </div>

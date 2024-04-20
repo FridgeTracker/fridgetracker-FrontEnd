@@ -6,9 +6,10 @@ import { getAuthToken } from '../authService.js';
 
 import UploadWidget from './UploadWidget.js';
 
-function AccountSettings({userData,timeZoneOptions}) {
+function AccountSettings({userData,timeZoneOptions,updateUser}) {
 
     const [imgURL, setURL] = useState(userData.imageData);
+
     const [selectedTimeZone,setSelectedTimeZone] = useState(userData.timezone);
     const [message, setMessage] = useState("");
 
@@ -31,6 +32,7 @@ function AccountSettings({userData,timeZoneOptions}) {
             const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', newUserInfo);
 
             setMessage(response.data);
+            updateUser();
             
         }
         catch (error) {
@@ -52,6 +54,7 @@ function AccountSettings({userData,timeZoneOptions}) {
 
         try {
             await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', uploadImage);
+            updateUser();
         }
         catch (error) {
         console.error('Failed to update information:', error);
