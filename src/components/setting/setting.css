@@ -36,7 +36,7 @@ hr {
     height: 80vh;
 }
 
-#family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password{
+#family-name, #email, #Password, #timeZone, #Current-Password, #New-Password, #Confirm-Password{
     width: 95%; 
     height: 3.5vh;
     box-sizing: border-box; 

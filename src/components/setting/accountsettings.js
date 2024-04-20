@@ -5,11 +5,14 @@ import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
 import UploadWidget from './UploadWidget.js';
+import 
 
 
-function AccountSettings({userData}) {
+function AccountSettings({userData,timeZoneOptions}) {
 
     const [imgURL, setURL] = useState(userData.imageData);
+    const [selectedTimeZone,setSelectedTimeZone] = useState('');
+
 
 
     const handleUpdateInformation = async(event) => {
@@ -52,6 +55,16 @@ function AccountSettings({userData}) {
         console.error('Failed to update information:', error);
         }
 
+    };
+    
+    const handleTimeZoneChange = async(event) => {
+        setSelectedTimeZone(event.target.value);
+
+        try {
+            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/timezone', setSelectedTimeZone);
+        }catch (error) {
+            console.error('Failed to update timezone', error);
+            }
     }
     return (
         <div className="account-settings">
@@ -79,7 +92,12 @@ function AccountSettings({userData}) {
         <form onSubmit={handleUpdateInformation}>
         <div>Family Name:<input type="text" name="familyName" id="family-name" placeholder={userData.familyName}/></div>
         <div>Email Address:<input type="email" name="email" id="email" placeholder={userData.email} /></div>
-        <div>Location:<input type="text" name="location" id="location"  /></div>
+        <div>Time Zone:
+            <select  name="timeZone" id="timeZone" value={selectedTimeZone} onChange= {handleTimeZoneChange} />
+            <option value="">Select Time Zone</option>
+                        {timeZoneOptions && timeZoneOptions.map((timeZone) =>(
+                            <option value={timeZone}>{timeZone}</option>
+                        ))}</div>
         <div>Password:<input type="password" name="password" id="Password"/></div>
         <br></br>
             <button id="update-button" >Update Information</button>
