@@ -33,6 +33,8 @@ const SidebarButton = ({ icon, text, onClick }) => (
 );
 
 function Dash() {
+
+
   const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
 
@@ -41,6 +43,7 @@ function Dash() {
   };
 
   const [userData, setUserData] = useState(null);
+
   useEffect(() => {
     setDashboard(true);
     const fetchUserData = async () => {
@@ -61,6 +64,20 @@ function Dash() {
     navigate("/");
   }
 
+  const updateUser = async () => {
+
+    try {
+      const UUID = getAuthToken();
+      const response = await axios.get(
+        `https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`
+      );
+      setUserData(response.data);
+    } catch (error) {
+      console.error("Failed to fetch user data:", error);
+    }
+  }
+
+
   const [showSelectedNav, setNav] = useState(false);
   const [showMembers, setMembers] = useState(false);
   const [showFridges, setFridges] = useState(false);
@@ -75,6 +92,7 @@ function Dash() {
     setSettings(item === "Settings");
     setDashboard(item === "Dashboard");
     setMealList(item === "MealList");
+    console.log(userData);
   };
 
   const [isOpen, setNavBar] = useState(false);
@@ -151,7 +169,10 @@ function Dash() {
           <input type="text" />
           <img className="searchIcon" src={searchIcon} alt="search icon" />
           <p>
-            <img className="userIcon" src={user} alt="" />{" "}
+
+            {userData && userData.imageData ? <img className="userIcon" src={userData.imageData} alt="" />
+            :<img className="userIcon" src={user} alt="" />}
+
             {userData && userData.familyName}
           </p>
           <img
@@ -163,7 +184,7 @@ function Dash() {
         </div>
         {showSelectedNav ? (
           <>
-            {showSettings && <Setting userData={userData} />}
+            {showSettings && <Setting userData={userData} updateUser={updateUser} />}
             {showMembers && <Members />}
             {showFridges && <Storage />}
             {showDashboard && <Dashboard />}

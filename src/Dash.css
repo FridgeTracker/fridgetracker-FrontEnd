@@ -201,6 +201,8 @@ z-index: 2;
 
 .userIcon{
     height: 80%;
+    width: 20%;
+    padding: .5vh;
 }
 
 .headerWrapper{
