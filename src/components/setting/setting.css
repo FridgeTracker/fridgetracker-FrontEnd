@@ -36,7 +36,7 @@ hr {
     height: 80vh;
 }
 
-#family-name, #email, #Password, #location, #Current-Password, #New-Password, #Confirm-Password{
+#family-name, #email, #Password, #Current-Password, #New-Password, #Confirm-Password{
     width: 95%; 
     height: 3.5vh;
     box-sizing: border-box; 
@@ -45,7 +45,17 @@ hr {
     border: 1px solid #ccc;
     border-radius: 0.5vh;
     margin: 1vh;
+    font-size: 1.3vh;
     padding: 1vh;
+}
+
+#timeZone{
+    font-size: 1.3vh;
+    width: 95%; 
+    height: 3.5vh;
+    margin-left: 1vh;
+    border: 1px solid #ccc;
+    border-radius: 0.5vh;
 }
 
 .input[type="checkbox"] {
@@ -106,6 +116,7 @@ button {
     min-width: 36vh;
     margin-top: 1vh;
     margin-left: 5%;
+    margin-bottom: 2%;
 }
 
 @media (min-width: 768px) {
@@ -154,4 +165,11 @@ button {
         grid-template-columns: repeat(2, 1fr);
     }
 
+}
+
+
+#updateMessage{
+    width: auto;
+    margin-top: 10px;
+    color: green;
 }

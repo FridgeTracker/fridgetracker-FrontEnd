@@ -6,11 +6,11 @@ import { getAuthToken } from '../authService.js';
 
 import UploadWidget from './UploadWidget.js';
 
-
-function AccountSettings({userData}) {
+function AccountSettings({userData,timeZoneOptions}) {
 
     const [imgURL, setURL] = useState(userData.imageData);
-
+    const [selectedTimeZone,setSelectedTimeZone] = useState(userData.timezone);
+    const [message, setMessage] = useState("");
 
     const handleUpdateInformation = async(event) => {
         event.preventDefault();
@@ -21,17 +21,22 @@ function AccountSettings({userData}) {
             id:getAuthToken(),
             familyName  :formData.get("familyName"),
             email       :formData.get("email"),
-            password    :formData.get("password")
+            password    :formData.get("password"),
+            timezone    :selectedTimeZone
         };
      
 
         try {
             
-            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', newUserInfo);
+            const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', newUserInfo);
+
+            setMessage(response.data);
             
         }
         catch (error) {
-        console.error('Failed to update information:', error);
+
+            console.error('Failed to update information:', error);
+            setMessage("User failed to update");
             
         }
     };
@@ -52,8 +57,11 @@ function AccountSettings({userData}) {
         console.error('Failed to update information:', error);
         }
 
+    };
+    
+    const handleTimeZoneChange = async(event) => {
+        setSelectedTimeZone(event.target.value);
     }
-
 
     return (
         <div className="account-settings">
@@ -81,11 +89,20 @@ function AccountSettings({userData}) {
         <form onSubmit={handleUpdateInformation}>
         <div>Family Name:<input type="text" name="familyName" id="family-name" placeholder={userData.familyName}/></div>
         <div>Email Address:<input type="email" name="email" id="email" placeholder={userData.email} /></div>
-        <div>Location:<input type="text" name="location" id="location"  /></div>
+        <div>Time Zone:
+            <select  name="timeZone" id="timeZone" value={selectedTimeZone} selected={selectedTimeZone} onChange= {handleTimeZoneChange}>
+                {timeZoneOptions && timeZoneOptions.map((timeZone) =>(
+                    <option value={timeZone}>{timeZone}</option>
+                ))}
+            </select>
+                </div>
         <div>Password:<input type="password" name="password" id="Password"/></div>
         <br></br>
             <button id="update-button" >Update Information</button>
         </form>
+        <span id="updateMessage">
+            {message && message}
+        </span>
         </div>
         
     );

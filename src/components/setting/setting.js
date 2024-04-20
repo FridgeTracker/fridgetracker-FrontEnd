@@ -1,10 +1,31 @@
 
+import { useEffect, useState } from 'react';
 import AccountSettings from './accountsettings';
 import SecuritySettings from './securitysettings';
-// import axios from 'axios';
+import axios from 'axios';
 import "./setting.css";
 
 function Settings({userData}) {
+
+    const [timezones,setTimeZones] = useState([]);
+
+
+    useEffect(() => {
+        async function fetchData() {
+        try {
+            const timeZoneResponse = await axios.get('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/timezone');
+            setTimeZones(timeZoneResponse.data);
+        }catch (error) {
+            console.error('Failed to update timezone', error);
+            }
+        }
+        fetchData();
+        
+    },
+    []);
+
+
+    
 
 
     return (
@@ -13,7 +34,7 @@ function Settings({userData}) {
                 <h1>Settings</h1>
             </div>
             <div className="settings-container">
-                <AccountSettings userData={userData}/>
+                <AccountSettings userData={userData} timeZoneOptions={timezones}/>
                 <SecuritySettings />                
             </div>
         </div>
