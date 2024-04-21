@@ -25,7 +25,12 @@
     height: 70%;
     width: 100%;
 }
-
+.shoppingList {
+    width: 100%;
+    height: 93%;
+    overflow: hidden;
+    position:relative;
+}
 
 
 
