@@ -3,59 +3,71 @@ import {useState} from 'react';
 import sausage from '../assets/sausage.png';
 import React, { CSSProperties } from 'react';
 
+
 function ShoppingList(){
+    const [selectedListName, setSelectedListName] = useState("SHOPPING LIST - 1");
+    const [lists, setLists] = useState(["SHOPPING LIST - 1"]);
+    const [listItems, setListItems] = useState({
+        "SHOPPING LIST - 1": [
+            {name: "Apple", quantity: 3, type: "Fruit"}
+        ]
+    });
 
-    
-
-    const [selectedListName, setSelectedListName] = useState("SHOPPING LIST _1");
+    const createNewList = () => {
+        const newListName = `SHOPPING LIST - ${lists.length + 1}`;
+        setLists([...lists, newListName]);
+        setSelectedListName(newListName);
+        setListItems({...listItems, [newListName]: []});
+    }
 
     return (
-        
         <div className='shoppingList'>
             <div><img className="sausageImage" src={sausage} alt="Logo" /></div>
 
-
             <div className='shoppingListHolder'>
-                <div className="shoppingListNameHolder">
-                    <div className="listNameTitle">Shopping List</div>
-                    <div className="listName">{selectedListName}</div>
-                    <div className="createNewS_list">Create New List</div>
+            <div className="shoppingListNameHolder">
+            <div className="listNameTitle">Shopping List</div>
+                {lists.map((listName, index) => (
+                    <div key={listName} className={`listName ${selectedListName === listName? "active" : ""}`} onClick={() => setSelectedListName(listName)}>{listName}</div>
+                ))}
+            <div className="createNewS_list" onClick={createNewList}>Create New List</div>
+            </div>
 
-
-                </div>
-                <div className="individual_shoppingList">
-                    <div className='individualS_listTitle'>{selectedListName}</div>
+            <div className="individual_shoppingList">
+                <div className='individualS_listTitle'>{selectedListName}</div>
                     <div className='s_listItem'>
-                    <div className='ItemTitle'>
-                        <table id="titleTable">
-                            <tr >
-                                <td id="foodName">Food Name</td>
-                                <td id="quantity">Quantity</td>
-                                <td id="type">Type</td>
-                            </tr>
-                        </table>  
-                    </div>
-                    <div className='eachItem'> 
-                    <table id="eachItemTable">
-                            <tr >
-                                <td id="foodName">Apple</td>
-                                <td id="quantity">3</td>
-                                <td id="type">Fruit</td>
-                            </tr>
-                        </table> 
-                    </div>
+                        <div className='ItemTitle'>
+                            <table id="titleTable">
+                                <tr>
+                                    <td id="foodName">Food Name</td>
+                                    <td id="quantity">Quantity</td>
+                                    <td id="type">Type</td>
+                                </tr>
+                            </table>  
+            </div>
+            <div className='eachItem'> 
+              <table id="eachItemTable">
+                {listItems[selectedListName].map((item, index) => (
+                  <tr key={index}>
+                    <td id="foodName">{item.name}</td>
+                    <td id="quantity">{item.quantity}</td>
+                    <td id="type">{item.type}</td>
+                  </tr>
+                ))}
+              </table> 
+            </div>
 
-                    </div>
-                    <div className='s_listOptions'>
-                        <div id="edit">Edit List</div>
-                        <div id="delete">Delete List</div>
-                        <div id="import">Import/Export</div>
-                    </div>
+            </div>
+            <div className='s_listOptions'>
+              <div id="edit">Edit List</div>
+              <div id="delete">Delete List</div>
+              <div id="import">Import/Export</div>
+            </div>
 
-                </div>
         </div>
-        </div>
-        
+      </div>
+    </div>
+  )
+}
 
-    )
-}export default ShoppingList;
+export default ShoppingList;
