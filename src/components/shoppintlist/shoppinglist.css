@@ -1,8 +1,23 @@
+.sausageImage{
+    height: 10%;
+    width: 96%;
+    margin: 2vh 2vh 2vh 2vh;
+}
+.shoppingListHolder{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    position:relative;
+    
+}
+
 
 .shoppingListNameHolder {
-    height: 95%;
+    height: 80%;
     width: 28%;
-    margin: 3vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
     background-color: white;
     overflow: hidden;
     align-content: space-between;
@@ -46,12 +61,50 @@
 }
 /* individual_shoppingList*/
 .individual_shoppingList {
-    height: 95%;
-    width: 65%;
-    margin-top: 3vh;
- 
-    background-color: yellow;
+    height: 80%;
+    width: 66.5%;
+    background-color: white;
 
 }
 
+.individualS_listTitle{
+    height: 9%;
+    width: 100%;
+    background-color: #1B8B60;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size: large;
+}
+.s_listItem{
+    height: 83%;
+    width: 100;
+    background-color: yellow;
 
+}
+.s_listOptions{
+    height: 8%;
+    width: 100;
+    display: flex;
+
+}
+.s_listOptions div{
+    height: 80%;
+    width: 25%;
+    margin:auto;
+    background-color: aqua;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+#edit {
+    background-color: #1B8B60;
+}
+#delete{
+    background-color:#FF5757 ;
+}
+#import{
+    background-color: #8B5D03;
+
+}
