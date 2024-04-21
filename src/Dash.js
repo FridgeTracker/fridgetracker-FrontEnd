@@ -23,6 +23,8 @@ import Dashboard from "./components/dashboard/dashboard";
 import MealList from "./components/meals/MealList";
 import ShoppingList from "./components/shoppinglist/shoppinglist";
 
+
+
 import { getAuthToken, logoutUser } from "./components/authService";
 import { getUser } from "./components/Requests/getRequest";
 
