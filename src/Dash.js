@@ -22,6 +22,7 @@ import Members from "./components/members/members";
 import Setting from "./components/setting/setting";
 import Dashboard from "./components/dashboard/dashboard";
 import MealList from "./components/meals/MealList";
+import ShoppingList from "./components/shoppintList/shoppingList";
 
 import { getAuthToken, logoutUser } from "./components/authService";
 
@@ -84,6 +85,7 @@ function Dash() {
   const [showSettings, setSettings] = useState(false);
   const [showDashboard, setDashboard] = useState(false);
   const [showMealList, setMealList] = useState(false);
+  const [showShoppingList,setShoppingList] = useState(false);
 
   const handleItemClick = (item) => {
     setNav(true);
@@ -92,6 +94,7 @@ function Dash() {
     setSettings(item === "Settings");
     setDashboard(item === "Dashboard");
     setMealList(item === "MealList");
+    setShoppingList(item === "Shopping List");
     console.log(userData);
   };
 
@@ -189,6 +192,7 @@ function Dash() {
             {showFridges && <Storage />}
             {showDashboard && <Dashboard />}
             {showMealList && <MealList userData={userData}/>}
+            {showShoppingList && <ShoppingList/>}
           </>
         ) : (
           <div className="headerWrapper">
