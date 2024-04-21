@@ -1,0 +1,57 @@
+
+.shoppingListNameHolder {
+    height: 95%;
+    width: 28%;
+    margin: 3vh;
+    background-color: white;
+    overflow: hidden;
+    align-content: space-between;
+    position: relative;
+    
+}
+.listNameTitle{
+    height: 6%;
+    width: 100%;
+    background-color: #1B8B60;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.listName{
+    height: 6%;
+    width: 85%;
+    margin: 2vh auto;
+    background-color: #D0FFBF;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.createNewS_list{
+    height: 6%;
+    width: 85%;
+    margin:3vh;
+    background-color: #1B8B60;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+
+}
+/* individual_shoppingList*/
+.individual_shoppingList {
+    height: 95%;
+    width: 65%;
+    margin-top: 3vh;
+ 
+    background-color: yellow;
+
+}
+
+
