@@ -1,4 +1,4 @@
-import './shoppingList.css';
+import './shoppinglist.css';
 import {useState} from 'react';
 import sausage from '../assets/sausage.png';
 import React, { CSSProperties } from 'react';
