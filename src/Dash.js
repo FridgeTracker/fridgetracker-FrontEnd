@@ -22,7 +22,7 @@ import Members from "./components/members/members";
 import Setting from "./components/setting/setting";
 import Dashboard from "./components/dashboard/dashboard";
 import MealList from "./components/meals/MealList";
-import ShoppingList from "./components/shoppintList/shoppingList";
+import ShoppingList from "./components/shoppinglist/shoppinglist";
 
 import { getAuthToken, logoutUser } from "./components/authService";
 

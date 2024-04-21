@@ -1,13 +1,15 @@
-import './shoppingList.css';
+import './shoppinglist.css';
 import {useState} from 'react';
 import sausage from '../assets/sausage.png';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
 function ShoppingList(){
 
     
 
     const [selectedListName, setSelectedListName] = useState("SHOPPING LIST _1");
+    setSelectedListName("hahaha")
+
 
     return (
         
