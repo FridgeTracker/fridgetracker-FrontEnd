@@ -108,3 +108,26 @@
     background-color: #8B5D03;
 
 }
+#titleTable{
+    background-color: #7adeb1;
+    height: 10%;
+    width:95%;
+    margin: 2vh auto;
+}
+#eachItemTable{
+    background-color: #7adeb1;
+    height: 10%;
+    width:95%;
+    margin: 1vh auto;
+}
+#titleTable td, #eachItemTable td {
+    width: 33%;
+}
+
+#quantity{
+    text-align: center;
+}
+
+#type{
+    text-align: end;
+}
