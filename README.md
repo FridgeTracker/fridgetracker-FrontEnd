@@ -1,5 +1,7 @@
 ## Testing
 
+Accounts are diferentiated between rank 1 and 0
+
 Admin Test account
 - Email: admin@ft.com
 - Password: admin
