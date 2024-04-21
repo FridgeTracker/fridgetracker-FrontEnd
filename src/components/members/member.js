@@ -1,10 +1,10 @@
 import "./member.css";
 
 import React, { useState } from "react";
-import axios from 'axios';
 
 import renderForm from "./renderForm";
 import { getAuthToken } from "../authService";
+import { updateItemRequest } from "../Requests/postRequests";
 
 const Member = ({ member, updateMember }) => {
 
@@ -17,8 +17,7 @@ const Member = ({ member, updateMember }) => {
             userID: getAuthToken()
         });
             
-        await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateMember`,newData);
-
+        await updateItemRequest(newData);
         updateMember();
        
     };

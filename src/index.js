@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 //import App from './App';
 import Dash from './Dash';
+import Admin from './Admin';
 import CreateUser from './components/createUser';
 import LoginUser from './components/loginUser';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -16,6 +17,7 @@ root.render(
 
         <Route index element={<LoginUser />} />
         <Route path ="dash" element = {<Dash/>} />
+        <Route path ="admin" element = {<Admin/>} />
         <Route path ="register" element={<CreateUser />} />
 
       </Routes>

@@ -1,17 +1,21 @@
 import './shoppinglist.css';
 import {useState} from 'react';
 import sausage from '../assets/sausage.png';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
 
 function ShoppingList(){
-    const [selectedListName, setSelectedListName] = useState("SHOPPING LIST - 1");
+    /*const [selectedListName, setSelectedListName] = useState("SHOPPING LIST - 1");
     const [lists, setLists] = useState(["SHOPPING LIST - 1"]);
     const [listItems, setListItems] = useState({
         "SHOPPING LIST - 1": [
             {name: "Apple", quantity: 3, type: "Fruit"}
         ]
-    });
+    });*/
+
+    
+
+    const [selectedListName] = useState("SHOPPING LIST _1");
 
     const createNewList = () => {
         const newListName = `SHOPPING LIST - ${lists.length + 1}`;
@@ -19,7 +23,6 @@ function ShoppingList(){
         setSelectedListName(newListName);
         setListItems({...listItems, [newListName]: []});
     }
-
     return (
         <div className='shoppingList'>
             <div><img className="sausageImage" src={sausage} alt="Logo" /></div>

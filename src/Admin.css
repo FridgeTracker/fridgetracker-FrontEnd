@@ -1,0 +1,94 @@
+html, body, #root, .wrapper {
+    height:100%;
+    font-family: 'Figtree', sans-serif;
+  }
+
+p {
+    margin: 0px;
+    padding:0px;
+    font-family: 'Figtree', sans-serif;
+}
+
+.admin{
+    height: 100%;
+    width: 100%;
+    background-color: rgb(9, 68, 41);
+    display: flex;
+    justify-content: center;
+}
+
+.userContainer{
+    height: 100%;
+    width: 55%;
+    background-color: white;
+}
+
+.adminTopWrapper{
+
+    width: 100%;
+    height: 10%;
+    background-image: url(./components/assets/testbck.png);
+    position: relative;
+    z-index: 1;
+
+}
+
+.logoutButton{
+    position: absolute;
+    height: 50%;
+    width: 3%;
+    right:0;
+    bottom: 0;
+    margin-right: 1%;
+}
+
+.logoutButton img{
+    width: 100%;
+}
+
+.userContent{
+
+    background-color: rgb(233, 233, 233);
+    height: 90%;
+    width: 100%;
+}
+
+.userOption{
+    background-color: white;
+    height: 5%;
+    width: 100%;
+    border: .5px solid black;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.expandedUser{
+    background-color: rgb(245, 255, 240);
+    margin-bottom: 1%;
+    border: 1px solid black;
+}
+
+.expandedUser p{
+    margin-bottom: 1%;
+    height: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.editable-variables{
+    background-color: rgb(245, 255, 240);
+}
+.editable-variables p{
+    height: 2.5vh;
+}
+
+.userArrays{
+    cursor: pointer;
+    background-color: rgb(245, 255, 240);
+}
+
+#arrayName{
+    font-weight: bold;
+}

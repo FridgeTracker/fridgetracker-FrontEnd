@@ -3,15 +3,15 @@ import { useState, useEffect } from 'react';
 import "./fridge/fridge.css";
 import "../item/item.css";
 
-import axios from 'axios';
-
 import Fridge from './fridge/fridge.js';
 import Item from '../item/item.js';
-import { getAuthToken } from '../authService.js';
 
 import addImage from '../assets/addIcon.png';
 import accessItem from '../assets/accessItem.png';
 import Freezer from './freezer/freezer.js';
+import { getUser } from '../Requests/getRequest.js';
+import { getAuthToken } from '../authService.js';
+import { addFreezerRequest, addFridgeRequest } from '../Requests/postRequests.js';
 
 
 function Storage() {
@@ -26,11 +26,8 @@ function Storage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-
-        const UUID = getAuthToken();
-        const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
-        setUserData(response.data);
-
+        const user_Data = await getUser();
+        setUserData(user_Data);
       } catch (error) {
         console.error('Failed to fetch user data:', error);
       }
@@ -82,18 +79,18 @@ function Storage() {
 const handleUpdateFridge = async () => {
 
   try {
-      const UUID = getAuthToken();
-      const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
-      setUserData(response.data);
+
+      const user_data = await getUser();
+      setUserData(user_data);
 
       if (selectedStorage) {
 
-        const updatedStorage = response.data.fridges.find(storage => storage.id === selectedStorage.id) || response.data.freezers.find(storage => storage.id === selectedStorage.id);
+        const updatedStorage = user_data.fridges.find(storage => storage.id === selectedStorage.id) || user_data.freezers.find(storage => storage.id === selectedStorage.id);
 
         if (updatedStorage) {
           setselectedStorage(updatedStorage); // Update selectedStorage with the new data
 
-          if (response.data.fridges.find(storage => storage.id === selectedStorage.id)) {
+          if (user_data.fridges.find(storage => storage.id === selectedStorage.id)) {
             setUserData((userData) => ({
               ...userData,
               fridges: userData.fridges.map((fridge) => ({
@@ -102,7 +99,7 @@ const handleUpdateFridge = async () => {
               })),
             }));
           } 
-          else if (response.data.freezers.find(storage => storage.id === selectedStorage.id)) {
+          else if (user_data.freezers.find(storage => storage.id === selectedStorage.id)) {
             setUserData((userData) => ({
               ...userData,
               freezers: userData.freezers.map((freezer) => ({
@@ -129,18 +126,17 @@ const handleAddFridge = async (event) => {
 
   const formData = new FormData(event.target);
 
-  const addFridge = {
+  const addFridgeData = {
       storageName:formData.get("fridgeName"),
       capacity:formData.get("capacity"),
       userID:getAuthToken()
   };
 
   try {
-      const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addFridge`,addFridge);
-      console.log(response);
+      await addFridgeRequest(addFridgeData);
       handleUpdateFridge();
-
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Failed to save data:', error);
     } 
 
@@ -153,21 +149,19 @@ const handleAddFreezer = async (event) => {
 
   const formData = new FormData(event.target);
 
-  const addFreezer = {
+  const addFreezerData = {
       storageName:formData.get("freezerName"),
       capacity:formData.get("capacity"),
       userID:getAuthToken()
   };
 
   try {
-      const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addFreezer`,addFreezer);
-      console.log(response);
+      await addFreezerRequest(addFreezerData);
       handleUpdateFridge();
-
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Failed to save data:', error);
     } 
-
 }
 
 

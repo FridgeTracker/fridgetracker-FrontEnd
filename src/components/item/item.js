@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import "./item.css";
-import axios from 'axios';
 import Example from "./searchSuggestion";
+import { addItemRequest, deleteItemRequest, updateItemRequest } from "../Requests/postRequests";
 
 const Item = ({Item, storageId, updateFridge}) => {
 
@@ -32,8 +32,6 @@ const Item = ({Item, storageId, updateFridge}) => {
             [name]: value
         });
     };
-    // End of edit item section
-
 
 
     //Save updated item in fridge
@@ -52,11 +50,10 @@ const Item = ({Item, storageId, updateFridge}) => {
         };
 
         try {
-
-            await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateItem`,savedItem);
-            updateFridge(savedItem.id);
-            
-          } catch (error) {
+            const response = await updateItemRequest(savedItem);
+            updateFridge(response);
+          } 
+          catch (error) {
             console.error('Failed to save data:', error);
         } 
     }
@@ -71,14 +68,12 @@ const Item = ({Item, storageId, updateFridge}) => {
             }
 
         try {
-
-            await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteItem`,deleteItem);
-            updateFridge(deleteItem.id);
-    
-          } catch (error) {
+            const response = await deleteItemRequest(deleteItem);
+            updateFridge(response);
+          } 
+          catch (error) {
             console.error('Failed to delete data:', error);
         } 
-
     }
     
 
@@ -99,11 +94,8 @@ const Item = ({Item, storageId, updateFridge}) => {
         };
  
         try {
-
-            await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addItem`,itemToAdd);
-            updateFridge(itemToAdd.id);
-
-    
+            const response = await addItemRequest(itemToAdd);
+            updateFridge(response);
           } catch (error) {
             console.error('Failed to fetch user data:', error);
           } 

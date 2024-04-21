@@ -1,12 +1,12 @@
 import "./member.css";
 import { useState, useEffect } from 'react';
-
-import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
 import Member from "./member.js";
 
 import addImage from '../assets/plus_sign.png';
+import { getUser } from "../Requests/getRequest.js";
+import { addMemberRequest } from "../Requests/postRequests.js";
 
 
 function Members(){
@@ -18,12 +18,10 @@ function Members(){
 
     const handleUpdateMember = async () => {
       try {
-        const UUID = getAuthToken();
-        const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
-        const updatedUserData = response.data;
-        setUserData(updatedUserData);
-        
-        const updatedSelectedMember = updatedUserData.members.find(member => member.id === selectedMember.id);
+        const user_Data = await getUser();
+        setUserData(user_Data);
+        const updatedSelectedMember = user_Data.members.find(member => member.id === selectedMember.id);
+       
         if (updatedSelectedMember) {
             setSelectedMember(updatedSelectedMember);
         }
@@ -37,18 +35,14 @@ function Members(){
     useEffect(() => {
         const fetchUserData = async () => {
           try {
-    
-            const UUID = getAuthToken();
-            const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`);
-            setUserData(response.data);
-    
+            const user_Data = await getUser();
+            setUserData(user_Data);
           } catch (error) {
             console.error('Failed to fetch user data:', error);
           }
         };
-    
         fetchUserData();
-      }, []); // Empty dependency array ensures the effect runs only once on mount
+      }, []); 
     
 
       const handleAddMember = async (event) => {
@@ -73,12 +67,9 @@ function Members(){
         };
       
         try {
-            await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addMember`,addMember);    
-            const updatedResponse = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${getAuthToken()}`);
-            setUserData(updatedResponse.data);
-           
-      
-          } catch (error) {
+            setUserData(await addMemberRequest(addMember));
+          } 
+          catch (error) {
             console.error('Failed to Add new Member:', error);
           } 
       
