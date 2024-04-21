@@ -82,7 +82,7 @@
 .s_listItem{
     height: 83%;
     width: 100;
-    background-color: yellow;
+   
 
 }
 .s_listOptions{
@@ -112,14 +112,13 @@
 
 }
 #titleTable{
-    background-color: #7adeb1;
     height: 10%;
     width:95%;
     margin: 2vh auto;
-    color: black;
+    color: green;
+    font-size: large;
 }
 #eachItemTable{
-    background-color: #7adeb1;
     height: 10%;
     width:95%;
     margin: 1vh auto;
