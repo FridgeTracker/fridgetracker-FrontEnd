@@ -5,17 +5,13 @@ import React from 'react';
 
 
 function ShoppingList(){
-    /*const [selectedListName, setSelectedListName] = useState("SHOPPING LIST - 1");
+    const [selectedListName, setSelectedListName] = useState("SHOPPING LIST - 1");
     const [lists, setLists] = useState(["SHOPPING LIST - 1"]);
     const [listItems, setListItems] = useState({
         "SHOPPING LIST - 1": [
             {name: "Apple", quantity: 3, type: "Fruit"}
         ]
-    });*/
-
-    
-
-    const [selectedListName] = useState("SHOPPING LIST _1");
+    });
 
     const createNewList = () => {
         const newListName = `SHOPPING LIST - ${lists.length + 1}`;
