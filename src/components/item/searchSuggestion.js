@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import axios from 'axios';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 
 import "./item.css";
+import { getFoodData } from '../Requests/getRequest';
 
 
 
@@ -20,9 +20,9 @@ export default function ComboBox({handleSubmit}) {
   useEffect(() => {
     async function fetchFoodData() {
       try {
-        const response = await axios.get('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/getFoodData');
-        setFoodData(response.data);
-      } catch (error) {
+        setFoodData(await getFoodData());
+      } 
+      catch (error) {
         console.error('Error fetching food data:', error);
       }
     }

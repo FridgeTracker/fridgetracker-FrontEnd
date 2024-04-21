@@ -24,10 +24,6 @@ function Settings({userData,updateUser}) {
     },
     []);
 
-
-    
-
-
     return (
         <div className="settings">
             <div className="settings-header">

@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
 import userIcon from "../assets/memberIcons/memberIcon.png";
-import axios from 'axios';
 import { getAuthToken } from '../authService.js';
 
 import UploadWidget from './UploadWidget.js';
+import { updateUserRequest } from '../Requests/postRequests.js';
 
 function AccountSettings({userData,timeZoneOptions,updateUser}) {
 
@@ -28,38 +28,30 @@ function AccountSettings({userData,timeZoneOptions,updateUser}) {
      
 
         try {
-            
-            const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', newUserInfo);
-
-            setMessage(response.data);
+            setMessage(await updateUserRequest(newUserInfo));
             updateUser();
-            
         }
         catch (error) {
-
             console.error('Failed to update information:', error);
             setMessage("User failed to update");
-            
         }
     };
 
     const updateProfile = async (imageURL) => {
 
         setURL(imageURL);
-
         const uploadImage = {
             id:getAuthToken(),
             imageData: imageURL
         };
 
         try {
-            await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateUser', uploadImage);
+            await updateUserRequest(uploadImage);
             updateUser();
         }
         catch (error) {
         console.error('Failed to update information:', error);
         }
-
     };
     
     const handleTimeZoneChange = async(event) => {

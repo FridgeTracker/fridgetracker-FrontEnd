@@ -7,8 +7,7 @@ function ShoppingList(){
 
     
 
-    const [selectedListName, setSelectedListName] = useState("SHOPPING LIST _1");
-    setSelectedListName("hahaha")
+    const [selectedListName] = useState("SHOPPING LIST _1");
 
 
     return (

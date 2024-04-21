@@ -12,12 +12,37 @@ function LoginUser(){
 
     const navigate = useNavigate();
 
-    // If User didnt logout token stays stored and relog automatically
-    useEffect(() => {
-      if(getAuthToken() != null){
-          navigate("../Dash");
+    const userRank = async () => {
+      try{
+        const token = getAuthToken();
+        const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${token}`);
+        return response.data.rank;
+      }catch(error){
+        console.error(error);
       }
-    },[navigate]);
+    }
+    // If User didnt logout token stays stored and relog automatically
+
+    useEffect(() => {
+      const redirectUser = async () => {
+        try {
+          const authToken = getAuthToken();
+          if (authToken) {
+            const rank = await userRank();
+            if (rank === 1) {
+              navigate("../Admin");
+            } else {
+              navigate("../Dash");
+            }
+          }
+        } catch (error) {
+          console.error('Error determining user role:', error);
+          navigate("/");
+        }
+      };
+    
+      redirectUser();
+    }, [navigate]);
 
     const [loading, setLoading] = useState(false);
 
@@ -45,7 +70,7 @@ function LoginUser(){
           
           authenticateUser(response.data.id);
           
-          if(response.data.rank === 1){
+          if(await userRank() === 1){
             navigate("../Admin");
           }else{
             navigate("../Dash");
@@ -55,8 +80,7 @@ function LoginUser(){
           console.error('Login failed:', error);       
       } finally {
           setLoading(false);
-      }
-        
+      } 
     }
 
       return(

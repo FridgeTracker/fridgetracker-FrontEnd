@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { getAuthToken } from '../authService.js';
+import { changePasswordRequest } from '../Requests/postRequests.js';
 
 function SecuritySettings() {
     const [currentPassword, setCurrentPassword] = useState('');
@@ -21,11 +21,10 @@ function SecuritySettings() {
             console.log(newPasswordInfo);
 
             try {
-                await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/changePw', newPasswordInfo);
-                setError('Password Sucessfully changed')
+                setError(await changePasswordRequest(newPasswordInfo));
             } catch (error) {
                 console.error('Failed to update Password:', error);
-                setError('Failed to update Password');
+                setError(error);
             }
     }else{
         setError('Password do not match.');

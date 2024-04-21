@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 
 import logoutIcon from './components/assets/logoutIcon.png';
 import './Admin.css';
-import axios from 'axios';
 import {useNavigate } from 'react-router-dom';
 import {logoutUser } from "./components/authService";
 
 import AdminUser from './components/admin/adminUser';
-
+import { getUser, getUsers } from './components/Requests/getRequest';
 
 
 function Admin(){
@@ -15,21 +14,36 @@ function Admin(){
     const[users,setUsers] = useState([]);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const checkUserRank = async () => {
+          try {
+            const user = await getUser();
+            if (user.rank === 0 || user.rank === null) {
+              navigate("/");
+            }
+          } catch (error) {
+            console.error("Error checking user rank:", error);
+            navigate("/");
+          }
+        };
+      
+        checkUserRank();
+      }, [navigate]);
+
 
     useEffect(() => {
-
         async function retrieveUsers(){
             try{
-                const response = await axios.get("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/getUsers");
-                setUsers(response.data);
-                console.log(response.data);
+                const response = await getUsers();
+                setUsers(response);
             } catch(error){
                 console.log(error);
             }
         }
         retrieveUsers();
-
     },[])
+    
+
     
     return(
         <div className='admin'>

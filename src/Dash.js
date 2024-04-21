@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import "./Dash.css";
@@ -25,6 +24,7 @@ import MealList from "./components/meals/MealList";
 import ShoppingList from "./components/shoppinglist/shoppinglist";
 
 import { getAuthToken, logoutUser } from "./components/authService";
+import { getUser } from "./components/Requests/getRequest";
 
 const SidebarButton = ({ icon, text, onClick }) => (
   <div className="dashboardButtonC" onClick={onClick}>
@@ -46,38 +46,32 @@ function Dash() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    setDashboard(true);
     const fetchUserData = async () => {
       try {
         const UUID = getAuthToken();
-        const response = await axios.get(
-          `https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`
-        );
-        setUserData(response.data);
+        if (!UUID) {
+          navigate("/");
+          return;
+        }
+        const userData = await getUser();
+        setUserData(userData);
+        setDashboard(true);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
     };
     fetchUserData();
-  }, []);
+  }, [navigate]);
 
-  if (getAuthToken() == null) {
-    navigate("/");
-  }
 
-  const updateUser = async () => {
-
+const updateUser = async () => {
     try {
-      const UUID = getAuthToken();
-      const response = await axios.get(
-        `https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${UUID}`
-      );
-      setUserData(response.data);
+      const userData = await getUser();
+      setUserData(userData);
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
-  }
-
+}
 
   const [showSelectedNav, setNav] = useState(false);
   const [showMembers, setMembers] = useState(false);
