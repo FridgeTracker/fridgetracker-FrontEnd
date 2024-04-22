@@ -7,11 +7,13 @@ import {logoutUser } from "./components/authService";
 
 import AdminUser from './components/admin/adminUser';
 import { getUser, getUsers } from './components/Requests/getRequest';
+import UploadWidget from './components/setting/UploadWidget';
 
 
 function Admin(){
 
     const[users,setUsers] = useState([]);
+    const[images,setImage] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,6 +45,9 @@ function Admin(){
         retrieveUsers();
     },[])
     
+    const uploadedImages = (imageURL) => {
+        setImage(prevImages => [...prevImages, imageURL.url]);
+    }
 
     
     return(
@@ -61,6 +66,19 @@ function Admin(){
                         </>
                     })}
                 </section>
+
+                <section className='areaForImages'>
+                    {images && images.map((image, index) => (
+                        <p key={index}><img id="thumbnail" alt="test" src={image}/>{image}</p>
+                    ))}
+                </section>
+                
+                <section className='uploadedImages'>
+                    <div id="uploadImageWidget">
+                        <UploadWidget updateProfile={uploadedImages}/>
+                    </div>
+                </section>
+        
             </section>
         </div>
     )

@@ -21,6 +21,9 @@ p {
     height: 100%;
     width: 55%;
     background-color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .adminTopWrapper{
@@ -49,13 +52,14 @@ p {
 .userContent{
 
     background-color: rgb(233, 233, 233);
-    height: 90%;
+    height: 80%;
     width: 100%;
+    position: relative;
 }
 
 .userOption{
     background-color: white;
-    height: 5%;
+    height: 7%;
     width: 100%;
     border: .5px solid black;
     display: flex;
@@ -91,4 +95,49 @@ p {
 
 #arrayName{
     font-weight: bold;
+}
+
+.uploadedImages{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 2%;
+    display: flex;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+#uploadImageWidget{
+    width: 100%;
+    background-color: green;
+    width: auto;
+    padding: .5vh;
+    border-radius: 1vh;
+}
+
+.areaForImages{
+    height: 32%;
+    width: 80%;
+    margin-left: 10%;
+    background-color: white;
+    bottom: 0;
+    margin-bottom: 7%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    position: relative;
+    
+}
+
+.areaForImages p{
+    display: flex;
+    align-items: center;
+}
+
+#thumbnail{
+    width: 4vh;
+    height: 4vh;
+    margin-right: 2vh;
 }

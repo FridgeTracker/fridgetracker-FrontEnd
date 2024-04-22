@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import selection1 from '../assets/memberIcons/penguinIcon.png'
 import selection2 from '../assets/memberIcons/dogIcon.png'
@@ -12,6 +12,7 @@ import selection9 from '../assets/memberIcons/birdIcon.png'
 import selection10 from '../assets/memberIcons/bearIcon.png'
 import selection11 from '../assets/memberIcons/sealIcon.png'
 import selection12 from '../assets/memberIcons/deerIcon.png'
+import ComboBox from "./allergiesSelection";
 
 const renderForm = (member, selectedEdit, handleFormSubmit) => {
     switch (selectedEdit) {
@@ -19,8 +20,8 @@ const renderForm = (member, selectedEdit, handleFormSubmit) => {
             return <ProfileForm handleFormSubmit={handleFormSubmit} member={member} />;
         case "Edit Body Details":
             return <BodyForm handleFormSubmit={handleFormSubmit} member={member} />;
-        case "Edit Food Preferences":
-            return <FoodForm handleFormSubmit={handleFormSubmit} />;
+        case "Edit Food Allergies":
+            return <FoodForm handleFormSubmit={handleFormSubmit} member={member}/>;
         case "Change Profile Picture":
             return <ProfilePictureForm handleFormSubmit={handleFormSubmit} member={member} />;
         default:
@@ -124,16 +125,24 @@ const BodyForm = ({ member, handleFormSubmit }) => {
     );
 };
 
-const FoodForm = ({ handleFormSubmit }) => {
+const FoodForm = ({ handleFormSubmit, member }) => {
+
+    const [selectedItems, setSelectedItems] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        const newData = ({
+            allergies: selectedItems
+        });
+
+        handleFormSubmit(newData);
       
     };
 
     return (
         <form onSubmit={handleSubmit} className="editFormLayout">
-
+            <ComboBox selectedItems={selectedItems} setSelectedItems={setSelectedItems} member={member}/>
             <button type="submit">Submit</button>
         </form>
     );

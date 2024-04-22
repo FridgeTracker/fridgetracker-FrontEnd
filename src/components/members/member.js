@@ -4,11 +4,12 @@ import React, { useState } from "react";
 
 import renderForm from "./renderForm";
 import { getAuthToken } from "../authService";
-import { updateItemRequest } from "../Requests/postRequests";
+import { updateMemberRequest } from "../Requests/postRequests";
 
 const Member = ({ member, updateMember }) => {
 
     const [selectedEdit, setSelectedEdit] = useState(null);
+    const [message,setMesage] = useState("");
 
     const handleFormSubmit = async (formData) => {
 
@@ -17,8 +18,13 @@ const Member = ({ member, updateMember }) => {
             userID: getAuthToken()
         });
             
-        await updateItemRequest(newData);
-        updateMember();
+        const response = await updateMemberRequest(newData);
+        if(response === "Member updated successfully"){
+            updateMember();
+            setMesage(response);
+        }else{
+            setMesage(response);
+        }
        
     };
 
@@ -36,10 +42,10 @@ const Member = ({ member, updateMember }) => {
             <div className="editNavBar">
                 <br></br><h2>General</h2>
                 
-                <div className="editProfile" onClick={() => {setSelectedEdit("Edit Profile")}}><p>Edit Profile Settings</p></div>
-                <div className="editBody" onClick={() => {setSelectedEdit("Edit Body Details")}}><p>Edit Body Details</p></div>
-                <div className="editFood" onClick={() => {setSelectedEdit("Edit Food Preferences")}}><p>Edit Food Preferences</p></div>
-                <div className="profilePicture" onClick={() => {setSelectedEdit("Change Profile Picture")}}><p>Change Profile Picture</p></div>
+                <div className="editProfile" onClick={() => {setSelectedEdit("Edit Profile"); setMesage("")}}><p>Edit Profile Settings</p></div>
+                <div className="editBody" onClick={() => {setSelectedEdit("Edit Body Details"); setMesage("")}}><p>Edit Body Details</p></div>
+                <div className="editFood" onClick={() => {setSelectedEdit("Edit Food Allergies"); setMesage("")}}><p>Edit Food Allergies</p></div>
+                <div className="profilePicture" onClick={() => {setSelectedEdit("Change Profile Picture"); setMesage("")}}><p>Change Profile Picture</p></div>
 
             </div>
 
@@ -49,6 +55,7 @@ const Member = ({ member, updateMember }) => {
                     <div className="choosenEdit">
 
                         {renderForm(member, selectedEdit, handleFormSubmit)}
+                        <span className="errorMessage">{message && message}</span>
                         
                     </div>
                 </div>

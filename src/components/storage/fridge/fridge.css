@@ -134,6 +134,7 @@
 #storageTitle{
     font-size: 2vh;
     font-weight: bold;
+    width: auto;
     position: absolute;
     left:0;
     top:0;
@@ -267,4 +268,15 @@
     background-color: rgb(97, 97, 97);
     height: 1px;
     margin-top: 1.5%;
+}
+
+#deleteFridge{
+
+    width: 2.2vh;
+    margin-left: 5%;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1%;
+    cursor: pointer;
+   
 }
