@@ -127,13 +127,14 @@ const BodyForm = ({ member, handleFormSubmit }) => {
 
 const FoodForm = ({ handleFormSubmit, member }) => {
 
-    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedAllergies, setSelectedAllergies] = useState([]);
+    const [selectedPreferences, setSelectedPreferences] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         const newData = ({
-            allergies: selectedItems
+            allergies: selectedAllergies,
+            preference: selectedPreferences
         });
 
         handleFormSubmit(newData);
@@ -142,7 +143,8 @@ const FoodForm = ({ handleFormSubmit, member }) => {
 
     return (
         <form onSubmit={handleSubmit} className="editFormLayout">
-            <ComboBox selectedItems={selectedItems} setSelectedItems={setSelectedItems} member={member}/>
+            <ComboBox selectedAllergies={selectedAllergies} setSelectedAllergies={setSelectedAllergies}
+            selectedPreferences={selectedPreferences} setSelectedPreferences={setSelectedPreferences} member={member}/>
             <button type="submit">Submit</button>
         </form>
     );

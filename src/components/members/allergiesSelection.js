@@ -9,7 +9,8 @@ const filterOptions = createFilterOptions({
   });
 
 
-export default function ComboBox({selectedItems,setSelectedItems, member}) {
+export default function ComboBox({selectedAllergies, setSelectedAllergies, selectedPreferences, setSelectedPreferences, member}) {
+
   const [foodData, setFoodData] = useState([]);
 
   useEffect(() => {
@@ -17,48 +18,63 @@ export default function ComboBox({selectedItems,setSelectedItems, member}) {
       try {
         const data = await getFoodData();
         setFoodData(data);
-        setSelectedItems(member.allergies);
+        setSelectedAllergies(member.allergies);
+        setSelectedPreferences(member.preference);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
 
     fetchData();
-  },[member.allergies, setSelectedItems]);
+  },[member.allergies, setSelectedAllergies, member.preference, setSelectedPreferences]);
 
   return (
-    <>                            
-    <Autocomplete
-      multiple
-      id="combo-box-demo"
-      size="small"
-      options={foodData}
-      filterOptions={filterOptions}
-      groupBy={(option) => option.foodCategory}
+      <>                            
+        <Autocomplete
+          multiple
+          id="combo-box-demo"
+          size="small"
+          disableClearable
+          options={foodData}
+          filterOptions={filterOptions}
+          groupBy={(option) => option.foodCategory}
+          getOptionLabel ={({foodItem,id}) => {
+            return `${id} - ${foodItem}`;
+          }}
+          getOptionDisabled={(options) => (selectedAllergies.length > 5 ? true : false)}
+          filterSelectedOptions
+          value={selectedAllergies.map(item => {
+            const matchingOption = foodData.find(option => option.foodItem === item);
+            return matchingOption || { foodItem: item };
+          })}
+          onChange={(event,value) => setSelectedAllergies(value.map(item => item.foodItem))}
+          sx={{ width: '60vh'}}
+          renderInput={(params) => <TextField {...params} label="Add Allergie Items"/>}
+        />
 
-      getOptionLabel ={({foodItem,id}) => {
-        return `${id} - ${foodItem}`;
-      }}
-      filterSelectedOptions
-      renderOption={(props, option) => {
-        return (
-          <li {...props}>
-            <div>
-              {option.foodItem}
-            </div>
-          </li>
-        );
-      }}
-      value={selectedItems.map(item => {
-        const matchingOption = foodData.find(option => option.foodItem === item);
-        return matchingOption || { foodItem: item };
-    })}
-      onChange={(event,value) => setSelectedItems(value.map(item => item.foodItem))}
-      sx={{ width: '60vh'}}
-      renderInput={(params) => <TextField {...params} label="Add Allergie Items"/>}
-      
-    />
+        <div id="autoCompleteSpacer"></div>
 
-</>
+        <Autocomplete
+          multiple
+          id="combo-box-demo"
+          size="small"
+          options={foodData}
+          disableClearable
+          filterOptions={filterOptions}
+          groupBy={(option) => option.foodCategory}
+          getOptionLabel ={({foodItem,id}) => {
+            return `${id} - ${foodItem}`;
+          }}
+          getOptionDisabled={(options) => (selectedPreferences.length > 5 ? true : false)}
+          filterSelectedOptions
+          value={selectedPreferences.map(item => {
+            const matchingOption = foodData.find(option => option.foodItem === item);
+            return matchingOption || { foodItem: item };
+          })}
+          onChange={(event,value) => setSelectedPreferences(value.map(item => item.foodItem))}
+          sx={{ width: '60vh'}}
+          renderInput={(params) => <TextField {...params} label="Add Preference Items"/>}
+        />
+    </>
   );
 }

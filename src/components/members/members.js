@@ -56,6 +56,7 @@ function Members(){
               name: formData.get("memberName"),
               age:0,
               allergies:[],
+              preference:[],
               height:0,
               weight:0,
               imageURL:'ftlogo.png'
