@@ -39,10 +39,10 @@ function AccountSettings({userData,timeZoneOptions,updateUser}) {
 
     const updateProfile = async (imageURL) => {
 
-        setURL(imageURL);
+        setURL(imageURL.url);
         const uploadImage = {
             id:getAuthToken(),
-            imageData: imageURL
+            imageData: imageURL.url
         };
 
         try {

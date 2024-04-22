@@ -173,3 +173,8 @@ button {
     margin-top: 10px;
     color: green;
 }
+
+#uploadImageButton{
+    cursor: pointer;
+    padding: 2px;
+}
