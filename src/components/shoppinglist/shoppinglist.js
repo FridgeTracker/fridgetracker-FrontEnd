@@ -70,7 +70,7 @@ function ShoppingList() {
 
     return (
         <div className='shoppingList'>
-            <div><img className="sausageImage" src={sausage} alt="sausage Image" /></div>
+            <div><img className="sausageImage" src={sausage} alt="sausage" /></div>
 
             <div className='shoppingListHolder'>
                 <div className="shoppingListNameHolder">

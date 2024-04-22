@@ -8,10 +8,13 @@ import Item from '../item/item.js';
 
 import addImage from '../assets/addIcon.png';
 import accessItem from '../assets/accessItem.png';
+import deleteIcon from '../assets/deleteIcon.png';
 import Freezer from './freezer/freezer.js';
+
 import { getUser } from '../Requests/getRequest.js';
 import { getAuthToken } from '../authService.js';
 import { addFreezerRequest, addFridgeRequest } from '../Requests/postRequests.js';
+import axios from 'axios';
 
 
 function Storage() {
@@ -111,6 +114,7 @@ const handleUpdateFridge = async () => {
         }
       }
       
+    setselectedStorage(null);
     setItem(null);
     setAdd(null);
 
@@ -162,6 +166,30 @@ const handleAddFreezer = async (event) => {
     catch (error) {
       console.error('Failed to save data:', error);
     } 
+}
+
+const handleDeleteStorage = async (deleteFridge) => {
+
+  const type= deleteFridge.type;
+  let selectedDelete = "";
+
+  if(type === "Fridge"){
+    selectedDelete = "deleteFridge";
+  } else if(type === "Freezer"){
+    selectedDelete = "deleteFreezer";
+  }
+
+  try {
+
+    const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/${selectedDelete}/${deleteFridge.id}`);
+    console.log(response);
+    handleUpdateFridge();
+
+  } 
+  catch (error) {
+    console.error('Failed to delete Storage:', error);
+  } 
+
 }
 
 
@@ -234,7 +262,9 @@ const handleAddFreezer = async (event) => {
       <div className='itemContainer'>
         
         <div className='itemListContainer'>
-            <p id="storageTitle">Name: {selectedStorage ? selectedStorage.storageName : 'Not Selected'}</p>
+            <p id="storageTitle">Name: {selectedStorage ? selectedStorage.storageName : 'Not Selected'}
+            {selectedStorage && <img id="deleteFridge" onClick={() => handleDeleteStorage(selectedStorage)} src={deleteIcon} alt="delete" />}
+            </p>
             <div className = "itemWrapper">
               <div className='itemListHolder'>
 
