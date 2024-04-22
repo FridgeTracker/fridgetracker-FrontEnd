@@ -56,7 +56,6 @@ export default function ComboBox({handleSubmit}) {
       }}
       onChange={(event, newValue) => {
         setSelectedItem(newValue);
-        console.log(newValue);
       }}
       sx={{ width: '80%'}}
       renderInput={(params) => <TextField {...params} label="Food Item"/>}
