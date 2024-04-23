@@ -4,6 +4,7 @@ import "./dashboard.css";
 import MealRecord from "./mealRecord";
 import Notifications from "./notifications";
 import Nutrition from "./Nutrition";
+import StoredItems from "./storedItems";
 
 
 function Dashboard(){
@@ -29,11 +30,7 @@ function Dashboard(){
             <section className="rightSides">
 
                 <Nutrition user={user}/>
-                <div className="itemsWrapper">
-                    <div className="rightTopBarItem">
-                        <p>Stored Item</p>
-                    </div>
-                </div>
+                <StoredItems user={user}/>
 
             </section>
 
