@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./Dash.css";
 import logo from "./components/assets/fridgeLogo.png";
 import user from "./components/assets/memberIcons/memberIcon.png";
-import darkbck from "./components/assets/moon2.png";
-import lightBck from "./components/assets/light_bck.png";
 import themeIcon from "./components/assets/iconSwitch.png";
 import searchIcon from "./components/assets/searchIcon.png";
 import powerIcon from "./components/assets/powerIcon.png";
@@ -186,17 +184,12 @@ const updateUser = async () => {
             {showSettings && <Setting userData={userData} updateUser={updateUser} />}
             {showMembers && <Members />}
             {showFridges && <Storage />}
-            {showDashboard && <Dashboard />}
             {showMealList && <MealList userData={userData}/>}
+            {showDashboard && <Dashboard/>}
             {showShoppingList && <ShoppingList/>}
           </>
         ) : (
-          <div className="headerWrapper">
-            <img
-              src={theme === "light" ? lightBck : darkbck}
-              alt="header background"
-            />
-          </div>
+          <Dashboard/>
         )}
       </div>
     </div>
