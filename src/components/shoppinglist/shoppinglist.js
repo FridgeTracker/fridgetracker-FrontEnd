@@ -1,66 +1,215 @@
 import './shoppinglist.css';
-import {useState} from 'react';
 import sausage from '../assets/sausage.png';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getUser } from '../Requests/getRequest';
+import axios from 'axios';
+import { addItemRequest, deleteItemRequest, updateItemRequest } from '../Requests/postRequests';
+
+import editIcon from "../assets/editIcon.png";
+import binIcon from "../assets/binIcon.png";
 
 
 function ShoppingList(){
-    const [selectedListName, setSelectedListName] = useState("SHOPPING LIST - 1");
-    const [lists, setLists] = useState(["SHOPPING LIST - 1"]);
-    const [listItems, setListItems] = useState({
-        "SHOPPING LIST - 1": [
-            {name: "Apple", quantity: 3, type: "Fruit"}
-        ]
-    });
 
-    const createNewList = () => {
-        const newListName = `SHOPPING LIST - ${lists.length + 1}`;
-        setLists([...lists, newListName]);
-        setSelectedListName(newListName);
-        setListItems({...listItems, [newListName]: []});
+    const[user,setUser] = useState(null);
+    const[selectedList, setSelectedList] = useState(null);
+    const[editMode,setEditMode] = useState(null);
+
+    useEffect(() => {
+      const checkUserRank = async () => {
+        try {
+          setUser(await getUser());
+        } catch (error) {
+        }
+      };
+      checkUserRank();
+    }, []);
+
+    const createShoppingList = async () => {
+
+        const formData = {
+          shoppingList:{
+              "s_listName":"New List 1"
+              },
+          userID:user.id
+        };
+
+        try {
+          await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/create", formData);
+          setUser(await getUser());
+      } catch (error) {
+          console.error('Error:', error.response.data); // Log response data
+      }
     }
+
+    const addListItem = async () => {
+      const itemToAdd = {
+          foodName: "Food Name",
+          quantity: 0,
+          id: selectedList.s_listId // Set the id value here
+      };
+  
+      try {
+          // Send request to add item
+          await addItemRequest(itemToAdd);
+  
+          // Update user data
+          const updatedUser = await getUser();
+          setUser(updatedUser);
+  
+          // No need to find and set selectedList again
+          setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
+      } catch (error) {
+          console.error('Failed to fetch user data:', error);
+      } 
+  };
+  
+  const handleInputChange = (e, index, type) => {
+    const { value } = e.target;
+    setSelectedList(prevList => {
+      const updatedItems = [...prevList.items];
+      if (type === 'foodName') {
+        updatedItems[index].foodName = value;
+      } else if (type === 'quantity') {
+        updatedItems[index].quantity = value;
+      }
+      setEditMode(updatedItems[index]);
+      return { ...prevList, items: updatedItems };
+    });
+  };
+
+  const saveNewList = async () => {
+
+    const savedItem = {
+
+      foodName:editMode.foodName,
+      itemID: editMode.itemID,
+      quantity: editMode.quantity,
+      id: selectedList.s_listId // Set the id value here
+
+  };
+  
+
+    try {
+          const response = await updateItemRequest(savedItem);
+          console.log(response);
+          const updatedUser = await getUser();
+          setUser(updatedUser);
+          setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
+      } 
+      catch (error) {
+          console.error('Error:', error.response.data); // Log response data
+      }
+    
+  }
+
+
+  const deleteItem = async (deletedSelection) => {
+
+    const deleteItem = {
+      itemID:deletedSelection.itemID,
+      id: selectedList.s_listId
+    }
+
+    console.log(deleteItem);
+
+    try {
+      const response = await deleteItemRequest(deleteItem);
+      console.log(response);
+      const updatedUser = await getUser();
+      setUser(updatedUser);
+      setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
+      
+    } 
+    catch (error) {
+      console.error('Failed to delete data:', error);
+    } 
+
+  }
+    
+
+
     return (
         <div className='shoppingList'>
             <div><img className="sausageImage" src={sausage} alt="sausage" /></div>
 
             <div className='shoppingListHolder'>
             <div className="shoppingListNameHolder">
-            <div className="listNameTitle">Shopping List</div>
-                {lists.map((listName, index) => (
-                    <div key={listName} className={`listName ${selectedListName === listName? "active" : ""}`} onClick={() => setSelectedListName(listName)}>{listName}</div>
-                ))}
-            <div className="createNewS_list" onClick={createNewList}>Create New List</div>
+              <div className="listNameTitle">Shopping List</div>
+
+                {user && user.shoppingLists.map((list) => 
+                  <div className='listName' onClick={() => setSelectedList(list)}>{list.s_listName}</div>
+                )}
+
+              <div className="createNewS_list" onClick={() => createShoppingList()}>Create New List</div>
             </div>
 
             <div className="individual_shoppingList">
-                <div className='individualS_listTitle'>{selectedListName}</div>
+                <div className='individualS_listTitle'>{selectedList && selectedList.s_listName}</div>
                     <div className='s_listItem'>
                         <div className='ItemTitle'>
                             <table id="titleTable">
                                 <tr>
                                     <td id="foodName">Food Name</td>
                                     <td id="quantity">Quantity</td>
-                                    <td id="type">Type</td>
+                                    <td id="type">Edit</td>
                                 </tr>
                             </table>  
             </div>
             <div className='eachItem'> 
-              <table id="eachItemTable">
-                {listItems[selectedListName].map((item, index) => (
-                  <tr key={index}>
-                    <td id="foodName">{item.name}</td>
-                    <td id="quantity">{item.quantity}</td>
-                    <td id="type">{item.type}</td>
-                  </tr>
-                ))}
-              </table> 
+
+            <table id="eachItemTable">
+              {selectedList && selectedList.items.map((item, index) => (
+                <tr key={index}>
+                  {editMode && editMode === item ? (
+                    <>
+                  <td id="foodName">
+
+                    <input 
+                      type="text" 
+                      value={item.foodName}
+                      onChange={(e) => handleInputChange(e, index, 'foodName')}
+                    />
+                  </td>
+                  <td id="quantity">
+                    <input 
+                      type="number" 
+                      value={item.quantity}
+                      onChange={(e) => handleInputChange(e, index, 'quantity')}
+                    />
+                  </td>
+                  <td id="type"> <img id="editIcon" src={binIcon} alt="edit" onClick={() => deleteItem(item)}/>
+                    <img id="editIcon" src={editIcon} alt="edit" onClick={() => setEditMode(item)}/></td> 
+                  </>
+                  )
+                  :
+                  (
+                  <>
+                  <td id="foodName">
+                    
+                    {item.foodName}
+                  </td>
+                  <td id="quantity">
+                    {item.quantity}
+                  </td>
+                  <td id="type"> 
+                    <img id="editIcon" src={binIcon} alt="edit" onClick={() => deleteItem(item)}/>
+                    <img id="editIcon" src={editIcon} alt="edit" onClick={() => setEditMode(item)}/>
+                  </td> 
+                  </>
+                  )}
+                  
+                </tr>
+              ))}
+            </table>
+
             </div>
 
             </div>
-            <div className='s_listOptions'>
-              <div id="edit">Edit List</div>
-              <div id="delete">Delete List</div>
-              <div id="import">Import/Export</div>
+            <div className='s_listOptions'>   
+                  <div id="edit" onClick={() => addListItem()}>Add Item</div>        
+                  <div id="import" onClick={() => saveNewList()} >Save Item</div>
+                  <div id="delete">Delete List</div>
             </div>
 
         </div>

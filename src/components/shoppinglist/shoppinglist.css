@@ -40,13 +40,17 @@
     height: 6%;
     width: 85%;
     margin: 2vh auto;
-    background-color: #D0FFBF;
+    background-color: #f1f1f1;
     text-align: center;
     display:flex;
     justify-content: center;
     align-items: center;
     color: black;
-    
+    cursor: pointer;
+}
+
+.listName:hover{
+    background-color: #1B8B60;
 }
 
 .createNewS_list{
@@ -60,7 +64,7 @@
     align-items: center;
     position: absolute;
     bottom: 0;
-
+    cursor: pointer;
 }
 /* individual_shoppingList*/
 .individual_shoppingList {
@@ -80,7 +84,7 @@
     font-size: large;
 }
 .s_listItem{
-    height: 83%;
+    height: 80%;
     width: 100;
    
 
@@ -99,6 +103,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 10%;
+    cursor: pointer;
 
 }
 #edit {
@@ -114,18 +120,45 @@
 #titleTable{
     height: 10%;
     width:95%;
-    margin: 2vh auto;
     color: green;
     font-size: large;
 }
+
+#titleTable:nth-child(1){
+    width: 98%;
+    padding-left: 1.5%;
+}
+
+
 #eachItemTable{
-    height: 10%;
-    width:95%;
+    width:100%;
+    overflow-y: scroll;
     margin: 1vh auto;
     color: black;
+    position: relative;
 }
+#eachItemTable tr{
+    height: 4.5vh;
+}
+
+.eachItem::-webkit-scrollbar{
+    width: 1vh;
+}
+.eachItem{
+    height: 90%;
+    overflow-y: scroll;
+}
+
 #titleTable td, #eachItemTable td {
     width: 33%;
+}
+
+#eachItemTable:nth-child(1){
+    padding-left: 1.5%;
+}
+
+#eachItemTable:nth-child(3){
+    width: 100%;
 }
 
 #quantity{
@@ -134,4 +167,15 @@
 
 #type{
     text-align: end;
+    padding-right: 2%;
+}
+
+#editIcon{
+    height: 2vh;
+    margin-left: 1vh;
+    cursor: pointer;
+}
+
+#editIcon:hover{
+    background-color: rgb(15, 182, 0);
 }
