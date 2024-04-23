@@ -11,7 +11,7 @@ function Nutrition ({user}) {
     return (
         <div className="nutritionWrapper">
             <div className="rightTopBar">
-                <p>Today Nutrition</p>
+                <p>Today Calories</p>
             </div>
             <div className="nutritionContents">
             {user && user.members.map((member, index) => {
@@ -21,7 +21,11 @@ function Nutrition ({user}) {
                         <div key={index} className="nutritionMember">
                                 <img src={icon} alt={`${member.name} icon`} className="nutIcon"/>
                                 <p>{member.name}
-                                <span>0/{calculateBMR(member)} calories</span>
+                                <span>
+                                    0/{calculateBMR(member)}
+                                    <p id="calories_nut"> Calories</p>
+                                </span>
+                                
                             </p>
                         </div>
                     );

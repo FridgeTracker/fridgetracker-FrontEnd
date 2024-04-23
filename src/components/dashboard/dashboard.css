@@ -193,7 +193,8 @@ h1{
 .nutritionMember span{
     position: absolute;
     right:0;
-    margin-right: 3%;
+    margin-right: 10%;
+    width: 20%;
 }
 .nutritionMember p{
     width: 100%;
@@ -206,6 +207,14 @@ h1{
 .nutIcon{
     height: 4vh;
     margin-left: 1vh;
+}
+
+#calories_nut{
+    font-size: 1.2vh;
+    color:grey;
+    position: relative;
+    font-weight: bold;
+    
 }
 
 /* ITEM */
