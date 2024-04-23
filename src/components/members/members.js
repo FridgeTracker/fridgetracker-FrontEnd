@@ -53,11 +53,11 @@ function Members(){
 
         const member = {
               name: formData.get("memberName"),
-              age:0,
+              age:20,
               allergies:[],
               preference:[],
-              height:0,
-              weight:0,
+              height:170,
+              weight:60,
               imageURL:'ftlogo.png'
         }
 

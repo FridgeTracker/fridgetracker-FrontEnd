@@ -190,11 +190,17 @@ h1{
     display: flex;
     align-items: center;
 }
-
+.nutritionMember span{
+    position: absolute;
+    right:0;
+    margin-right: 3%;
+}
 .nutritionMember p{
+    width: 100%;
    font-size: 2vh;
    font-weight: bold;
    margin-left: 1vh;
+   position: relative;
 }
 
 .nutIcon{
