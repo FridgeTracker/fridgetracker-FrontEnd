@@ -6,8 +6,7 @@ import Member from "./member.js";
 
 import addImage from '../assets/plus_sign.png';
 import { getUser } from "../Requests/getRequest.js";
-import { addMemberRequest } from "../Requests/postRequests.js";
-
+import { addMemberRequest, deleteMemberRequest } from "../Requests/postRequests.js";
 
 function Members(){
 
@@ -76,6 +75,18 @@ function Members(){
       
       }
 
+      const deleteMember = async (member) => {
+ 
+        try{
+          await deleteMemberRequest(member);
+          setUserData(await getUser());
+          setSelectedMember(null);
+
+        } catch(error) {
+          console.error(error);
+        }
+      }
+
       useEffect(() => {
         setUserData(userData); // Log userData when it changes
       }, [userData]);
@@ -125,7 +136,7 @@ function Members(){
 
                 <div className="memberContent">
 
-                  {selectedMember && <Member key={selectedMember.id} member={selectedMember} updateMember={handleUpdateMember}/>}
+                  {selectedMember && <Member key={selectedMember.id} member={selectedMember} updateMember={handleUpdateMember} deleteMember={deleteMember}/>}
                   
                 </div>
 

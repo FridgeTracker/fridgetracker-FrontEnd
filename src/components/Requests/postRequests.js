@@ -89,3 +89,15 @@ export const updateUserRequest = async (formData) => {
         return "User failed to update";
     }
 }
+
+
+export const deleteMemberRequest = async (formData) => {
+  try {         
+      const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteMember', formData);
+      return response.data;
+  }
+  catch (error) {
+      console.error('Failed to delete Member:', error);
+      return "Failed to delete member";
+  }
+}

@@ -5,8 +5,9 @@ import React, { useState } from "react";
 import renderForm from "./renderForm";
 import { getAuthToken } from "../authService";
 import { updateMemberRequest } from "../Requests/postRequests";
+import deleteIcon from "../assets/deleteIcon.png";
 
-const Member = ({ member, updateMember }) => {
+const Member = ({ member, updateMember, deleteMember }) => {
 
     const [selectedEdit, setSelectedEdit] = useState(null);
     const [message,setMesage] = useState("");
@@ -35,7 +36,7 @@ const Member = ({ member, updateMember }) => {
         <div className="topBar">
             <div className="styleBar"></div>
             <img src={testIcon} alt="m"/>
-            <span className="memberName"><p>{member.name}</p></span>
+            <span className="memberName"><p>{member.name}<img src={deleteIcon} alt="delete" id="deleteMember" onClick={() => deleteMember(member)}/></p></span>
         </div>
 
         <div className="memberContentSection">

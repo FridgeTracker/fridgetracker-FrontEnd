@@ -139,6 +139,7 @@
     position: absolute;
     left:15%;
     font-size: 4vh;
+    width: auto;
     font-weight: bold;
     color:black;
 }
@@ -439,4 +440,12 @@
 
 #autoCompleteSpacer{
     height: 15%;
+}
+
+#deleteMember{
+    width: 2.5vh;
+    position: relative;
+    left:1vh;
+    top:0;
+    cursor: pointer;
 }
