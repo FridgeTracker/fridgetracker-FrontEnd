@@ -14,6 +14,8 @@ function Notifications ({user}) {
             return "alertText";
           case "Notification":
             return "notificationText";
+          case "Reminder":
+            return "reminderText";
           default:
             return "";
         }

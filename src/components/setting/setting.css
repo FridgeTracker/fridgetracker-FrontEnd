@@ -64,7 +64,7 @@ hr {
     margin-right: 1vh;
     cursor: pointer;
 }
-#empty-box, #expiry-box, #newMeal-box, #Full-box {
+.notifications-grid input{
     width: 3vh; 
     height: 3vh;
 }
@@ -177,4 +177,14 @@ button {
 #uploadImageButton{
     cursor: pointer;
     padding: 2px;
+}
+
+#notiMessage{
+    display: flex;
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: .5vh;
+    color: green;
 }

@@ -1,12 +1,37 @@
 import React, { useState } from 'react';
 import { getAuthToken } from '../authService.js';
 import { changePasswordRequest } from '../Requests/postRequests.js';
+import axios from 'axios';
 
-function SecuritySettings() {
+function SecuritySettings({user, updateUser}) {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [error, setError] = useState('');
+    const [message, setMessage] = useState('');
+
+    const [userAlerts, setUserAlerts] = useState({
+        id:user.id,
+        expiryDate: user.expiryDate,
+        storageEmpty: user.storageEmpty,
+        storageFull: user.storageFull
+      });
+    
+      const handleCheckboxChange = (event) => {
+        const { id, checked } = event.target;
+        setUserAlerts(prevUserAlerts => ({
+          ...prevUserAlerts,
+          [id]: checked
+        }));
+      };
+
+      const handleDiscard = () => {
+        setUserAlerts({
+          expiryDate: user.expiryDate,
+          storageEmpty: user.storageEmpty,
+          storageFull: user.storageFull
+        });
+      };
 
     const handlePasswordChange = async (event) => {
         event.preventDefault();
@@ -30,6 +55,16 @@ function SecuritySettings() {
         setError('Password do not match.');
     }
     };
+
+    const updateNotifications = async () => {
+        try{
+            const response = await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateNotifications",userAlerts);
+            setMessage(response.data);
+            updateUser();
+        } catch(error){
+            console.error(error);
+        }
+    }
 
     return (
         <div className="security-settings">
@@ -57,23 +92,22 @@ function SecuritySettings() {
                 <p>Customize the type of alerts you will receive</p>
                 <div className="notifications-grid">
                     <label>
-                        <input type="checkbox" id="expiry-box"/>Food Item Expired
+                        <input type="checkbox" id="expiryDate" onChange={handleCheckboxChange} checked={userAlerts.expiryDate}/>Food Item Expired
                     </label>
                     <label>
-                        <input type="checkbox" id="empty-box" />Fridge/Freezer Empty
+                        <input type="checkbox" id="storageEmpty" onChange={handleCheckboxChange} checked={userAlerts.storageEmpty}/>Fridge/Freezer Empty
                     </label>
                     <label>
-                        <input type="checkbox" id="Full-box" />Fridge/Freezer Full
+                        <input type="checkbox" id="storageFull" onChange={handleCheckboxChange} checked={userAlerts.storageFull}/>Fridge/Freezer Full
                     </label>
-                    <label>
-                        <input type="checkbox" id="newMeal-box"/>New meals possible
-                    </label>
+                    
                 </div>
                 <div>
-                    <button id="Discard-button">Discard</button>
+                    <button id="Discard-button" onClick={() => handleDiscard()}>Discard</button>
                     
-                    <button id="save-button">Save</button>
+                    <button id="save-button" onClick={() => updateNotifications()}>Save</button>
                 </div>
+                <span id="notiMessage">{message && message}</span>
             </div>
         </div>
     );

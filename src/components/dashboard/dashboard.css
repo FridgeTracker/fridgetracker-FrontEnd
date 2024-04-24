@@ -196,7 +196,9 @@ color: red;
 .notificationText {
 color: orange;
 }
-  
+.reminderText{
+    color: rgb(5, 145, 0);
+}
 
 
 /* FOR NUTRI */
