@@ -14,6 +14,7 @@ function ShoppingList(){
     const[user,setUser] = useState(null);
     const[selectedList, setSelectedList] = useState(null);
     const[editMode,setEditMode] = useState(null);
+    const[updatedListName , setUpdatedListName] = useState(null);
 
     useEffect(() => {
       const checkUserRank = async () => {
@@ -141,10 +142,28 @@ function ShoppingList(){
     }catch(error){
       console.error(error);
     }
-
   }
+  
     
+  const changeListName = async (updatedListName) => {
+    console.log(updatedListName);
+    const form = {
+      s_listId: selectedList.s_listId,
+      //s_listName: updatedListName.s_listName
+      s_listName: "HELLO"
+    };
+  
+    try {
+      await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/changeListName", form);
+      const updatedUser = await getUser();
+      setUser(updatedUser);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
+  
 
     return (
         <div className='shoppingList'>
@@ -162,7 +181,7 @@ function ShoppingList(){
             </div>
 
             <div className="individual_shoppingList">
-                <div className='individualS_listTitle'>{selectedList && selectedList.s_listName}</div>
+                <div className='individualS_listTitle' onClick={() => changeListName(selectedList)}>{selectedList && selectedList.s_listName}</div>
                     <div className='s_listItem'>
                         <div className='ItemTitle'>
                             <table id="titleTable">
