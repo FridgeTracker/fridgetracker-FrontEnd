@@ -29,7 +29,7 @@ function ShoppingList(){
 
         const formData = {
           shoppingList:{
-              "s_listName":"New List 1"
+              "s_listName":"New List"
               },
           userID:user.id
         };
