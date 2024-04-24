@@ -28,7 +28,9 @@ function ShoppingList(){
     const createShoppingList = async () => {
 
         const formData = {
+
           s_listName:"New List 1",
+
           userID:user.id
         };
 
