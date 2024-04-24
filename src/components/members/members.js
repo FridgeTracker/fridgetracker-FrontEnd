@@ -6,8 +6,7 @@ import Member from "./member.js";
 
 import addImage from '../assets/plus_sign.png';
 import { getUser } from "../Requests/getRequest.js";
-import { addMemberRequest } from "../Requests/postRequests.js";
-
+import { addMemberRequest, deleteMemberRequest } from "../Requests/postRequests.js";
 
 function Members(){
 
@@ -54,10 +53,11 @@ function Members(){
 
         const member = {
               name: formData.get("memberName"),
-              age:0,
+              age:20,
               allergies:[],
-              height:0,
-              weight:0,
+              preference:[],
+              height:170,
+              weight:60,
               imageURL:'ftlogo.png'
         }
 
@@ -73,6 +73,18 @@ function Members(){
             console.error('Failed to Add new Member:', error);
           } 
       
+      }
+
+      const deleteMember = async (member) => {
+ 
+        try{
+          await deleteMemberRequest(member);
+          setUserData(await getUser());
+          setSelectedMember(null);
+
+        } catch(error) {
+          console.error(error);
+        }
       }
 
       useEffect(() => {
@@ -124,7 +136,7 @@ function Members(){
 
                 <div className="memberContent">
 
-                  {selectedMember && <Member key={selectedMember.id} member={selectedMember} updateMember={handleUpdateMember}/>}
+                  {selectedMember && <Member key={selectedMember.id} member={selectedMember} updateMember={handleUpdateMember} deleteMember={deleteMember}/>}
                   
                 </div>
 

@@ -55,6 +55,7 @@ p {
     height: 80%;
     width: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .userOption{

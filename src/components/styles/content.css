@@ -22,8 +22,9 @@
 }
 
 .dashboard{
-    height: 70%;
+    height: 93%;
     width: 100%;
+    display: flex;
 }
 .shoppingList {
     width: 100%;

@@ -31,7 +31,7 @@ function Settings({userData,updateUser}) {
             </div>
             <div className="settings-container">
                 <AccountSettings userData={userData} timeZoneOptions={timezones} updateUser={updateUser}/>
-                <SecuritySettings />                
+                <SecuritySettings user={userData} updateUser={updateUser}/>                
             </div>
         </div>
 
