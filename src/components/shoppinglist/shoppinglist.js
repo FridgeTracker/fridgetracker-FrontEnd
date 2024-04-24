@@ -124,6 +124,23 @@ function ShoppingList(){
     } 
 
   }
+
+  const deleteList = async (selectedList) => {
+
+    const form = {
+      s_listId:selectedList.s_listId
+    };
+
+    try{
+      axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteList",form);
+      const updatedUser = await getUser();
+      setUser(updatedUser);
+      setSelectedList(null);
+    }catch(error){
+      console.error(error);
+    }
+
+  }
     
 
 
@@ -207,7 +224,7 @@ function ShoppingList(){
             <div className='s_listOptions'>   
                   <div id="edit" onClick={() => addListItem()}>Add Item</div>        
                   <div id="import" onClick={() => saveNewList()} >Save Item</div>
-                  <div id="delete">Delete List</div>
+                  <div id="delete" onClick={() => selectedList && deleteList(selectedList)}>Delete List</div>
             </div>
 
         </div>
