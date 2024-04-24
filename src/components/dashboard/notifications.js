@@ -48,7 +48,7 @@ function Notifications ({user}) {
                     <td>{noti.sender === "Admin" ? 
                         <><img className={noti.sender} src={adminIcon} alt="admin"/> {noti.sender}</> : 
                         <><img className={noti.sender} src={serverIcon} alt="server"/> {noti.sender}</>}</td>
-                        
+
                     <td className={getClassForAlertType(noti.alert_type)}>{noti.alert_type}</td>
                         <td>{noti.message}</td>
                         <td>{formatDate(noti.dateTime)}</td>
