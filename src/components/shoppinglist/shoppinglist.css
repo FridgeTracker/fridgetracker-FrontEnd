@@ -179,3 +179,43 @@
 #editIcon:hover{
     background-color: rgb(15, 182, 0);
 }
+
+}
+
+.editModeButtons {
+    height: 8%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: white;
+}
+
+.discardbutton {
+    height: 80%;
+    width: 30%;
+    background-color: red; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.saveButton {
+    height: 80%;
+    width: 30%;
+    background-color: #1B8B60; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.addnewButton {
+    height: 80%;
+    width: 30%;
+    background-color: burlywood; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
