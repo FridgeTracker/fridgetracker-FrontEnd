@@ -126,17 +126,17 @@ h1{
     align-items: center;
 }
 .notiTable td:nth-child(1){
-    width: 28%;
+    width: 16%;
     padding-left: 2%;
 }
 .notiTable td:nth-child(2){
     width: 21%
 }
 .notiTable td:nth-child(3){
-    width:31.5%
+    width:35%
 }
 .notiTable td:nth-child(4){
-    width: 8%;
+    width: 7%;
 }
 
 .notiContent{
@@ -152,26 +152,27 @@ h1{
     width: 100%;
     font-size: 1.5vh;
     font-weight: bold;
-    align-items: center;
+}
+.notiTableContent img{
+    width: 3vh;
+    margin-right: .5vh;
 }
 .notiTableContent td:nth-child(1){
-    width: 4%;
-    overflow: hidden;
+    width: 25%;
     padding-left: 2%;
+    display: flex;
+    align-items: center;
 }
 
 .notiTableContent td:nth-child(2){
-    width: 16%;
+    width: 20%;
 }
 
 .notiTableContent td:nth-child(3){
-    width: 15%;
+    width: 50%;
 }
 .notiTableContent td:nth-child(4){
-    width: 20%;
-}
-.notiTableContent td:nth-child(5){
-    width: 8%;
+    width: 10%;
 }
 
 .Admin{
@@ -190,10 +191,10 @@ h1{
 color: green;
 } 
 .alertText {
-color: orange;
+color: red;
 } 
 .notificationText {
-color: red;
+color: orange;
 }
   
 

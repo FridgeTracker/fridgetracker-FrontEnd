@@ -20,6 +20,11 @@ function Notifications ({user}) {
       }
       console.log(user);
 
+      const formatDate = (dateTimeString) => {
+        const date = new Date(dateTimeString);
+        return date.toISOString().split('T')[0]; // Extracting the date part
+      };
+
     return (
         <div className="notificationWrapper">
             <div className="recordTopBarNoti">
@@ -41,17 +46,14 @@ function Notifications ({user}) {
                 {user && user.notification.map((noti) => (
                     <tr>
                     <td>{noti.sender === "Admin" ? 
-                        <img className={noti.sender} src={adminIcon} alt="admin"/>  : 
-                        <img className={noti.sender} src={serverIcon} alt="server"/>}</td>
-                    <td>
-                        {noti.sender}
-                    </td>
+                        <><img className={noti.sender} src={adminIcon} alt="admin"/> {noti.sender}</> : 
+                        <><img className={noti.sender} src={serverIcon} alt="server"/> {noti.sender}</>}</td>
+                        
                     <td className={getClassForAlertType(noti.alert_type)}>{noti.alert_type}</td>
                         <td>{noti.message}</td>
-                        <td>{noti.dateTime}</td>
+                        <td>{formatDate(noti.dateTime)}</td>
                     </tr>
-                    
-                
+                     
                 )
             )}
                 </tbody>
