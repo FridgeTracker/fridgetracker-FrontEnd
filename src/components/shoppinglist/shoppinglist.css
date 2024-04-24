@@ -90,7 +90,7 @@
 
 }
 .s_listOptions{
-    height: 8%;
+    height: 10%;
     width: 100;
     display: flex;
 
@@ -99,11 +99,9 @@
     height: 80%;
     width: 25%;
     margin:auto;
-    background-color: aqua;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10%;
     cursor: pointer;
 
 }
@@ -218,3 +216,16 @@
     cursor: pointer;
 }
 
+#listNameTitle{
+    background-color: transparent;
+    border: 1px solid black;
+    height: 3vh;
+    text-align: center;
+    font-size: 2vh;
+}
+
+#confirmImg{
+    margin-left: 1vh;
+    width: 3vh;
+    cursor: pointer;
+}

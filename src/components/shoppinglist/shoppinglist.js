@@ -7,6 +7,7 @@ import { addItemRequest, deleteItemRequest, updateItemRequest } from '../Request
 
 import editIcon from "../assets/editIcon.png";
 import binIcon from "../assets/binIcon.png";
+import conmfirmIcon from "../assets/confirmIcon.png";
 
 
 function ShoppingList(){
@@ -14,7 +15,12 @@ function ShoppingList(){
     const[user,setUser] = useState(null);
     const[selectedList, setSelectedList] = useState(null);
     const[editMode,setEditMode] = useState(null);
+
     const[updatedListName , setUpdatedListName] = useState(null);
+
+    const handleChange = (event) => {
+      setUpdatedListName(event.target.value);
+    };
 
     useEffect(() => {
       const checkUserRank = async () => {
@@ -29,18 +35,18 @@ function ShoppingList(){
     const createShoppingList = async () => {
 
         const formData = {
-
           s_listName:"New List 1",
-
           userID:user.id
         };
+        if(user.shoppingLists.length < 8){
 
-        try {
-          await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/create", formData);
-          setUser(await getUser());
-      } catch (error) {
-          console.error('Error:', error.response.data); // Log response data
-      }
+          try {
+              await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/create", formData);
+              setUser(await getUser());
+          } catch (error) {
+              console.error('Error:', error.response.data); // Log response data
+          }
+        }
     }
 
     const addListItem = async () => {
@@ -146,11 +152,10 @@ function ShoppingList(){
   
     
   const changeListName = async (updatedListName) => {
-    console.log(updatedListName);
+    
     const form = {
       s_listId: selectedList.s_listId,
-      //s_listName: updatedListName.s_listName
-      s_listName: "HELLO"
+      s_listName: updatedListName
     };
   
     try {
@@ -174,14 +179,21 @@ function ShoppingList(){
               <div className="listNameTitle">Shopping List</div>
 
                 {user && user.shoppingLists.map((list) => 
-                  <div className='listName' onClick={() => setSelectedList(list)}>{list.s_listName}</div>
+                  <div className='listName' onClick={() => {setSelectedList(list); setUpdatedListName(list.s_listName)}}>{list.s_listName}</div>
                 )}
 
               <div className="createNewS_list" onClick={() => createShoppingList()}>Create New List</div>
             </div>
 
             <div className="individual_shoppingList">
-                <div className='individualS_listTitle' onClick={() => changeListName(selectedList)}>{selectedList && selectedList.s_listName}</div>
+                <div className='individualS_listTitle' onClick={() => changeListName(selectedList)}>
+                  {selectedList && (
+                  <>
+                    <input type="text" onChange={handleChange} id="listNameTitle" value={updatedListName}/>
+                    <img id="confirmImg" src={conmfirmIcon} alt="confirm" onClick={() => changeListName(updatedListName)}/>
+                  </>
+                )}
+                </div>
                     <div className='s_listItem'>
                         <div className='ItemTitle'>
                             <table id="titleTable">
