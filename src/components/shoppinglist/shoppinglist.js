@@ -148,7 +148,9 @@ function ShoppingList(){
   const changeListName = async (updatedListName) => {
     console.log(updatedListName);
     const form = {
-      s_listName: updatedListName.s_listName
+      s_listId: selectedList.s_listId,
+      //s_listName: updatedListName.s_listName
+      s_listName: "HELLO"
     };
   
     try {
