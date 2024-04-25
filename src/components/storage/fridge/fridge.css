@@ -176,10 +176,10 @@
 .addItemButton{
     color: var(--text-color);
     width: 90%;
-    height: 7%;
+    height: 5%;
     margin: 5% 5%;
-    margin-top: 20px;
-    background-color: #8da19f;
+    margin-top: 2%;
+    background-color: #afdaab;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -187,7 +187,7 @@
 }
 
 .addItemButton img{
-    height:3vh;
+    height:2vh;
 }
 
 

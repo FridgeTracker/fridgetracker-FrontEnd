@@ -91,7 +91,7 @@ const handleUpdateFridge = async () => {
         const updatedStorage = user_data.fridges.find(storage => storage.id === selectedStorage.id) || user_data.freezers.find(storage => storage.id === selectedStorage.id);
 
         if (updatedStorage) {
-          setselectedStorage(updatedStorage); // Update selectedStorage with the new data
+          setselectedStorage(updatedStorage);
 
           if (user_data.fridges.find(storage => storage.id === selectedStorage.id)) {
             setUserData((userData) => ({
@@ -114,7 +114,6 @@ const handleUpdateFridge = async () => {
         }
       }
       
-    setselectedStorage(null);
     setItem(null);
     setAdd(null);
 
@@ -181,8 +180,7 @@ const handleDeleteStorage = async (deleteFridge) => {
 
   try {
 
-    const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/${selectedDelete}/${deleteFridge.id}`);
-    console.log(response);
+    await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/${selectedDelete}/${deleteFridge.id}`);
     handleUpdateFridge();
 
   } 
@@ -263,7 +261,7 @@ const handleDeleteStorage = async (deleteFridge) => {
         
         <div className='itemListContainer'>
             <p id="storageTitle">Name: {selectedStorage ? selectedStorage.storageName : 'Not Selected'}
-            {selectedStorage && <img id="deleteFridge" onClick={() => handleDeleteStorage(selectedStorage)} src={deleteIcon} alt="delete" />}
+            {selectedStorage && <img id="deleteFridge" onClick={() => {handleDeleteStorage(selectedStorage); setselectedStorage(null)}} src={deleteIcon} alt="delete" />}
             </p>
             <div className = "itemWrapper">
               <div className='itemListHolder'>
@@ -276,9 +274,11 @@ const handleDeleteStorage = async (deleteFridge) => {
                       <img src={accessItem} alt="a"/>
                     </div>
                   ))}
-                  <div className="addItemButton" onClick={() => {setAdd(true); setItem(null);}}>
-                    <p><img src={addImage} alt='add' className='addItem' /></p>
-                  </div>
+                  {selectedStorage.items.length < selectedStorage.capacity &&
+                    <div className="addItemButton" onClick={() => {setAdd(true); setItem(null);}}>
+                      <p><img src={addImage} alt='add' className='addItem' /></p>
+                    </div>
+                  }
                 </>
               }
 

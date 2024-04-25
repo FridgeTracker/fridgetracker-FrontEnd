@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import "./item.css";
-import Example from "./searchSuggestion";
+import ComboBox from "./searchSuggestion";
 import { addItemRequest, deleteItemRequest, updateItemRequest } from "../Requests/postRequests";
 
 const Item = ({Item, storageId, updateFridge}) => {
@@ -145,7 +145,7 @@ const Item = ({Item, storageId, updateFridge}) => {
                 </div>
                 <div className="itemFormContainer">
 
-                   <Example handleSubmit={handleSubmit}/>
+                   <ComboBox handleSubmit={handleSubmit}/>
                    
                 </div>
             </>
