@@ -1,266 +1,327 @@
 // src/services/mealService.js
+let base_url = "https://agile-atoll-76917-ba182676f53b.herokuapp.com/";
 
+//Mock data for members
 const members = [
   {
-    id: 1,
-    memberName: "Member 1",
-    age: 25,
-    allergies: ["chicken"],
+    id: "6f3cbbd0-8f99-479f-8ad3-e0761db5ec81",
+    name: "Ranko",
+    age: 20,
+    allergies: [],
+    preference: [],
+    height: 170,
+    weight: 60,
+    imageURL: "https://api.dicebear.com/8.x/adventurer/svg?seed=Lilly",
   },
   {
-    id: 2,
-    memberName: "Member 2",
-    age: 30,
-    allergies: ["peanuts", "shellfish", "Bread"],
+    id: "5ea8e200-e60b-49ff-9223-2858b06bbe43",
+    name: "Poh",
+    age: 20,
+    allergies: [],
+    preference: [],
+    height: 170,
+    weight: 60,
+    imageURL: "https://api.dicebear.com/8.x/adventurer/svg?seed=Lily",
   },
-  { id: 3, memberName: "Member 3", age: 28, allergies: [] },
-  { id: 4, memberName: "Member 4", age: 22, allergies: ["gluten"] },
-  { id: 5, memberName: "Member 5", age: 35, allergies: ["bee stings"] },
-  { id: 6, memberName: "Member 6", age: 40, allergies: ["dairy", "soy"] },
+  {
+    id: "c03b3300-fe16-4617-8b41-77ba3fd87baa",
+    name: "Sreeram",
+    age: 20,
+    allergies: [],
+    preference: [],
+    height: 170,
+    weight: 60,
+    imageURL: "https://api.dicebear.com/8.x/adventurer/svg?seed=Bandit",
+  },
+  {
+    id: "27eaabf4-e2df-4bd3-b6c3-38b08aa3e796",
+    name: "Christine",
+    age: 20,
+    allergies: [],
+    preference: [],
+    height: 170,
+    weight: 60,
+    imageURL: "https://api.dicebear.com/8.x/adventurer/svg?seed=Callie",
+  },
+  {
+    id: "bb159d3a-f464-44d4-a8c5-9b334e12d8a8",
+    name: "Thomas",
+    age: 20,
+    allergies: ["Duck"],
+    preference: ["Chicken breast", "Peanuts"],
+    height: 170,
+    weight: 60,
+    imageURL: "https://api.dicebear.com/8.x/adventurer/svg?seed=Nala",
+  },
 ];
 
-let mockMeals = [
+// Mock data for fridges and freezers
+const mockFridges = [
   {
-    PlanID: 1,
-    MealType: "Breakfast",
-    MealName: "Roast Turkey",
-    Image:
-      "https://hips.hearstapps.com/hmg-prod/images/kfc-nuggets-1-6421f3b4547e8.jpg",
-    NutritionalInformation: {
-      Calories: "500",
-      Protein: "42g",
-      Carbs: "0g",
-      Fat: "35g",
-    },
-    Ingredients: [
-      "Whole chicken",
-      "Extra-virgin olive oil",
-      "Italian seasoning",
-      "Kosher salt",
-      "Freshly ground black pepper",
+    id: "2176cb2a-81f3-445a-9e21-2b35ebaff56c",
+    storageName: "F1",
+    capacity: 1,
+    type: "Fridge",
+    items: [
+      {
+        itemID: 90,
+        foodName: "Applesauce",
+        quantity: 10,
+        expiryDate: "2024-04-25",
+        foodID: {
+          id: 1,
+          per100grams: "100g",
+          foodCategory: "CannedFruit",
+          foodItem: "Applesauce",
+          cals_per100grams: "62 cal",
+          kj_per100grams: "260 kJ",
+        },
+      },
+      {
+        itemID: 101,
+        foodName: "Chicken breast",
+        quantity: 5,
+        expiryDate: "2024-04-30",
+        foodID: {
+          id: 562,
+          per100grams: "100g",
+          foodCategory: "ColdCuts&LunchMeat",
+          foodItem: "Chicken breast",
+          cals_per100grams: "79 cal",
+          kj_per100grams: "332 kJ",
+        },
+      },
+      {
+        itemID: 102,
+        foodName: "Peanuts",
+        quantity: 2,
+        expiryDate: "2024-05-15",
+        foodID: {
+          id: 1547,
+          per100grams: "100g",
+          foodCategory: "Legumes",
+          foodItem: "Peanuts",
+          cals_per100grams: "567 cal",
+          kj_per100grams: "2381 kJ",
+        },
+      },
+      {
+        itemID: 103,
+        foodName: "Bell peppers",
+        quantity: 3,
+        expiryDate: "2024-04-28",
+        foodID: {
+          id: 2149,
+          per100grams: "100g",
+          foodCategory: "Vegetables",
+          foodItem: "Bell peppers",
+          cals_per100grams: "260 cal",
+          kj_per100grams: "1224 kJ",
+        },
+      },
+      {
+        itemID: 104,
+        foodName: "Dried chili peppers",
+        quantity: 1,
+        expiryDate: "2024-06-01",
+        foodID: {
+          id: 2171,
+          per100grams: "100g",
+          foodCategory: "Vegetables",
+          foodItem: "Dried chili peppers",
+          cals_per100grams: "100 cal",
+          kj_per100grams: "985 kJ",
+        },
+      },
+      {
+        itemID: 105,
+        foodName: "Soy sauce",
+        quantity: 1,
+        expiryDate: "2024-07-01",
+        foodID: {
+          id: 2210,
+          per100grams: "100g",
+          foodCategory: "Condiments",
+          foodItem: "Soy sauce",
+          cals_per100grams: "275 cal",
+          kj_per100grams: "627 kJ",
+        },
+      },
     ],
-    PreparationMethod:
-      "Preheat the oven to 425°F (220°C), place a baking rack in the lower ⅓ of the oven, and bring the chicken to room temperature. Pat the chicken dry with paper towels. Place the chicken breast side up in an oven-safe pan (I prefer cast iron). Truss the legs. Drizzle with oil and use your hands to rub it.",
   },
+  // ... (other fridges)
+];
+
+const mockFreezers = [
   {
-    PlanID: 2,
-    MealType: "Lunch",
-    MealName: "Quinoa Salad",
-    Image: "quinoa-salad.jpg",
-    NutritionalInformation: {
-      Calories: "350",
-      Protein: "8g",
-      Carbs: "45g",
-      Fat: "15g",
-    },
-    Ingredients: [
-      "Quinoa",
-      "Cucumbers",
-      "Cherry tomatoes",
-      "Feta cheese",
-      "Lemon vinaigrette",
+    id: "3062e7e8-6a83-4729-aeec-a35576930949",
+    storageName: "Freezer 1",
+    capacity: 10,
+    type: "Freezer",
+    items: [
+      {
+        itemID: 94,
+        foodName: "Applesauce",
+        quantity: 9,
+        expiryDate: "2024-04-23",
+        foodID: {
+          id: 1,
+          per100grams: "100g",
+          foodCategory: "CannedFruit",
+          foodItem: "Applesauce",
+          cals_per100grams: "62 cal",
+          kj_per100grams: "260 kJ",
+        },
+      },
     ],
-    PreparationMethod:
-      "Rinse quinoa under cold running water. Cook quinoa as directed on package. Allow to cool. Combine with diced cucumbers, cherry tomatoes, crumbled feta cheese, and dress with lemon vinaigrette.",
   },
-  {
-    PlanID: 3,
-    MealType: "Dinner",
-    MealName: "Grilled Salmon",
-    Image: "grilled-salmon.jpg",
-    NutritionalInformation: {
-      Calories: "470",
-      Protein: "50g",
-      Carbs: "0g",
-      Fat: "28g",
-    },
-    Ingredients: [
-      "Salmon fillets",
-      "Extra-virgin olive oil",
-      "Lemon slices",
-      "Dill",
-      "Salt and pepper",
-    ],
-    PreparationMethod:
-      "Preheat grill to medium-high heat. Brush salmon fillets with olive oil and season with salt and pepper. Grill skin-side down for 6-8 minutes. Flip over onto lemon slices and grill for an additional 3-4 minutes.",
-  },
-  {
-    PlanID: 4,
-    MealType: "Snack",
-    MealName: "Greek Yogurt with Honey",
-    Image: "greek-yogurt-honey.jpg",
-    NutritionalInformation: {
-      Calories: "180",
-      Protein: "10g",
-      Carbs: "24g",
-      Fat: "6g",
-    },
-    Ingredients: ["Greek yogurt", "Honey", "Almond slices", "Blueberries"],
-    PreparationMethod:
-      "Spoon Greek yogurt into a bowl, drizzle with honey, and top with almond slices and blueberries.",
-  },
-  {
-    PlanID: 5,
-    MealType: "Breakfast",
-    MealName: "Avocado Toast",
-    Image: "avocado-toast.jpg",
-    NutritionalInformation: {
-      Calories: "320",
-      Protein: "9g",
-      Carbs: "30g",
-      Fat: "20g",
-    },
-    Ingredients: [
-      "Whole grain bread",
-      "Ripe avocado",
-      "Lemon juice",
-      "Salt and pepper",
-      "Red pepper flakes",
-    ],
-    PreparationMethod:
-      "Toast whole grain bread to your liking. Mash ripe avocado with lemon juice, salt, and pepper. Spread on toast and sprinkle with red pepper flakes.",
-  },
-  {
-    PlanID: 6,
-    MealType: "Lunch",
-    MealName: "Chicken Caesar Wrap",
-    Image: "chicken-caesar-wrap.jpg",
-    NutritionalInformation: {
-      Calories: "560",
-      Protein: "36g",
-      Carbs: "40g",
-      Fat: "30g",
-    },
-    Ingredients: [
-      "Grilled chicken breast",
-      "Romaine lettuce",
-      "Caesar dressing",
-      "Parmesan cheese",
-      "Whole wheat wraps",
-    ],
-    PreparationMethod:
-      "Chop grilled chicken breast and romaine lettuce. Toss with Caesar dressing and Parmesan cheese. Fill whole wheat wraps with the mixture and roll tightly.",
-  },
-  {
-    PlanID: 7,
-    MealType: "Dinner",
-    MealName: "Beef Stir-Fry",
-    Image: "beef-stir-fry.jpg",
-    NutritionalInformation: {
-      Calories: "610",
-      Protein: "55g",
-      Carbs: "20g",
-      Fat: "35g",
-    },
-    Ingredients: [
-      "Sliced beef",
-      "Broccoli florets",
-      "Carrot slices",
-      "Soy sauce",
-      "Ginger",
-    ],
-    PreparationMethod:
-      "Heat a pan over high heat. Add sliced beef and vegetables. Stir-fry until beef is browned. Add soy sauce and ginger, cook for an additional minute.",
-  },
-  {
-    PlanID: 8,
-    MealType: "Snack",
-    MealName: "Protein Smoothie",
-    Image: "protein-smoothie.jpg",
-    NutritionalInformation: {
-      Calories: "220",
-      Protein: "20g",
-      Carbs: "18g",
-      Fat: "8g",
-    },
-    Ingredients: [
-      "Scoop of protein powder",
-      "Almond milk",
-      "Frozen berries",
-      "Spinach",
-      "Chia seeds",
-    ],
-    PreparationMethod:
-      "Blend protein powder, almond milk, frozen berries, spinach, and chia seeds until smooth.",
-  },
-  {
-    PlanID: 9,
-    MealType: "Breakfast",
-    MealName: "Omelette",
-    Image: "omelette.jpg",
-    NutritionalInformation: {
-      Calories: "400",
-      Protein: "22g",
-      Carbs: "2g",
-      Fat: "34g",
-    },
-    Ingredients: [
-      "Eggs",
-      "Milk",
-      "Shredded cheese",
-      "Diced tomatoes",
-      "Spinach",
-    ],
-    PreparationMethod:
-      "Whisk eggs and milk together. Pour into a heated skillet. Add cheese, tomatoes, and spinach before the eggs set. Fold omelette in half and cook until set.",
-  },
-  {
-    PlanID: 10,
-    MealType: "Dinner",
-    MealName: "Pasta Primavera",
-    Image: "pasta-primavera.jpg",
-    NutritionalInformation: {
-      Calories: "480",
-      Protein: "15g",
-      Carbs: "75g",
-      Fat: "15g",
-    },
-    Ingredients: [
-      "Pasta",
-      "Assorted vegetables (zucchini, bell peppers, carrots)",
-      "Olive oil",
-      "Garlic",
-      "Parmesan cheese",
-    ],
-    PreparationMethod:
-      "Cook pasta according to package directions. Sauté vegetables in olive oil and garlic until tender. Toss cooked pasta with vegetables and top with Parmesan cheese.",
-  },
+  // ... (other freezers)
 ];
 
 const getMeals = async () => {
-  return Promise.resolve(mockMeals);
+  try {
+    const response = await fetch(base_url + "meal_plans");
+    if (!response.ok) {
+      throw new Error(`HTTP error ${response.status}`);
+    }
+    const data = await response.json();
+    if (!Array.isArray(data)) {
+      throw new Error("Malformed response: expected an array");
+    }
+    return data;
+  } catch (error) {
+    console.error("Error fetching meals:", error);
+    // Handle error, e.g., display a user-friendly error message or redirect to an error page
+    return [];
+  }
 };
 
 const getMealsFilteredByMemberAllergies = (memberId) => {
   const member = members.find((m) => m.id === memberId);
-  if (!member) return Promise.resolve(mockMeals); // If member not found, return all meals
+  if (!member) return Promise.resolve(getMeals()); // Return all meals if member not found
 
-  // Lowercase all member allergies for case-insensitive comparison
-  const memberAllergies = member.allergies.map((allergy) =>
-    allergy.toLowerCase()
-  );
-
-  // Filter meals where ingredients do not include any of the member's allergies
-  const filteredMeals = mockMeals.filter((meal) => {
-    return !meal.Ingredients.some((ingredient) =>
-      memberAllergies.includes(ingredient.toLowerCase())
+  return getMeals().then((meals) => {
+    // Filter meals by checking that none of the member's allergies are in the meal's ingredients
+    const memberAllergies = member.allergies.map((allergy) =>
+      allergy.toLowerCase()
     );
+    const filteredMeals = meals.filter(
+      (meal) =>
+        !meal.ingredients.some((ingredient) =>
+          memberAllergies.includes(ingredient.toLowerCase())
+        )
+    );
+
+    return Promise.resolve(filteredMeals);
+  });
+};
+
+const getMealById = (mealId) => {
+  return getMeals().then((meals) => {
+    const meal = meals.find((meal) => meal.id === mealId);
+    return Promise.resolve(meal); // Return the found meal or undefined
+  });
+};
+
+// Assuming that we have an `ingredientAvailability` function that checks if ingredients are available
+// For the sake of simulation, we'll just assume all ingredients are available if they are not allergens
+// Simulated function; need toreplace with actual availability check
+/*
+const ingredientAvailability = (ingredients) => {
+  // Simulated check; replace with actual availability check
+  return ingredients.length <= 5;
+};
+*/
+const ingredientAvailability = (ingredients) => {
+  // Check if all ingredients are available in the fridges and freezers
+  const availableIngredients = new Set();
+
+  // Check fridges
+  mockFridges.forEach((fridge) => {
+    fridge.items.forEach((item) => {
+      availableIngredients.add(item.foodName.toLowerCase());
+    });
   });
 
-  return Promise.resolve(filteredMeals);
+  // Check freezers
+  mockFreezers.forEach((freezer) => {
+    freezer.items.forEach((item) => {
+      availableIngredients.add(item.foodName.toLowerCase());
+    });
+  });
+
+  // Check if all ingredients are available
+  return ingredients.every((ingredient) =>
+    availableIngredients.has(ingredient.toLowerCase())
+  );
+};
+const getMealsFilteredByMember = (memberId) => {
+  const member = members.find((m) => m.id === memberId);
+  if (!member) {
+    return Promise.resolve({
+      preferenceMeals: [],
+      readyToEatMeals: [],
+      ingredientsNeededMeals: [],
+    });
+  }
+
+  const allergies = member.allergies.map((allergy) => allergy.toLowerCase());
+  const preferences = (member.preference || []).map((preference) =>
+    preference.toLowerCase()
+  );
+
+  return getMeals().then((meals) => {
+    // Separate meals into categories
+    let preferenceMeals = [];
+    let readyToEatMeals = [];
+    let ingredientsNeededMeals = [];
+
+    meals.forEach((meal) => {
+      const mealIngredients = meal.ingredients.map((ingredient) =>
+        ingredient.toLowerCase()
+      );
+      const hasAllergen = mealIngredients.some((ingredient) =>
+        allergies.includes(ingredient)
+      );
+      const isReadyToEat = ingredientAvailability(mealIngredients);
+      const hasPreference = mealIngredients.some((ingredient) =>
+        preferences.includes(ingredient)
+      );
+
+      if (!hasAllergen) {
+        if (hasPreference) {
+          preferenceMeals.push(meal);
+        }
+        if (isReadyToEat) {
+          readyToEatMeals.push(meal);
+        } else {
+          ingredientsNeededMeals.push(meal);
+        }
+      }
+    });
+
+    // Use a timestamp or another method for unique keys if needed
+    preferenceMeals = preferenceMeals.map((meal) => ({ ...meal }));
+    readyToEatMeals = readyToEatMeals.map((meal) => ({ ...meal }));
+    ingredientsNeededMeals = ingredientsNeededMeals.map((meal) => ({
+      ...meal,
+    }));
+
+    return Promise.resolve({
+      preferenceMeals,
+      readyToEatMeals,
+      ingredientsNeededMeals,
+    });
+  });
 };
 
-const getMealById = (planId) => {
-  const meal = mockMeals.find((meal) => meal.PlanID === planId);
-  return Promise.resolve(meal); // Wrapping in a promise to simulate async operation
-};
-
-// Update your mealService object to include the new function
 const mealService = {
   members,
+  ingredientAvailability,
   getMeals,
   getMealsFilteredByMemberAllergies,
-  getMealById, // Include the new function here
+  getMealsFilteredByMember,
+  getMealById,
 };
 
 export default mealService;
