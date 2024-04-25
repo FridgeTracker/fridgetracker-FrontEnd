@@ -1,173 +1,253 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import mealService from "../../services/mealService";
 import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Grid,
-  Container,
-  Pagination,
   Box,
   Button,
-  ButtonGroup,
+  Card,
+  CardMedia,
+  Container,
+  List,
+  ListItem,
+  Typography,
+  Grid,
+  Chip,
 } from "@mui/material";
-import MealDetails from "./MealDetails"; // Adjust the import path as necessary
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { styled } from "@mui/material/styles";
 
-import mealService from "../../services/mealService"; // Adjust the import path as necessary
+const StyledCard = styled(Card)(({ theme }) => ({
+  backgroundColor: "transparent",
+  boxShadow: "none",
+  padding: theme.spacing(2),
+}));
 
-const MealList = ({userData}) => {
+const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
+  height: 400,
+  width: 400,
+  borderRadius: "50%",
+  margin: "0 auto",
+}));
 
-  const [meals, setMeals] = useState([]);
-  const [selectedMeal, setSelectedMeal] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedMemberId, setSelectedMemberId] = useState(1); // Start with the first member
-  const [mealsPerPage] = useState(8); // Adjust the number of items per page as needed
-  const [members] = useState(userData.members);
+const MealTitle = styled(Typography)(({ theme }) => ({
+  backgroundColor: "#1b8b60",
+  color: "#fff",
+  padding: theme.spacing(1),
+  textAlign: "right",
+}));
 
-  // Find the selected member's details using the selectedMemberId
-  const selectedMember = members.find(
-    (member) => member.id === selectedMemberId
+const IngredientsList = styled(List)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  display: "flex",
+  flexDirection: "column",
+  gap: theme.spacing(1),
+  alignItems: "flex-end",
+}));
+
+const AvailabilityIndicator = styled("span")(({ theme, available }) => ({
+  height: "15px",
+  width: "15px",
+  borderRadius: "50%",
+  display: "inline-block",
+  marginLeft: theme.spacing(1),
+  backgroundColor: available
+    ? theme.palette.success.main
+    : theme.palette.error.main,
+}));
+
+const IngredientItem = styled("div")({
+  display: "flex",
+  justifyContent: "flex-end",
+  alignItems: "center",
+  marginBottom: "8px",
+});
+
+const NutritionInfo = styled(Box)(({ theme }) => ({
+  display: "flex",
+  lineHeight: "2",
+  justifyContent: "space-between",
+  borderTop: "1px solid #ccc",
+  borderBottom: "1px solid #ccc",
+  "& > div": {
+    borderRight: "1px solid #ccc",
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    "&:last-child": {
+      borderRight: "none",
+    },
+  },
+}));
+
+const NutritionLabel = styled(Typography)(({ theme }) => ({
+  fontWeight: "bold",
+}));
+
+/*Simulated function; need to replace with actual availability check
+const MealDetails = ({ meal, onGoBack }) => {
+  const hasAllIngredientsAvailable = meal.ingredients.every((ingredient) =>
+    ingredientAvailability(ingredient)
+  );
+  */
+const MealDetails = ({ meal, onGoBack }) => {
+  const [availability, setAvailability] = useState({});
+
+  useEffect(() => {
+    const checkAvailability = async () => {
+      const availabilityResults = {};
+      for (const ingredient of meal.ingredients) {
+        availabilityResults[ingredient] =
+          await mealService.ingredientAvailability([ingredient]); // Assuming ingredientAvailability takes an array
+      }
+      setAvailability(availabilityResults);
+    };
+
+    checkAvailability();
+  }, [meal.ingredients]);
+
+  // Calculate if all ingredients are available
+  const hasAllIngredientsAvailable = meal.ingredients.every(
+    (ingredient) => availability[ingredient]
   );
 
-  useEffect(() => {
-    mealService.getMeals().then(setMeals);
-  }, []);
-
-  useEffect(() => {
-    mealService
-      .getMealsFilteredByMemberAllergies(selectedMemberId)
-      .then(setMeals);
-  }, [selectedMemberId]);
-
-  const handleMealSelect = (meal) => {
-    setSelectedMeal(meal);
-  };
-
-  const handleGoBack = () => {
-    setSelectedMeal(null);
-  };
-
-  // Calculate the currently displayed meals
-  const indexOfLastMeal = currentPage * mealsPerPage;
-  const indexOfFirstMeal = indexOfLastMeal - mealsPerPage;
-  const currentMeals = meals.slice(indexOfFirstMeal, indexOfLastMeal);
-
-  // Change page
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  // Calculate the total number of pages
-  const pageCount = Math.ceil(meals.length / mealsPerPage);
-
-  if (selectedMeal) {
-    return (
-      <Container>
-        <MealDetails
-          meal={selectedMeal}
-          onGoBack={handleGoBack}
-          memberName={selectedMember.name}
-        />
-      </Container>
-    );
-  }
-
   return (
-    <Container sx={{ marginTop: 5 }}>
-      {/* Horizontal list of member filters */}
-      <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
-        <ButtonGroup
-          variant="text"
-          aria-label="text button group"
-          sx={{
-            ".MuiButton-root": {
-              borderRadius: 0,
-              color: "#1b8b60",
-              "&.MuiButton-contained": {
-                backgroundColor: "#1b8b60",
-                color: "#fff",
-                "&:hover": {
-                  backgroundColor: "#15724e",
-                },
-              },
-              "&:hover": {
-                backgroundColor: "#1b8b60",
-                color: "#fff",
-                opacity: 0.8,
-              },
-            },
-          }}
+    <Container sx={{ maxWidth: "none" }}>
+      <Box sx={{ my: 4, display: "flex", alignItems: "center" }}>
+        <Button
+          startIcon={<ArrowBackIosNewIcon />}
+          onClick={onGoBack}
+          sx={{ color: "text.primary", mb: 2 }}
         >
-          {members.map((member) => (
-            <Button
-              key={member.id}
-              onClick={() => setSelectedMemberId(member.id)}
-              variant={selectedMemberId === member.id ? "contained" : "text"}
-            >
-              {member.name}
-            </Button>
-          ))}
-        </ButtonGroup>
+          Back to Meals
+        </Button>
       </Box>
 
-      <Grid container spacing={4}>
-        {currentMeals.map((meal) => (
-          <Grid item key={meal.PlanID} xs={12} sm={6} md={4} lg={3}>
-            <Card raised onClick={() => handleMealSelect(meal)}>
-              <CardMedia
-                component="img"
-                height="194"
-                image={
-                  meal.Image ||
-                  "https://hips.hearstapps.com/hmg-prod/images/kfc-nuggets-1-6421f3b4547e8.jpg"
-                } // Ensure this points to a valid image or placeholder
-                alt={meal.MealName}
-              />
-              <CardContent sx={{ textAlign: "center" }}>
-                <Typography variant="h6">{meal.MealName}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: 3,
-          paddingBottom: 3,
-        }}
+      <Grid
+        container
+        spacing={3}
+        sx={{ flexWrap: "nowrap", alignContent: "center" }}
       >
-        <Pagination
-          count={pageCount}
-          page={currentPage}
-          onChange={handleChangePage}
-          sx={{
-            ".MuiPaginationItem-root": {
-              borderRadius: 0,
-            },
-            ".Mui-selected": {
-              backgroundColor: "#1b8b60",
-              "&:hover": {
-                backgroundColor: "#15724e",
-              },
-            },
-            ".MuiPaginationItem-ellipsis": {
-              color: "text.secondary",
-            },
-            ".MuiButtonBase-root": {
-              color: "#1b8b60",
-              "&:hover": {
-                backgroundColor: "#1b8b60",
-                color: "#fff",
-                opacity: 0.8,
-              },
-            },
-          }}
-        />
-      </Box>
+        <Grid item xs={12} md={4}>
+          <StyledCard>
+            <MealTitle variant="h4" component="div" gutterBottom>
+              {meal.mealName}
+            </MealTitle>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textAlign={"right"}
+            >
+              {meal.description}
+            </Typography>
+            <IngredientsList>
+              {meal.ingredients.map((ingredient, index) => (
+                <IngredientItem key={index}>
+                  <Typography variant="body1">{ingredient}</Typography>
+                  <AvailabilityIndicator
+                    available={availability[ingredient] || false}
+                  />
+                </IngredientItem>
+              ))}
+            </IngredientsList>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+              <Button
+                variant="contained"
+                disabled={hasAllIngredientsAvailable}
+                sx={{
+                  backgroundColor: hasAllIngredientsAvailable
+                    ? "rgba(0, 0, 0, 0.12)"
+                    : "#1b8b60",
+                  borderRadius: 0,
+                  "&:hover": {
+                    backgroundColor: hasAllIngredientsAvailable
+                      ? "rgba(0, 0, 0, 0.12)"
+                      : "#15724e",
+                  },
+                }}
+              >
+                Add to List
+              </Button>
+            </Box>
+          </StyledCard>
+        </Grid>
+
+        <Grid item xs={12} md={4.5}>
+          <StyledCard>
+            <StyledCardMedia
+              component="img"
+              image={meal.mealImage || "defaultMealImage.jpg"}
+              alt={meal.mealName}
+            />
+          </StyledCard>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <StyledCard>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              sx={{ color: "#1b8b60" }}
+            >
+              Nutritional Facts
+            </Typography>
+            <NutritionInfo>
+              <div>
+                <NutritionLabel>Fat:</NutritionLabel>
+                <Typography>
+                  {meal.nutritionalInformation?.Fat || "N/A"}
+                </Typography>
+              </div>
+              <div>
+                <NutritionLabel>Calories:</NutritionLabel>
+                <Typography>
+                  {meal.nutritionalInformation?.Calories || "N/A"}
+                </Typography>
+              </div>
+              <div>
+                <NutritionLabel>Protein:</NutritionLabel>
+                <Typography>
+                  {meal.nutritionalInformation?.Protein || "N/A"}
+                </Typography>
+              </div>
+            </NutritionInfo>
+
+            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Button
+                variant="contained"
+                disabled={!hasAllIngredientsAvailable}
+                sx={{
+                  backgroundColor: !hasAllIngredientsAvailable
+                    ? "rgba(0, 0, 0, 0.12)"
+                    : "#1b8b60",
+                  borderRadius: 0,
+                  "&:hover": {
+                    backgroundColor: !hasAllIngredientsAvailable
+                      ? "rgba(0, 0, 0, 0.12)"
+                      : "#15724e",
+                  },
+                }}
+              >
+                Consume
+              </Button>
+            </Box>
+          </StyledCard>
+        </Grid>
+      </Grid>
     </Container>
   );
 };
 
-export default MealList;
+// Simulated function; need to replace with actual availability check
+/*
+const ingredientAvailability = (ingredient) => {
+  // Simulated check; replace with actual availability check
+  console.log(ingredient);
+  return Math.random() > 0.3; // 70% chance of ingredient being available
+};
+*/
+
+export default MealDetails;
