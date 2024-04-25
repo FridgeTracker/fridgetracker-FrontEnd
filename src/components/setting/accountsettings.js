@@ -5,6 +5,7 @@ import { getAuthToken } from '../authService.js';
 
 import UploadWidget from './UploadWidget.js';
 import { updateUserRequest } from '../Requests/postRequests.js';
+import axios from 'axios';
 
 function AccountSettings({userData,timeZoneOptions,updateUser}) {
 
@@ -58,6 +59,16 @@ function AccountSettings({userData,timeZoneOptions,updateUser}) {
         setSelectedTimeZone(event.target.value);
     }
 
+    const handleFill = async () => {
+        try{
+            setMessage("Filling Fridge/Freezer")
+            const response = await axios.post(`http://localhost:8080/api/uploadFridgeAndFreezer/${userData.id}`);
+            setMessage(response.data);
+        } catch(error){
+            console.error(error);
+        }
+    }
+
     return (
         <div className="account-settings">
             <h3>Account Settings</h3>
@@ -93,7 +104,8 @@ function AccountSettings({userData,timeZoneOptions,updateUser}) {
                 </div>
         <div>Password:<input type="password" name="password" id="Password"/></div>
         <br></br>
-            <button id="update-button" >Update Information</button>
+            <button type="submit" id="update-button" >Update Information</button>
+            <button type="button" id="uploadItems" onClick={handleFill} >Fill Fridge/Freezer</button>
         </form>
         <span id="updateMessage">
             {message && message}
