@@ -21,10 +21,10 @@ import MealDetails from "./MealDetails";
 import mealService from "../../services/mealService";
 import MealCard from "./MealCard"; 
 
-const MealList = () => {
+const MealList = ({userData}) => {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedMemberId, setSelectedMemberId] = useState("");
-  const [members] = useState(mealService.members);
+  const [members] = useState(userData.members);
 
   const [preferenceMeals, setPreferenceMeals] = useState([]);
   const [readyToEatMeals, setReadyToEatMeals] = useState([]);
@@ -128,7 +128,7 @@ const MealList = () => {
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                     {member.imageURL && (
                       <Avatar
-                        src={member.imageURL}
+                        src={require(`../assets/memberIcons/${member.imageURL}`)}
                         sx={{ width: 24, height: 24, marginRight: 1 }}
                       />
                     )}
@@ -146,7 +146,7 @@ const MealList = () => {
               <MenuItem key={member.id} value={member.id}>
                 <ListItemIcon>
                   <Avatar
-                    src={member.imageURL}
+                    src={require(`../assets/memberIcons/${member.imageURL}`)}
                     sx={{ width: 24, height: 24 }}
                   />
                 </ListItemIcon>

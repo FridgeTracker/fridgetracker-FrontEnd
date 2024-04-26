@@ -24,7 +24,7 @@ h1{
     background-color: white;
     height: 50%;
     width: 95%;
-    border-radius: 1vh;
+    border-radius: .5vh;
 }
 
 .recordTopBar{
@@ -109,7 +109,7 @@ h1{
     background-color: white;
     height: 41%;
     width: 95%;
-    border-radius: 1vh;
+    border-radius: .4vh;
 }
 
 
@@ -206,7 +206,7 @@ color: orange;
     background-color: rgb(243, 243, 243);
     height: 62%;
     width: 93%;
-    border-radius: 1vh;
+    border-radius: .4vh;
     position: relative;
 }
 
@@ -250,7 +250,7 @@ color: orange;
     margin-top: 2%;
     height: 15%;
     width: 95%;
-    border-radius: 1vh;
+    border-radius: .5vh;
     display: flex;
     align-items: center;
 }
@@ -287,5 +287,5 @@ color: orange;
     background-color: white;
     height: 30%;
     width: 93%;
-    border-radius: 1vh;
+    border-radius: .4vh;
 }

@@ -9,9 +9,13 @@ import {
   List,
   Typography,
   Grid,
+  Menu,
+  MenuItem
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { getUser } from "../Requests/getRequest";
 import { styled } from "@mui/material/styles";
+import { addItemRequest } from "../Requests/postRequests";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -89,11 +93,34 @@ const MealDetails = ({ meal, onGoBack }) => {
   );
   */
 const MealDetails = ({ meal, onGoBack }) => {
+
   const [availability, setAvailability] = useState({});
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMenuItemClick = async (list) => {
+    meal.ingredients.forEach(element => {
+      const itemToAdd = {
+        foodName: element,
+        quantity: 1,
+        id: list.s_listId
+      };
+      addItemRequest(itemToAdd);
+    });
+
+    handleClose();
+  };
 
   useEffect(() => {
     const checkAvailability = async () => {
       const availabilityResults = {};
+      setUser(await getUser());
       for (const ingredient of meal.ingredients) {
         availabilityResults[ingredient] =
           await mealService.ingredientAvailability([ingredient]); // Assuming ingredientAvailability takes an array
@@ -163,9 +190,19 @@ const MealDetails = ({ meal, onGoBack }) => {
                       : "#15724e",
                   },
                 }}
+                onClick={handleClick}
               >
                 Add to List
               </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {user && user.shoppingLists.map((list) => 
+                <MenuItem onClick={() => handleMenuItemClick(list)}>{list.s_listName}</MenuItem>
+                )}
+              </Menu>
             </Box>
           </StyledCard>
         </Grid>
