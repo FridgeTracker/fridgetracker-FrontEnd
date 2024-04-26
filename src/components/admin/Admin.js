@@ -7,13 +7,11 @@ import {logoutUser } from "../authService";
 
 import AdminUser from './adminUser';
 import { getUserRank, getUsers } from '../Requests/getRequest';
-import UploadWidget from '../setting/UploadWidget';
 
 
 function Admin(){
 
     const[users,setUsers] = useState([]);
-    const[images,setImage] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,10 +36,6 @@ function Admin(){
         retrieveUsers();
     },[])
     
-    const uploadedImages = (imageURL) => {
-        setImage(prevImages => [...prevImages, imageURL.url]);
-    }
-
     
     return(
         <div className='admin'>
