@@ -1,249 +1,222 @@
-import React, { useState, useEffect } from "react";
-import mealService from "../../services/mealService";
+import React, { useEffect, useState } from "react";
 import {
-  Box,
-  Button,
-  Card,
-  CardMedia,
   Container,
-  List,
   Typography,
   Grid,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Paper,
+  Box,
+  Pagination,
+  Select,
+  MenuItem,
+  Avatar,
+  ListItemIcon,
+  InputLabel,
 } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { styled } from "@mui/material/styles";
+import MealDetails from "./MealDetails";
+import mealService from "../../services/mealService";
+import MealCard from "./MealCard"; 
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  backgroundColor: "transparent",
-  boxShadow: "none",
-  padding: theme.spacing(2),
-}));
+const MealList = () => {
+  const [selectedMeal, setSelectedMeal] = useState(null);
+  const [selectedMemberId, setSelectedMemberId] = useState("");
+  const [members, setMembers] = useState(mealService.members);
 
-const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
-  height: 400,
-  width: 400,
-  borderRadius: "50%",
-  margin: "0 auto",
-}));
+  const [preferenceMeals, setPreferenceMeals] = useState([]);
+  const [readyToEatMeals, setReadyToEatMeals] = useState([]);
+  const [ingredientsNeededMeals, setIngredientsNeededMeals] = useState([]);
 
-const MealTitle = styled(Typography)(({ theme }) => ({
-  backgroundColor: "#1b8b60",
-  color: "#fff",
-  padding: theme.spacing(1),
-  textAlign: "right",
-}));
+  const [filter, setFilter] = useState("all");
+  const [page, setPage] = useState(1);
+  const mealsPerPage = 8;
 
-const IngredientsList = styled(List)(({ theme }) => ({
-  marginTop: theme.spacing(1),
-  display: "flex",
-  flexDirection: "column",
-  gap: theme.spacing(1),
-  alignItems: "flex-end",
-}));
+  const allMeals = [
+    ...preferenceMeals,
+    ...readyToEatMeals,
+    ...ingredientsNeededMeals,
+  ];
+  const filteredMeals =
+    filter === "preference"
+      ? preferenceMeals
+      : filter === "ready"
+      ? readyToEatMeals
+      : filter === "needed"
+      ? ingredientsNeededMeals
+      : allMeals;
 
-const AvailabilityIndicator = styled("span")(({ theme, available }) => ({
-  height: "15px",
-  width: "15px",
-  borderRadius: "50%",
-  display: "inline-block",
-  marginLeft: theme.spacing(1),
-  backgroundColor: available
-    ? theme.palette.success.main
-    : theme.palette.error.main,
-}));
-
-const IngredientItem = styled("div")({
-  display: "flex",
-  justifyContent: "flex-end",
-  alignItems: "center",
-  marginBottom: "8px",
-});
-
-const NutritionInfo = styled(Box)(({ theme }) => ({
-  display: "flex",
-  lineHeight: "2",
-  justifyContent: "space-between",
-  borderTop: "1px solid #ccc",
-  borderBottom: "1px solid #ccc",
-  "& > div": {
-    borderRight: "1px solid #ccc",
-    paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    "&:last-child": {
-      borderRight: "none",
-    },
-  },
-}));
-
-const NutritionLabel = styled(Typography)(({ theme }) => ({
-  fontWeight: "bold",
-}));
-
-/*Simulated function; need to replace with actual availability check
-const MealDetails = ({ meal, onGoBack }) => {
-  const hasAllIngredientsAvailable = meal.ingredients.every((ingredient) =>
-    ingredientAvailability(ingredient)
+  const pageCount = Math.ceil(filteredMeals.length / mealsPerPage);
+  const paginatedMeals = filteredMeals.slice(
+    (page - 1) * mealsPerPage,
+    page * mealsPerPage
   );
-  */
-const MealDetails = ({ meal, onGoBack }) => {
-  const [availability, setAvailability] = useState({});
 
   useEffect(() => {
-    const checkAvailability = async () => {
-      const availabilityResults = {};
-      for (const ingredient of meal.ingredients) {
-        availabilityResults[ingredient] =
-          await mealService.ingredientAvailability([ingredient]); // Assuming ingredientAvailability takes an array
-      }
-      setAvailability(availabilityResults);
-    };
+    if (selectedMemberId) {
+      mealService
+        .getMealsFilteredByMember(selectedMemberId)
+        .then((categorizedMeals) => {
+          // Assign a new unique identifier for each meal
+          const updatedPreferenceMeals = categorizedMeals.preferenceMeals.map(
+            (meal) => ({
+              ...meal,
+              uniqueKey: `${meal.id}-${Date.now()}`,
+            })
+          );
+          const updatedReadyToEatMeals = categorizedMeals.readyToEatMeals.map(
+            (meal) => ({
+              ...meal,
+              uniqueKey: `${meal.id}-${Date.now()}`,
+            })
+          );
+          const updatedIngredientsNeededMeals =
+            categorizedMeals.ingredientsNeededMeals.map((meal) => ({
+              ...meal,
+              uniqueKey: `${meal.id}-${Date.now()}`,
+            }));
 
-    checkAvailability();
-  }, [meal.ingredients]);
+          setPreferenceMeals(updatedPreferenceMeals);
+          setReadyToEatMeals(updatedReadyToEatMeals);
+          setIngredientsNeededMeals(updatedIngredientsNeededMeals);
+        });
+    } else {
+      setPreferenceMeals([]);
+      setReadyToEatMeals([]);
+      setIngredientsNeededMeals([]);
+    }
+  }, [selectedMemberId]);
 
-  // Calculate if all ingredients are available
-  const hasAllIngredientsAvailable = meal.ingredients.every(
-    (ingredient) => availability[ingredient]
-  );
+  const handleMealSelect = (meal) => {
+    setSelectedMeal(meal);
+  };
+
+  const handleGoBack = () => {
+    setSelectedMeal(null); // Deselect the meal and go back to the list
+  };
+
+  if (selectedMeal) {
+    return (
+      <MealDetails
+        meal={selectedMeal}
+        onGoBack={handleGoBack}
+        memberName={
+          members.find((member) => member.id === selectedMemberId)?.name ||
+          "Back to List"
+        }
+      />
+    );
+  }
 
   return (
-    <Container sx={{ maxWidth: "none" }}>
-      <Box sx={{ my: 4, display: "flex", alignItems: "center" }}>
-        <Button
-          startIcon={<ArrowBackIosNewIcon />}
-          onClick={onGoBack}
-          sx={{ color: "text.primary", mb: 2 }}
-        >
-          Back to Meals
-        </Button>
-      </Box>
-
-      <Grid
-        container
-        spacing={3}
-        sx={{ flexWrap: "nowrap", alignContent: "center" }}
-      >
-        <Grid item xs={12} md={4}>
-          <StyledCard>
-            <MealTitle variant="h4" component="div" gutterBottom>
-              {meal.mealName}
-            </MealTitle>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign={"right"}
-            >
-              {meal.description}
-            </Typography>
-            <IngredientsList>
-              {meal.ingredients.map((ingredient, index) => (
-                <IngredientItem key={index}>
-                  <Typography variant="body1">{ingredient}</Typography>
-                  <AvailabilityIndicator
-                    available={availability[ingredient] || false}
+    <Container sx={{ mt: 4 }}>
+      <Paper sx={{ mb: 2, p: 2 }}>
+        <FormControl fullWidth>
+          <InputLabel id="member-select-label">Select Member</InputLabel>
+          <Select
+            labelId="member-select-label"
+            value={selectedMemberId}
+            onChange={(e) => setSelectedMemberId(e.target.value)}
+            displayEmpty
+            label="Select Member" 
+            renderValue={(selected) => {
+              if (selected) {
+                const member = members.find((m) => m.id === selected);
+                return (
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    {member.imageURL && (
+                      <Avatar
+                        src={member.imageURL}
+                        sx={{ width: 24, height: 24, marginRight: 1 }}
+                      />
+                    )}
+                    {member.name}
+                  </Box>
+                );
+              }
+              return <em>None</em>;
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {members.map((member) => (
+              <MenuItem key={member.id} value={member.id}>
+                <ListItemIcon>
+                  <Avatar
+                    src={member.imageURL}
+                    sx={{ width: 24, height: 24 }}
                   />
-                </IngredientItem>
-              ))}
-            </IngredientsList>
-            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
-              <Button
-                variant="contained"
-                disabled={hasAllIngredientsAvailable}
-                sx={{
-                  backgroundColor: hasAllIngredientsAvailable
-                    ? "rgba(0, 0, 0, 0.12)"
-                    : "#1b8b60",
-                  borderRadius: 0,
-                  "&:hover": {
-                    backgroundColor: hasAllIngredientsAvailable
-                      ? "rgba(0, 0, 0, 0.12)"
-                      : "#15724e",
-                  },
-                }}
-              >
-                Add to List
-              </Button>
-            </Box>
-          </StyledCard>
-        </Grid>
+                </ListItemIcon>
+                {member.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Grid item xs={12} md={4.5}>
-          <StyledCard>
-            <StyledCardMedia
-              component="img"
-              image={meal.mealImage || "defaultMealImage.jpg"}
-              alt={meal.mealName}
+        <FormControl component="fieldset" sx={{ mt: 2 }}>
+          <FormLabel component="legend">Filter Meals</FormLabel>
+          <RadioGroup
+            row
+            aria-label="meal-filter"
+            name="row-radio-buttons-group"
+            value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value);
+              setPage(1); 
+            }}
+          >
+            <FormControlLabel value="all" control={<Radio />} label="All" />
+            <FormControlLabel
+              value="preference"
+              control={<Radio />}
+              label="Preferences"
             />
-          </StyledCard>
-        </Grid>
+            <FormControlLabel
+              value="ready"
+              control={<Radio />}
+              label="Ready to Eat"
+            />
+            <FormControlLabel
+              value="needed"
+              control={<Radio />}
+              label="Ingredients Needed"
+            />
+          </RadioGroup>
+        </FormControl>
+      </Paper>
 
-        <Grid item xs={12} md={4}>
-          <StyledCard>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="div"
-              sx={{ color: "#1b8b60" }}
-            >
-              Nutritional Facts
-            </Typography>
-            <NutritionInfo>
-              <div>
-                <NutritionLabel>Fat:</NutritionLabel>
-                <Typography>
-                  {meal.nutritionalInformation?.Fat || "N/A"}
-                </Typography>
-              </div>
-              <div>
-                <NutritionLabel>Calories:</NutritionLabel>
-                <Typography>
-                  {meal.nutritionalInformation?.Calories || "N/A"}
-                </Typography>
-              </div>
-              <div>
-                <NutritionLabel>Protein:</NutritionLabel>
-                <Typography>
-                  {meal.nutritionalInformation?.Protein || "N/A"}
-                </Typography>
-              </div>
-            </NutritionInfo>
-
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-              <Button
-                variant="contained"
-                disabled={!hasAllIngredientsAvailable}
-                sx={{
-                  backgroundColor: !hasAllIngredientsAvailable
-                    ? "rgba(0, 0, 0, 0.12)"
-                    : "#1b8b60",
-                  borderRadius: 0,
-                  "&:hover": {
-                    backgroundColor: !hasAllIngredientsAvailable
-                      ? "rgba(0, 0, 0, 0.12)"
-                      : "#15724e",
-                  },
-                }}
-              >
-                Consume
-              </Button>
-            </Box>
-          </StyledCard>
-        </Grid>
+      <Typography variant="h4" gutterBottom>
+        {filter.charAt(0).toUpperCase() + filter.slice(1)} Meals
+      </Typography>
+      <Grid container spacing={4}>
+        {paginatedMeals.map((meal, index) => (
+          <MealCard
+            key={`${filter}-meal-${meal.id}-page-${page}-index-${index}`}
+            meal={meal}
+            onSelect={handleMealSelect}
+          />
+        ))}
       </Grid>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          mt: 3,
+          pb: 3,
+        }}
+      >
+        <Pagination
+          count={pageCount}
+          page={page}
+          onChange={(_, newPage) => setPage(newPage)}
+          sx={{ ".MuiPaginationItem-root": { borderRadius: 0 } }}
+        />
+      </Box>
     </Container>
   );
 };
 
-// Simulated function; need to replace with actual availability check
-/*
-const ingredientAvailability = (ingredient) => {
-  // Simulated check; replace with actual availability check
-  console.log(ingredient);
-  return Math.random() > 0.3; // 70% chance of ingredient being available
-};
-*/
-
-export default MealDetails;
+export default MealList;
