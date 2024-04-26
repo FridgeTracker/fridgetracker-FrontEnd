@@ -15,6 +15,20 @@ function Members(){
     const [selectedMember, setSelectedMember] = useState(null);
     const [addMember, setAddMember] = useState(false);
 
+    useEffect(() => {
+      const fetchUserData = async () => {
+        try {
+          const user_Data = await getUser();
+          setUserData(user_Data);
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      };
+      fetchUserData();
+    }, []); 
+
+
+
     const handleUpdateMember = async () => {
       try {
         const user_Data = await getUser();
@@ -29,41 +43,23 @@ function Members(){
         console.error('Failed to fetch user data:', error);
       }
     }
-
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-          try {
-            const user_Data = await getUser();
-            setUserData(user_Data);
-          } catch (error) {
-            console.error('Failed to fetch user data:', error);
-          }
-        };
-        fetchUserData();
-      }, []); 
     
-
       const handleAddMember = async (event) => {
-
-        setAddMember(false);
         event.preventDefault(); 
+        setAddMember(false);
       
         const formData = new FormData(event.target);
-
-        const member = {
-              name: formData.get("memberName"),
-              age:20,
-              allergies:[],
-              preference:[],
-              height:170,
-              weight:60,
-              imageURL:'ftlogo.png'
-        }
-
         const addMember = {
-            member:member,
-            userID:getAuthToken()
+          member: {
+              name: formData.get("memberName"),
+              age: 20,
+              allergies: [],
+              preference: [],
+              height: 170,
+              weight: 60,
+              imageURL: 'ftlogo.png'
+          },
+          userID: getAuthToken()
         };
       
         try {
@@ -72,7 +68,6 @@ function Members(){
           catch (error) {
             console.error('Failed to Add new Member:', error);
           } 
-      
       }
 
       const deleteMember = async (member) => {
@@ -81,15 +76,11 @@ function Members(){
           await deleteMemberRequest(member);
           setUserData(await getUser());
           setSelectedMember(null);
-
-        } catch(error) {
+        } 
+        catch(error) {
           console.error(error);
         }
       }
-
-      useEffect(() => {
-        setUserData(userData); // Log userData when it changes
-      }, [userData]);
       
 
     return (

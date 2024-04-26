@@ -39,3 +39,13 @@ export const getAlerts = async () => {
         console.error('Error fetching food data:', error);
       }
 }
+
+
+export const getUserRank = async () => {
+    try{
+        const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${getAuthToken()}`);
+        return response.data.rank;
+      }catch(error){
+        console.error(error);
+      }
+}

@@ -4,31 +4,23 @@ import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/login.css';
 
-import openFridge from './assets/openFridge2.png';
+import openFridge from './assets/openedFridge.png';
 import logo from './assets/ftlogo.png';
 import { authenticateUser, getAuthToken } from './authService';
+import { getUserRank } from './Requests/getRequest';
 
 function LoginUser(){
 
     const navigate = useNavigate();
 
-    const userRank = async () => {
-      try{
-        const token = getAuthToken();
-        const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${token}`);
-        return response.data.rank;
-      }catch(error){
-        console.error(error);
-      }
-    }
-    // If User didnt logout token stays stored and relog automatically
 
+    // If User didnt logout token stays stored and relog automatically
     useEffect(() => {
       const redirectUser = async () => {
         try {
           const authToken = getAuthToken();
           if (authToken) {
-            const rank = await userRank();
+            const rank = await getUserRank();
             if (rank === 1) {
               navigate("../Admin");
             } else {
@@ -65,33 +57,27 @@ function LoginUser(){
         setLoading(true);
         
         try {
-          const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);
-          /*'https://localhost:8080/api/login'*/
-          
+          const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);  
           authenticateUser(response.data.id);
           
-          if(await userRank() === 1){
+          if(await getUserRank() === 1){
             navigate("../Admin");
           }else{
             navigate("../Dash");
           }
           
-      } catch (error) {
-          console.error('Login failed:', error);       
-      } finally {
-          setLoading(false);
-      } 
+        } catch (error) {
+            console.error('Login failed:', error);       
+        } finally {
+            setLoading(false);
+        } 
     }
 
       return(
-
         <div className='loginWrapper'>
-          
           <img src={logo} alt="logo" id="logo" onClick={() => {navigate("/")}}/>
-
           <div className='fridgeContainer'>
             <img src={openFridge} alt='wow'/>
-            
           </div>
 
           <div className='rightSide'>
@@ -127,12 +113,8 @@ function LoginUser(){
                 </div>
           
               </form>
-
             </div>
           </div>
-          
-
-          
         </div>
       )
     };

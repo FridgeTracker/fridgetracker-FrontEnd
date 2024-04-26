@@ -44,8 +44,7 @@ function Dash() {
           navigate("/");
           return;
         }
-        const userData = await getUser();
-        setUserData(userData);
+        setUserData(await getUser());
         setDashboard(true);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
@@ -55,14 +54,13 @@ function Dash() {
   }, [navigate]);
 
 
-const updateUser = async () => {
+  const updateUser = async () => {
     try {
-      const userData = await getUser();
-      setUserData(userData);
+      setUserData(await getUser());
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
-}
+  }
 
   const [showSelectedNav, setNav] = useState(false);
   const [showMembers, setMembers] = useState(false);

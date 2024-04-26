@@ -2,8 +2,7 @@ import './shoppinglist.css';
 import sausage from '../assets/sausage.png';
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../Requests/getRequest';
-import axios from 'axios';
-import { addItemRequest, deleteItemRequest, updateItemRequest } from '../Requests/postRequests';
+import { addItemRequest, createListRequest, deleteItemRequest, deleteListRequest, updateItemRequest } from '../Requests/postRequests';
 
 import editIcon from "../assets/editIcon.png";
 import binIcon from "../assets/binIcon.png";
@@ -15,7 +14,6 @@ function ShoppingList(){
     const[user,setUser] = useState(null);
     const[selectedList, setSelectedList] = useState(null);
     const[editMode,setEditMode] = useState(null);
-
     const[updatedListName , setUpdatedListName] = useState(null);
 
     const handleChange = (event) => {
@@ -23,13 +21,10 @@ function ShoppingList(){
     };
 
     useEffect(() => {
-      const checkUserRank = async () => {
-        try {
-          setUser(await getUser());
-        } catch (error) {
-        }
+      const fetchUser = async () => {
+        setUser(await getUser());
       };
-      checkUserRank();
+      fetchUser();
     }, []);
 
     const createShoppingList = async () => {
@@ -39,13 +34,7 @@ function ShoppingList(){
           userID:user.id
         };
         if(user.shoppingLists.length < 8){
-
-          try {
-              await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/create", formData);
-              setUser(await getUser());
-          } catch (error) {
-              console.error('Error:', error.response.data); // Log response data
-          }
+          await createListRequest(formData,setUser);
         }
     }
 
@@ -95,11 +84,9 @@ function ShoppingList(){
       id: selectedList.s_listId // Set the id value here
 
   };
-  
 
     try {
-          const response = await updateItemRequest(savedItem);
-          console.log(response);
+          await updateItemRequest(savedItem);
           const updatedUser = await getUser();
           setUser(updatedUser);
           setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
@@ -107,47 +94,31 @@ function ShoppingList(){
       catch (error) {
           console.error('Error:', error.response.data); // Log response data
       }
-    
   }
 
 
   const deleteItem = async (deletedSelection) => {
-
     const deleteItem = {
       itemID:deletedSelection.itemID,
       id: selectedList.s_listId
     }
 
-    console.log(deleteItem);
-
     try {
-      const response = await deleteItemRequest(deleteItem);
-      console.log(response);
+      await deleteItemRequest(deleteItem);
       const updatedUser = await getUser();
       setUser(updatedUser);
       setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
-      
     } 
     catch (error) {
       console.error('Failed to delete data:', error);
     } 
-
   }
 
   const deleteList = async (selectedList) => {
-
     const form = {
       s_listId:selectedList.s_listId
     };
-
-    try{
-      axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteList",form);
-      const updatedUser = await getUser();
-      setUser(updatedUser);
-      setSelectedList(null);
-    }catch(error){
-      console.error(error);
-    }
+    await deleteListRequest(form,setUser,setSelectedList);
   }
   
     
@@ -158,18 +129,9 @@ function ShoppingList(){
       s_listName: updatedListName
     };
   
-    try {
-      await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/changeListName", form);
-      const updatedUser = await getUser();
-      setUser(updatedUser);
-    } catch (error) {
-      console.error(error);
-    }
+    await changeListName(form,setUser);
   }
   
-
-  
-
     return (
         <div className='shoppingList'>
             <div><img className="sausageImage" src={sausage} alt="sausage" /></div>

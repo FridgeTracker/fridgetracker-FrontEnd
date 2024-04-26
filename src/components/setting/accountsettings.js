@@ -4,13 +4,11 @@ import userIcon from "../assets/memberIcons/memberIcon.png";
 import { getAuthToken } from '../authService.js';
 
 import UploadWidget from './UploadWidget.js';
-import { updateUserRequest } from '../Requests/postRequests.js';
-import axios from 'axios';
+import { fillFridgeAndFreezer, updateUserRequest } from '../Requests/postRequests.js';
 
 function AccountSettings({userData,timeZoneOptions,updateUser}) {
 
     const [imgURL, setURL] = useState(userData.imageData);
-
     const [selectedTimeZone,setSelectedTimeZone] = useState(userData.timezone);
     const [message, setMessage] = useState("");
 
@@ -18,7 +16,6 @@ function AccountSettings({userData,timeZoneOptions,updateUser}) {
         event.preventDefault();
         
         const formData = new FormData(event.target);
-        
         const newUserInfo = {
             id:getAuthToken(),
             familyName  :formData.get("familyName"),
@@ -61,9 +58,8 @@ function AccountSettings({userData,timeZoneOptions,updateUser}) {
 
     const handleFill = async () => {
         try{
-            setMessage("Filling Fridge/Freezer")
-            const response = await axios.post(`http://localhost:8080/api/uploadFridgeAndFreezer/${userData.id}`);
-            setMessage(response.data);
+            setMessage("Filling Fridge/Freezer");
+            setMessage(await fillFridgeAndFreezer());
         } catch(error){
             console.error(error);
         }

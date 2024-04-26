@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getUser } from "./getRequest";
+import { getAuthToken } from "../authService";
 
 export const addFreezerRequest = async (formData) => {
     try {
@@ -99,5 +100,74 @@ export const deleteMemberRequest = async (formData) => {
   catch (error) {
       console.error('Failed to delete Member:', error);
       return "Failed to delete member";
+  }
+}
+
+
+export const fillFridgeAndFreezer = async () => {
+  try{
+    const response = await axios.post(`http://agile-atoll-76917-ba182676f53b.herokuapp.com/api/uploadFridgeAndFreezer/${getAuthToken()}`);
+    return response.data;
+  } catch(error){
+      console.error(error);
+  }
+}
+
+
+export const updateNotificationsRequest = async (userAlerts) => {
+  try{
+    const response = await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateNotifications",userAlerts);
+    return response.data;
+  } catch(error){
+      console.error(error);
+  }
+}
+
+
+export const registerUserRequest = async (formData) => {
+
+  try{
+    const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/register', formData);
+    return response.data;
+  }catch(error){
+    return error.response.data;
+  }
+
+}
+
+
+export const createListRequest = async (formData,setUser) => {
+
+  try {
+    await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/create", formData);
+    setUser(await getUser());
+  } catch (error) {
+      console.error('Error:', error.response.data); // Log response data
+  }
+
+}
+
+
+export const deleteListRequest = async (formData,setUser,setSelectedList) => {
+  try{
+    axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteList",formData);
+    const updatedUser = await getUser();
+    setUser(updatedUser);
+    setSelectedList(null);
+  }catch(error){
+    console.error(error);
+  }
+
+}
+
+
+
+export const changeListRequest = async (formData,setUser) => {
+  try {
+    await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/changeListName", formData);
+    const updatedUser = await getUser();
+    setUser(updatedUser);
+  } catch (error) {
+    console.error(error);
   }
 }

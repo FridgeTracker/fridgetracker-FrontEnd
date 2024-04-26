@@ -15,7 +15,6 @@ function MealRecord ({user}) {
                     ))}
                 </select>
             </div>
-
             
             <div className="directional_bar">
                 <table>

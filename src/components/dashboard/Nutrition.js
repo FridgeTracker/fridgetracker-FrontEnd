@@ -11,24 +11,22 @@ function Nutrition ({user}) {
     return (
         <div className="nutritionWrapper">
             <div className="rightTopBar">
-                <p>Today Calories</p>
+                <p>Today's Calories</p>
             </div>
             <div className="nutritionContents">
-            {user && user.members.map((member, index) => {
-                    const icon = require(`../assets/memberIcons/${member.imageURL}`);
-                     
-                    return (
-                        <div key={index} className="nutritionMember">
-                                <img src={icon} alt={`${member.name} icon`} className="nutIcon"/>
-                                <p>{member.name}
-                                <span>
-                                    0/{calculateBMR(member)}
-                                    <p id="calories_nut"> Calories</p>
-                                </span>
-                                
-                            </p>
-                        </div>
-                    );
+                {user && user.members.map((member, index) => {
+                        const icon = require(`../assets/memberIcons/${member.imageURL}`);
+                        return (
+                            <div key={index} className="nutritionMember">
+                                    <img src={icon} alt={`${member.name} icon`} className="nutIcon"/>
+                                    <p>{member.name}
+                                    <span>
+                                        0/{calculateBMR(member)}
+                                        <p id="calories_nut"> Calories</p>
+                                    </span>
+                                </p>
+                            </div>
+                        );
                 })}
             </div>
         </div>

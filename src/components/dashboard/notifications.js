@@ -20,7 +20,6 @@ function Notifications ({user}) {
             return "";
         }
       }
-      console.log(user);
 
       const formatDate = (dateTimeString) => {
         const date = new Date(dateTimeString);

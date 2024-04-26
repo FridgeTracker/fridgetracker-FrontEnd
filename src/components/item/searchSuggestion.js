@@ -6,8 +6,6 @@ import { createFilterOptions } from '@mui/material/Autocomplete';
 import "./item.css";
 import { getFoodData } from '../Requests/getRequest';
 
-
-
 const filterOptions = createFilterOptions({
     stringify: ({ foodItem, id }) => `Item: ${foodItem} ${id}`
   });
