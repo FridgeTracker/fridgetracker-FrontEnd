@@ -1,6 +1,6 @@
 import axios from "axios";
-import { getUser } from "./getRequest";
-import { getAuthToken } from "../authService";
+import { getUser, getUserRank } from "./getRequest";
+import { authenticateUser, getAuthToken } from "../authService";
 
 export const addFreezerRequest = async (formData) => {
     try {
@@ -170,4 +170,18 @@ export const changeListRequest = async (formData,setUser) => {
   } catch (error) {
     console.error(error);
   }
+}
+
+
+export const loginUserRequest = async (formData,navigate,setLoading) => {
+  try {
+    const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);  
+    authenticateUser(response.data.id);
+    await getUserRank(navigate);
+  } 
+  catch (error) {
+      console.error('Login failed:', error);       
+  } finally {
+      setLoading(false);
+  } 
 }

@@ -39,8 +39,7 @@ function Dash() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const UUID = getAuthToken();
-        if (!UUID) {
+        if (!getAuthToken()) {
           navigate("/");
           return;
         }

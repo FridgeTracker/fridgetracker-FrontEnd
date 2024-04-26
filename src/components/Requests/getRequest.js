@@ -41,11 +41,16 @@ export const getAlerts = async () => {
 }
 
 
-export const getUserRank = async () => {
+export const getUserRank = async (navigate) => {
     try{
         const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${getAuthToken()}`);
-        return response.data.rank;
+        if (response.data.rank === 1) {
+          navigate("../Admin");
+        } else {
+          navigate("../Dash");
+        }
       }catch(error){
         console.error(error);
+        navigate("/");
       }
 }

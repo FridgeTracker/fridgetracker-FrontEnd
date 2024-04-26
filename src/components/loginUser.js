@@ -1,76 +1,38 @@
 
 import React, { useEffect, useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import './styles/login.css';
 
 import openFridge from './assets/openedFridge.png';
 import logo from './assets/ftlogo.png';
-import { authenticateUser, getAuthToken } from './authService';
 import { getUserRank } from './Requests/getRequest';
+import { loginUserRequest } from './Requests/postRequests';
 
 function LoginUser(){
 
     const navigate = useNavigate();
-
+    const [loading, setLoading] = useState(false);
 
     // If User didnt logout token stays stored and relog automatically
     useEffect(() => {
       const redirectUser = async () => {
-        try {
-          const authToken = getAuthToken();
-          if (authToken) {
-            const rank = await getUserRank();
-            if (rank === 1) {
-              navigate("../Admin");
-            } else {
-              navigate("../Dash");
-            }
-          }
-        } catch (error) {
-          console.error('Error determining user role:', error);
-          navigate("/");
-        }
+        await getUserRank(navigate);
       };
-    
       redirectUser();
     }, [navigate]);
-
-    const [loading, setLoading] = useState(false);
-
-    const [formData, setFormData] = useState({
-      email: '',
-      password: ''
-     });
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prevState => ({
-          ...prevState,
-          [name]: value
-      }));
-      };
-
+    
 
     const loginInWithEmailAndPassword = async (e) => {
         e.preventDefault();
         setLoading(true);
-        
-        try {
-          const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);  
-          authenticateUser(response.data.id);
-          
-          if(await getUserRank() === 1){
-            navigate("../Admin");
-          }else{
-            navigate("../Dash");
-          }
-          
-        } catch (error) {
-            console.error('Login failed:', error);       
-        } finally {
-            setLoading(false);
-        } 
+
+        const form = new FormData(e.target);
+        const formData = {
+          email: form.get("email"),
+          password: form.get("password")
+         };
+
+        await loginUserRequest(formData,navigate,setLoading);
     }
 
       return(
@@ -91,16 +53,12 @@ function LoginUser(){
 
                 <div className='inputWrapper'>
                   <input className='emailInput' type="email" name="email" placeholder="Enter Email Here" 
-                    value={formData.email}
-                    onChange={handleChange}
                     required
                   />
 
                   <br></br>
 
                   <input className='passInput' type="password" name="password" placeholder="Enter Password Here"
-                    value={formData.password}
-                    onChange={handleChange}
                     required
                   />
                 </div>
