@@ -24,7 +24,7 @@ import MealCard from "./MealCard";
 const MealList = () => {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedMemberId, setSelectedMemberId] = useState("");
-  const [members, setMembers] = useState(mealService.members);
+  const [members] = useState(mealService.members);
 
   const [preferenceMeals, setPreferenceMeals] = useState([]);
   const [readyToEatMeals, setReadyToEatMeals] = useState([]);
