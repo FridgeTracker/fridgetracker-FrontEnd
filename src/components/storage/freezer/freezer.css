@@ -21,6 +21,7 @@
     width: 60%;
     padding: 3px;
     border-radius: 1px;
+    box-shadow: 0vh .1vh .2vh rgb(70, 70, 70);
 }
 
 .freezerHolder img{

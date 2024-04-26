@@ -1,6 +1,6 @@
 import "./dashboard.css";
 
-import serverIcon from "../assets/setIcon.png";
+import serverIcon from "../assets/systemIcon.png";
 import adminIcon from "../assets/membersIcon.png";
 
 
@@ -47,7 +47,7 @@ function Notifications ({user}) {
                 {user && user.notification.map((noti) => (
                     <tr>
                     <td>{noti.sender === "Admin" ? 
-                        <><img className={noti.sender} src={adminIcon} alt="admin"/> {noti.sender}</> : 
+                        <><img className={noti.sender} src={adminIcon} alt="admin"/>  {noti.sender}</> : 
                         <><img className={noti.sender} src={serverIcon} alt="server"/> {noti.sender}</>}</td>
 
                     <td className={getClassForAlertType(noti.alert_type)}>{noti.alert_type}</td>

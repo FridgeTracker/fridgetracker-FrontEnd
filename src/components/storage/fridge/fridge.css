@@ -9,6 +9,7 @@
     width: 60%;
     padding: 3px;
     border-radius: 1px;
+    box-shadow: 0vh .1vh .15vh rgb(70, 70, 70);
 }
 
 .fridge2Holder:hover{
@@ -84,6 +85,7 @@
 .addFridgeButtonWrapper{
     width: 60%;
     height: 25%;
+    box-shadow: 0vh .1vh .2vh rgb(70, 70, 70);
 }
 
 .addFridgeButton{
@@ -184,12 +186,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0vh .1vh .2vh rgb(70, 70, 70);
 }
 
 .addItemButton img{
     height:2vh;
 }
-
 
 .itemDetailWrapper{
 

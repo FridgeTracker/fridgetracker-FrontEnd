@@ -151,25 +151,24 @@ h1{
 .notiTableContent{
     width: 100%;
     font-size: 1.5vh;
-    font-weight: bold;
 }
 .notiTableContent img{
-    width: 3vh;
+    width: 2.5vh;
     margin-right: .5vh;
 }
 .notiTableContent td:nth-child(1){
-    width: 25%;
-    padding-left: 2%;
+    width: 27%;
+    padding-left: 5%;
     display: flex;
     align-items: center;
 }
 
 .notiTableContent td:nth-child(2){
-    width: 20%;
+    width: 21.5%;
 }
 
 .notiTableContent td:nth-child(3){
-    width: 50%;
+    width: 48%;
 }
 .notiTableContent td:nth-child(4){
     width: 10%;
@@ -197,7 +196,7 @@ color: red;
 color: orange;
 }
 .reminderText{
-    color: rgb(5, 145, 0);
+color: rgb(5, 145, 0);
 }
 
 
@@ -253,6 +252,7 @@ color: orange;
     border-radius: .5vh;
     display: flex;
     align-items: center;
+    box-shadow: 0vh .08vh .15vh rgb(70, 70, 70);
 }
 .nutritionMember span{
     position: absolute;
