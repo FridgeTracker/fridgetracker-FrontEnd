@@ -12,10 +12,8 @@ import deleteIcon from '../assets/deleteIcon.png';
 import Freezer from './freezer/freezer.js';
 
 import { getUser } from '../Requests/getRequest.js';
-import { getAuthToken } from '../authService.js';
-import { addFreezerRequest, addFridgeRequest } from '../Requests/postRequests.js';
-import axios from 'axios';
-
+import { deleteStorageRequest } from '../Requests/postRequests.js';
+import { storageService } from './storageService.js';
 
 function Storage() {
 
@@ -24,179 +22,43 @@ function Storage() {
   const [selectedItem, setItem] = useState(null);
   const [addItem, setAdd] = useState(false);
   const [addFridge,setAddFridge] = useState(false);
-  const[addFreezer, setAddFreezer] = useState(false);
+  const [addFreezer, setAddFreezer] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      try {
-        const user_Data = await getUser();
-        setUserData(user_Data);
-      } catch (error) {
-        console.error('Failed to fetch user data:', error);
-      }
+      setUserData(await getUser());
     };
-
     fetchUserData();
   }, []); 
 
 
   const storageHandler = (clickedStorage) => {
-    
     setItem(null);
     setAdd(false);
     setAddFridge(false);
     setAddFreezer(false);
-  
-  
-    if (!selectedStorage || selectedStorage.id !== clickedStorage.id) {
-
-      setselectedStorage(clickedStorage);
-
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-        fridges: prevUserData.fridges.map((fridge) => ({
-          ...fridge,
-          selected: fridge.id === clickedStorage.id,
-        })),
-      }));
-    }
-
-    if (!selectedStorage || selectedStorage.id !== clickedStorage.id) {
-
-      setselectedStorage(clickedStorage);
-
-      setUserData((prevUserData) => ({
-        ...prevUserData,
-        freezers: prevUserData.freezers.map((freezer) => ({
-          ...freezer,
-          selected: freezer.id === clickedStorage.id,
-        })),
-      }));
-    }
-
-    console.log(selectedStorage);
-
+    storageService.storageHandler(clickedStorage,selectedStorage,setselectedStorage,setUserData);
   };
 
-
-const handleUpdateFridge = async () => {
-
-  try {
-
-      const user_data = await getUser();
-      setUserData(user_data);
-
-      if (selectedStorage) {
-
-        const updatedStorage = user_data.fridges.find(storage => storage.id === selectedStorage.id) || user_data.freezers.find(storage => storage.id === selectedStorage.id);
-
-        if (updatedStorage) {
-          setselectedStorage(updatedStorage);
-
-          if (user_data.fridges.find(storage => storage.id === selectedStorage.id)) {
-            setUserData((userData) => ({
-              ...userData,
-              fridges: userData.fridges.map((fridge) => ({
-                ...fridge,
-                selected: fridge.id === updatedStorage.id,
-              })),
-            }));
-          } 
-          else if (user_data.freezers.find(storage => storage.id === selectedStorage.id)) {
-            setUserData((userData) => ({
-              ...userData,
-              freezers: userData.freezers.map((freezer) => ({
-                ...freezer,
-                selected: freezer.id === updatedStorage.id,
-              })),
-            }));
-          }
-        }
-      }
-      
-    setItem(null);
-    setAdd(null);
-
-  } catch (error) {
-      console.error('Failed to fetch user data:', error);
-  }
-};
-
-const handleAddFridge = async (event) => {
-
-  setAddFridge(false);
-  event.preventDefault(); 
-
-  const formData = new FormData(event.target);
-
-  const addFridgeData = {
-      storageName:formData.get("fridgeName"),
-      capacity:formData.get("capacity"),
-      userID:getAuthToken()
+  const handleUpdateFridge = async () => {
+    storageService.handleUpdateStorage(selectedStorage, setUserData, setselectedStorage, setItem, setAdd);
   };
 
-  try {
-      await addFridgeRequest(addFridgeData);
-      handleUpdateFridge();
-    } 
-    catch (error) {
-      console.error('Failed to save data:', error);
-    } 
-
-}
-
-const handleAddFreezer = async (event) => {
-
-  setAddFridge(false);
-  event.preventDefault(); 
-
-  const formData = new FormData(event.target);
-
-  const addFreezerData = {
-      storageName:formData.get("freezerName"),
-      capacity:formData.get("capacity"),
-      userID:getAuthToken()
+  const handleAddStorage = async (event, storageType) => {
+    event.preventDefault();
+    setAddFridge(false);
+    const formData = new FormData(event.target);
+    storageService.handleAddStorage(formData,storageType,handleUpdateFridge)
   };
-
-  try {
-      await addFreezerRequest(addFreezerData);
-      handleUpdateFridge();
-    } 
-    catch (error) {
-      console.error('Failed to save data:', error);
-    } 
-}
 
 const handleDeleteStorage = async (deleteFridge) => {
-
-  const type= deleteFridge.type;
-  let selectedDelete = "";
-
-  if(type === "Fridge"){
-    selectedDelete = "deleteFridge";
-  } else if(type === "Freezer"){
-    selectedDelete = "deleteFreezer";
-  }
-
-  try {
-
-    await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/${selectedDelete}/${deleteFridge.id}`);
-    handleUpdateFridge();
-
-  } 
-  catch (error) {
-    console.error('Failed to delete Storage:', error);
-  } 
-
+  await deleteStorageRequest(deleteFridge, handleUpdateFridge);
 }
-
 
   return (
 
     <div className="fridge">
-      
       <div className="fridgeListWrapper">
-
         <div className="fridgeListHolder">
 
           {userData.fridges && userData.fridges.map((fridge) => (
@@ -207,7 +69,7 @@ const handleDeleteStorage = async (deleteFridge) => {
             <div className='addFridgeButtonWrapper'>
               {addFridge ? (
                 <div className='submitAddFridgeWrapper'>
-                  <form onSubmit={handleAddFridge} className='addFridgeForm'>
+                  <form onSubmit={(event) => handleAddStorage(event,"fridge")} className='addFridgeForm'>
                     <input type="text" name="fridgeName" placeholder='Enter fridge Name' />
                     <input type="number" name="capacity" placeholder='Enter fridge Capacity' />
                     <input type="submit" placeholder='Add Fridge' className='addFridgeSubmit'/>
@@ -228,7 +90,6 @@ const handleDeleteStorage = async (deleteFridge) => {
         <div className='storageDivider'></div>
 
         <div className="freezerListHolder">
-
             {userData.freezers && userData.freezers.map((freezer) => (
             <Freezer key={freezer.id} freezer={freezer} onFreezerClick={storageHandler} />
             ))}
@@ -237,7 +98,7 @@ const handleDeleteStorage = async (deleteFridge) => {
               <div className='addFridgeButtonWrapper'>
                 {addFreezer ? (
                   <div className='submitAddFridgeWrapper'>
-                    <form onSubmit={handleAddFreezer} className='addFridgeForm'>
+                    <form onSubmit={handleAddStorage} className='addFridgeForm'>
                       <input type="text" name="freezerName" placeholder='Enter Freezer Name' />
                       <input type="number" name="capacity" placeholder='Enter Fridge Capacity' />
                       <input type="submit" placeholder='Add Freezer' className='addFridgeSubmit'/>
@@ -258,7 +119,6 @@ const handleDeleteStorage = async (deleteFridge) => {
       </div>
 
       <div className='itemContainer'>
-        
         <div className='itemListContainer'>
             <p id="storageTitle">Name: {selectedStorage ? selectedStorage.storageName : 'Not Selected'}
             {selectedStorage && <img id="deleteFridge" onClick={() => {handleDeleteStorage(selectedStorage); setselectedStorage(null)}} src={deleteIcon} alt="delete" />}

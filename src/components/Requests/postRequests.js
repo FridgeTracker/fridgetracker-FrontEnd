@@ -185,3 +185,27 @@ export const loginUserRequest = async (formData,navigate,setLoading) => {
       setLoading(false);
   } 
 }
+
+
+export const deleteStorageRequest = async (deleteFridge, handleUpdateFridge) => {
+  let selectedDelete = "";
+
+  if(deleteFridge.type === "Fridge"){
+    selectedDelete = "deleteFridge";
+  } 
+  else if(deleteFridge.type === "Freezer"){
+    selectedDelete = "deleteFreezer";
+  }
+
+  try {
+
+    await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/${selectedDelete}/${deleteFridge.id}`);
+    handleUpdateFridge();
+
+  } 
+  catch (error) {
+    console.error('Failed to delete Storage:', error);
+  } 
+
+}
+

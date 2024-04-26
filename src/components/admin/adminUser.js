@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import AdminComponent from './adminComponent';
-import '../../Admin.css';
+import './Admin.css';
 
 function AdminUser ({user}) {
 
-    
     const[expandedUser, setExpandedUser] = useState(null);
     const[members, setMember] = useState(false);
     const[fridges, setFridge] = useState(false);

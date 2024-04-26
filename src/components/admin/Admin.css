@@ -30,7 +30,7 @@ p {
 
     width: 100%;
     height: 10%;
-    background-image: url(./components/assets/testbck.png);
+    background-image: url(../assets/testbck.png);
     position: relative;
     z-index: 1;
 
@@ -52,10 +52,11 @@ p {
 .userContent{
 
     background-color: rgb(233, 233, 233);
-    height: 80%;
+    height: 100%;
     width: 100%;
     position: relative;
     overflow: hidden;
+    overflow-y: scroll;
 }
 
 .userOption{
@@ -96,49 +97,4 @@ p {
 
 #arrayName{
     font-weight: bold;
-}
-
-.uploadedImages{
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 2%;
-    display: flex;
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-}
-
-#uploadImageWidget{
-    width: 100%;
-    background-color: green;
-    width: auto;
-    padding: .5vh;
-    border-radius: 1vh;
-}
-
-.areaForImages{
-    height: 32%;
-    width: 80%;
-    margin-left: 10%;
-    background-color: white;
-    bottom: 0;
-    margin-bottom: 7%;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    position: absolute;
-    position: relative;
-    
-}
-
-.areaForImages p{
-    display: flex;
-    align-items: center;
-}
-
-#thumbnail{
-    width: 4vh;
-    height: 4vh;
-    margin-right: 2vh;
 }

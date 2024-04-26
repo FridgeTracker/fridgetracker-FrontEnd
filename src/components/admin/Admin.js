@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
-import logoutIcon from './components/assets/logoutIcon.png';
+import logoutIcon from '../assets/logoutIcon.png';
 import './Admin.css';
 import {useNavigate } from 'react-router-dom';
-import {logoutUser } from "./components/authService";
+import {logoutUser } from "../authService";
 
-import AdminUser from './components/admin/adminUser';
-import { getUser, getUsers } from './components/Requests/getRequest';
-import UploadWidget from './components/setting/UploadWidget';
+import AdminUser from './adminUser';
+import { getUserRank, getUsers } from '../Requests/getRequest';
+import UploadWidget from '../setting/UploadWidget';
 
 
 function Admin(){
@@ -17,16 +17,9 @@ function Admin(){
     const navigate = useNavigate();
 
     useEffect(() => {
+
         const checkUserRank = async () => {
-          try {
-            const user = await getUser();
-            if (user.rank === 0 || user.rank === null) {
-              navigate("/");
-            }
-          } catch (error) {
-            console.error("Error checking user rank:", error);
-            navigate("/");
-          }
+          await getUserRank(navigate);
         };
       
         checkUserRank();
@@ -67,18 +60,6 @@ function Admin(){
                     })}
                 </section>
 
-                <section className='areaForImages'>
-                    {images && images.map((image, index) => (
-                        <p key={index}><img id="thumbnail" alt="test" src={image}/>{image}</p>
-                    ))}
-                </section>
-                
-                <section className='uploadedImages'>
-                    <div id="uploadImageWidget">
-                        <UploadWidget updateProfile={uploadedImages}/>
-                    </div>
-                </section>
-        
             </section>
         </div>
     )

@@ -1,15 +1,13 @@
 import "./member.css";
 import { useState, useEffect } from 'react';
-import { getAuthToken } from '../authService.js';
 
 import Member from "./member.js";
 
 import addImage from '../assets/plus_sign.png';
 import { getUser } from "../Requests/getRequest.js";
-import { addMemberRequest, deleteMemberRequest } from "../Requests/postRequests.js";
+import memberService from "./memberService.js";
 
 function Members(){
-
 
     const [userData, setUserData] = useState({});
     const [selectedMember, setSelectedMember] = useState(null);
@@ -17,72 +15,24 @@ function Members(){
 
     useEffect(() => {
       const fetchUserData = async () => {
-        try {
-          const user_Data = await getUser();
-          setUserData(user_Data);
-        } catch (error) {
-          console.error('Failed to fetch user data:', error);
-        }
+        setUserData(await getUser());
       };
       fetchUserData();
     }, []); 
 
-
-
+    
     const handleUpdateMember = async () => {
-      try {
-        const user_Data = await getUser();
-        setUserData(user_Data);
-        const updatedSelectedMember = user_Data.members.find(member => member.id === selectedMember.id);
-       
-        if (updatedSelectedMember) {
-            setSelectedMember(updatedSelectedMember);
-        }
-
-      } catch (error) {
-        console.error('Failed to fetch user data:', error);
-      }
+      memberService.handleUpdateMember(setUserData, selectedMember, setSelectedMember);
     }
     
-      const handleAddMember = async (event) => {
-        event.preventDefault(); 
-        setAddMember(false);
-      
-        const formData = new FormData(event.target);
-        const addMember = {
-          member: {
-              name: formData.get("memberName"),
-              age: 20,
-              allergies: [],
-              preference: [],
-              height: 170,
-              weight: 60,
-              imageURL: 'ftlogo.png'
-          },
-          userID: getAuthToken()
-        };
-      
-        try {
-            setUserData(await addMemberRequest(addMember));
-          } 
-          catch (error) {
-            console.error('Failed to Add new Member:', error);
-          } 
-      }
+    const handleAddMember = async (event) => {
+      memberService.handleAddMember(event, setAddMember, setUserData);
+    }
 
-      const deleteMember = async (member) => {
- 
-        try{
-          await deleteMemberRequest(member);
-          setUserData(await getUser());
-          setSelectedMember(null);
-        } 
-        catch(error) {
-          console.error(error);
-        }
-      }
+    const deleteMember = async (member) => {
+      memberService.deleteMember(member,setUserData,setSelectedMember);
+    }
       
-
     return (
 
         <div className="member">

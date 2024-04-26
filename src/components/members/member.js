@@ -3,32 +3,18 @@ import "./member.css";
 import React, { useState } from "react";
 
 import renderForm from "./renderForm";
-import { getAuthToken } from "../authService";
-import { updateMemberRequest } from "../Requests/postRequests";
+import memberService from "./memberService.js";
 import deleteIcon from "../assets/deleteIcon.png";
 
 const Member = ({ member, updateMember, deleteMember }) => {
 
     const [selectedEdit, setSelectedEdit] = useState(null);
     const [message,setMesage] = useState("");
+    const memberProfileIcon = require(`../assets/memberIcons/${member.imageURL}`);
 
     const handleFormSubmit = async (formData) => {
-
-        const newData = ({
-            member : {...formData,id:member.id},
-            userID: getAuthToken()
-        });
-        const response = await updateMemberRequest(newData);
-        
-        if(response === "Member updated successfully"){
-            updateMember();
-            setMesage(response);
-        }else{
-            setMesage(response);
-        }
+        memberService.handleFormSubmit(formData, member, updateMember, setMesage);
     };
-
-    const memberProfileIcon = require(`../assets/memberIcons/${member.imageURL}`);
 
     return (
     <div className="memberContentData">

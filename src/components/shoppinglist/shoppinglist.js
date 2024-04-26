@@ -2,134 +2,69 @@ import './shoppinglist.css';
 import sausage from '../assets/sausage.png';
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../Requests/getRequest';
-import { addItemRequest, createListRequest, deleteItemRequest, deleteListRequest, updateItemRequest } from '../Requests/postRequests';
+import { changeListRequest, deleteListRequest } from '../Requests/postRequests';
 
 import editIcon from "../assets/editIcon.png";
 import binIcon from "../assets/binIcon.png";
 import conmfirmIcon from "../assets/confirmIcon.png";
+import shoppingListService from './shoppingListService';
 
 
 function ShoppingList(){
 
-    const[user,setUser] = useState(null);
-    const[selectedList, setSelectedList] = useState(null);
-    const[editMode,setEditMode] = useState(null);
-    const[updatedListName , setUpdatedListName] = useState(null);
+  const[user,setUser] = useState(null);
+  const[selectedList, setSelectedList] = useState(null);
+  const[editMode,setEditMode] = useState(null);
+  const[updatedListName , setUpdatedListName] = useState(null);
 
-    const handleChange = (event) => {
-      setUpdatedListName(event.target.value);
-    };
-
-    useEffect(() => {
-      const fetchUser = async () => {
-        setUser(await getUser());
-      };
-      fetchUser();
-    }, []);
-
-    const createShoppingList = async () => {
-
-        const formData = {
-          s_listName:"New List 1",
-          userID:user.id
-        };
-        if(user.shoppingLists.length < 8){
-          await createListRequest(formData,setUser);
-        }
-    }
-
-    const addListItem = async () => {
-      const itemToAdd = {
-          foodName: "Food Name",
-          quantity: 0,
-          id: selectedList.s_listId // Set the id value here
-      };
-  
-      try {
-          // Send request to add item
-          await addItemRequest(itemToAdd);
-  
-          // Update user data
-          const updatedUser = await getUser();
-          setUser(updatedUser);
-  
-          // No need to find and set selectedList again
-          setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
-      } catch (error) {
-          console.error('Failed to fetch user data:', error);
-      } 
-  };
-  
   const handleInputChange = (e, index, type) => {
     const { value } = e.target;
     setSelectedList(prevList => {
-      const updatedItems = [...prevList.items];
-      if (type === 'foodName') {
-        updatedItems[index].foodName = value;
-      } else if (type === 'quantity') {
-        updatedItems[index].quantity = value;
-      }
-      setEditMode(updatedItems[index]);
-      return { ...prevList, items: updatedItems };
+      prevList.items[index][type] = value;
+      setEditMode(prevList.items[index]);
+      return { ...prevList };
     });
   };
 
-  const saveNewList = async () => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      setUser(await getUser());
+    };
+    fetchUser();
+  }, []);
 
-    const savedItem = {
-
-      foodName:editMode.foodName,
-      itemID: editMode.itemID,
-      quantity: editMode.quantity,
-      id: selectedList.s_listId // Set the id value here
-
+  const handleChange = (event) => {
+    setUpdatedListName(event.target.value);
   };
 
-    try {
-          await updateItemRequest(savedItem);
-          const updatedUser = await getUser();
-          setUser(updatedUser);
-          setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
-      } 
-      catch (error) {
-          console.error('Error:', error.response.data); // Log response data
-      }
+  const createShoppingList = async () => {
+    shoppingListService.createShoppingList(setUser, user);
   }
 
+  const addListItem = async () => {
+    shoppingListService.addListItem(selectedList, setUser, setSelectedList);
+  };
+
+  const saveNewList = async () => {
+    shoppingListService.saveNewList(editMode, selectedList, setUser, setSelectedList);
+  }
 
   const deleteItem = async (deletedSelection) => {
-    const deleteItem = {
-      itemID:deletedSelection.itemID,
-      id: selectedList.s_listId
-    }
-
-    try {
-      await deleteItemRequest(deleteItem);
-      const updatedUser = await getUser();
-      setUser(updatedUser);
-      setSelectedList(updatedUser.shoppingLists.find(list => list.s_listId === selectedList.s_listId));
-    } 
-    catch (error) {
-      console.error('Failed to delete data:', error);
-    } 
+    shoppingListService.deleteItem(deletedSelection, selectedList, setUser, setSelectedList);
   }
 
   const deleteList = async (selectedList) => {
-    const form = {
-      s_listId:selectedList.s_listId
-    };
+    const form = {s_listId:selectedList.s_listId};
     await deleteListRequest(form,setUser,setSelectedList);
   }
   
     
-  const changeListName = async (updatedListName) => {
-    
+  const changeListName = async (updatedListName) => { 
     const form = {
       s_listId: selectedList.s_listId,
       s_listName: updatedListName
     };
-  
-    await changeListName(form,setUser);
+    await changeListRequest(form, setUser);
   }
   
     return (

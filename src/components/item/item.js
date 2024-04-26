@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import "./item.css";
 import ComboBox from "./searchSuggestion";
-import { addItemRequest, deleteItemRequest, updateItemRequest } from "../Requests/postRequests";
+import itemService from "./itemService";
 
 const Item = ({Item, storageId, updateFridge}) => {
 
@@ -32,69 +32,20 @@ const Item = ({Item, storageId, updateFridge}) => {
 
     //Save updated item in fridge
     const handleSave = async (event) => {
-        event.preventDefault(); 
-        const formData = new FormData(event.target);
-
-        const savedItem = {
-            itemID: Item.itemID,
-            quantity: formData.get('quantity'),
-            expiryDate: formData.get('expiryDate'),
-            id: storageId // Set the id value here
-        };
-
-        try {
-            const response = await updateItemRequest(savedItem);
-            updateFridge(response);
-          } 
-          catch (error) {
-            console.error('Failed to save data:', error);
-        } 
+        itemService.handleSave(event, Item, storageId, updateFridge);
     }
     
-
     //Delete Item from fridge
     const removeItemHandler = async () => {
-
-        const deleteItem = {
-            itemID:Item.itemID,
-            id: storageId 
-        }
-
-        try {
-            const response = await deleteItemRequest(deleteItem);
-            updateFridge(response);
-          } 
-          catch (error) {
-            console.error('Failed to delete data:', error);
-        } 
+        itemService.removeItemHandler(Item, storageId, updateFridge);
     }
     
-
     // Add Item Section
     const handleSubmit = async (selectedItem,event) => {
-        event.preventDefault(); 
-
-        const formData = new FormData(event.target);
-
-        const itemToAdd = {
-            foodName: selectedItem.foodItem,
-            quantity: formData.get('quantity'),
-            expiryDate: formData.get('expiryDate'),
-            foodID: selectedItem.id,
-            id: storageId
-        };
- 
-        try {
-            const response = await addItemRequest(itemToAdd);
-            updateFridge(response);
-          } catch (error) {
-            console.error('Failed to fetch user data:', error);
-          } 
-        };
-
+        itemService.handleSubmit(selectedItem, event, storageId, updateFridge);
+    };
 
     return (
-
     <div className= "itemCardContainer">
         {Item ? (
             <>

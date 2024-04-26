@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 //import App from './App';
 import Dash from './Dash';
-import Admin from './Admin';
+import Admin from './components/admin/Admin';
 import CreateUser from './components/createUser';
 import LoginUser from './components/loginUser';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
