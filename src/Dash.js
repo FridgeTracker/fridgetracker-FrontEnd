@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./Dash.css";
+
 import logo from "./components/assets/fridgeLogo.png";
 import user from "./components/assets/memberIcons/memberIcon.png";
-import themeIcon from "./components/assets/iconSwitch.png";
 import searchIcon from "./components/assets/searchIcon.png";
 import powerIcon from "./components/assets/powerIcon.png";
 import dashIcon from "./components/assets/dashIcon.png";
@@ -21,8 +21,6 @@ import Dashboard from "./components/dashboard/dashboard";
 import MealList from "./components/meals/MealList";
 import ShoppingList from "./components/shoppinglist/shoppinglist";
 
-
-
 import { getAuthToken, logoutUser } from "./components/authService";
 import { getUser } from "./components/Requests/getRequest";
 
@@ -35,14 +33,7 @@ const SidebarButton = ({ icon, text, onClick }) => (
 
 function Dash() {
 
-
   const navigate = useNavigate();
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -100,7 +91,7 @@ const updateUser = async () => {
   };
 
   return (
-    <div className={`wrapper ${theme === "dark" ? "dark-theme" : ""}`}>
+    <div className="wrapper">
       <div className={`sideBarWrapper ${isOpen ? "open" : ""}`}>
         <div className="fridgeLogoWrapper">
           <img src={logo} alt="fridge logo" />
@@ -166,19 +157,12 @@ const updateUser = async () => {
           <input type="text" />
           <img className="searchIcon" src={searchIcon} alt="search icon" />
           <p>
-
             {userData && userData.imageData ? <img className="userIcon" src={userData.imageData} alt="" />
             :<img className="userIcon" src={user} alt="" />}
-
             {userData && userData.familyName}
           </p>
-          <img
-            className="themeChanger"
-            src={themeIcon}
-            onClick={toggleTheme}
-            alt="theme changer"
-          />
         </div>
+
         {showSelectedNav ? (
           <>
             {showSettings && <Setting userData={userData} updateUser={updateUser} />}
@@ -191,6 +175,7 @@ const updateUser = async () => {
         ) : (
           <Dashboard/>
         )}
+        
       </div>
     </div>
   );
