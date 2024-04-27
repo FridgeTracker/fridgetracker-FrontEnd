@@ -106,7 +106,7 @@ export const deleteMemberRequest = async (formData) => {
 
 export const fillFridgeAndFreezer = async () => {
   try{
-    const response = await axios.post(`http://agile-atoll-76917-ba182676f53b.herokuapp.com/api/uploadFridgeAndFreezer/${getAuthToken()}`);
+    const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/uploadFridgeAndFreezer/${getAuthToken()}`);
     return response.data;
   } catch(error){
       console.error(error);
