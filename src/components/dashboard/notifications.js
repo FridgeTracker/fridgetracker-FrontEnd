@@ -16,6 +16,8 @@ function Notifications ({user}) {
             return "notificationText";
           case "Reminder":
             return "reminderText";
+            case "Admin":
+              return "adminText";
           default:
             return "";
         }

@@ -18,6 +18,7 @@ function AdminUser ({user}) {
 
     const handleExpand = (userId) => {
         setExpandedUser((prevUserId) => (prevUserId === userId ? null : userId));
+        console.log(user);
     };
 
     return (
@@ -27,12 +28,13 @@ function AdminUser ({user}) {
         </div>
 
         {expandedUser === user.id && (
-
+           
             <div className='expandedUser'>
 
                 <div className='editable-variables'>
-                    <p>{user.familyName}</p>
-                    <p>{user.email}</p>
+                    <p>Family Name: {user.familyName}</p>
+                    <p>Email: {user.email}</p>
+                    <p>User ID: {user.id}</p>
                 </div>
                 <hr></hr>
                 <div className='userArrays'>
