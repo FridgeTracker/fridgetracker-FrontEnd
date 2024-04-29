@@ -90,7 +90,11 @@ const ingredientAvailability = async (ingredients) => {
 
     return ingredients.every((ingredient) =>
       allItems.some(
-        (item) => item.foodName.toLowerCase() === ingredient.toLowerCase()
+        (item) =>
+          item.foodName &&
+          ingredient.name &&
+          item.foodName.toLowerCase() === ingredient.name.toLowerCase() &&
+          item.quantity >= ingredient.quantity // Check for quantity, assuming ingredient has quantity
       )
     );
   } catch (error) {
@@ -126,57 +130,47 @@ const updateItemQuantity = async (itemId, quantity, storageId) => {
     console.error("Failed to update item:", error.response.data);
     throw error;
   }
+
+  clearCache();
 };
 
-const consumeMeal = async (meal) => {
-  if (!meal || !meal.ingredients) {
-    throw new Error("Invalid meal data");
+const consumeMeal = async (meal, memberId) => {
+  if (!meal || !meal.ingredients || !memberId) {
+    throw new Error("Meal data or Member ID is missing.");
   }
 
-  try {
-    const userData = await mealService.getUser();
+  const userData = await getUser();
 
-    const updatePromises = meal.ingredients.map(async (ingredientName) => {
-      let updated = false;
+  const updatePromises = meal.ingredients.map(async (ingredientName) => {
+    let updated = false;
 
-      for (const storageType of [userData.fridges, userData.freezers]) {
-        for (const storage of storageType) {
-          const ingredient = storage.items.find(
-            (item) =>
-              item.foodName.toLowerCase() === ingredientName.toLowerCase()
-          );
-
-          if (ingredient && ingredient.quantity > 0) {
-            const newQuantity = ingredient.quantity - 1;
-            console.log(
-              `Updating ${ingredientName} quantity to ${newQuantity} in storage ID ${storage.id}`
-            );
-            await mealService.updateItemQuantity(
-              ingredient.itemID,
-              newQuantity,
-              storage.id
-            );
-            updated = true;
-            break;
-          }
-        }
-        if (updated) break;
-      }
-
-      if (!updated) {
-        console.error(
-          `Ingredient not found or quantity is zero: ${ingredientName}`
+    for (const storageType of ["fridges", "freezers"]) {
+      for (const storage of userData[storageType]) {
+        const ingredient = storage.items.find(
+          (item) => item.foodName.toLowerCase() === ingredientName.toLowerCase()
         );
+
+        if (ingredient && ingredient.quantity > 0) {
+          const newQuantity = ingredient.quantity - 1;
+          await updateItemQuantity(ingredient.itemID, newQuantity, storage.id);
+          updated = true;
+          break;
+        }
       }
-    });
+      if (updated) break;
+    }
 
-    await Promise.all(updatePromises);
+    if (!updated) {
+      console.error(
+        `Ingredient not found or quantity is zero: ${ingredientName}`
+      );
+    }
+  });
 
-    mealService.clearCache();
-  } catch (error) {
-    console.error("Failed to consume meal:", error);
-    throw error;
-  }
+  await Promise.all(updatePromises);
+  await recordMealConsumption(meal.id, memberId);
+
+  clearCache();
 };
 
 const getMealsFilteredByMember = async (memberId) => {
@@ -198,28 +192,42 @@ const getMealsFilteredByMember = async (memberId) => {
       ? member.preference.map((preference) => preference.toLowerCase())
       : [];
 
-    const meals = await getMeals();
+    let meals = await getMeals();
+
+    // Use Promise.all to wait for all the ingredientAvailability checks
+    const mealsWithAvailability = await Promise.all(
+      meals.map(async (meal) => {
+        const mealIngredients = meal.ingredients.map((ingredient) =>
+          ingredient.toLowerCase()
+        );
+        const hasAllergen = mealIngredients.some((ingredient) =>
+          allergies.includes(ingredient)
+        );
+        const hasPreference = mealIngredients.some((ingredient) =>
+          preferences.includes(ingredient)
+        );
+        const isReadyToEat = await ingredientAvailability(mealIngredients); // Await the availability check
+
+        return {
+          ...meal,
+          hasAllergen,
+          hasPreference,
+          isReadyToEat,
+        };
+      })
+    );
+
+    // Now filter the meals based on the computed properties
     let preferenceMeals = [];
     let readyToEatMeals = [];
     let ingredientsNeededMeals = [];
 
-    meals.forEach((meal) => {
-      const mealIngredients = meal.ingredients.map((ingredient) =>
-        ingredient.toLowerCase()
-      );
-      const hasAllergen = mealIngredients.some((ingredient) =>
-        allergies.includes(ingredient)
-      );
-      const isReadyToEat = ingredientAvailability(mealIngredients);
-      const hasPreference = mealIngredients.some((ingredient) =>
-        preferences.includes(ingredient)
-      );
-
-      if (!hasAllergen) {
-        if (hasPreference) {
+    mealsWithAvailability.forEach((meal) => {
+      if (!meal.hasAllergen) {
+        if (meal.hasPreference) {
           preferenceMeals.push(meal);
         }
-        if (isReadyToEat) {
+        if (meal.isReadyToEat) {
           readyToEatMeals.push(meal);
         } else {
           ingredientsNeededMeals.push(meal);
@@ -227,6 +235,7 @@ const getMealsFilteredByMember = async (memberId) => {
       }
     });
 
+    // Map the meals to ensure they're fresh objects (if needed)
     preferenceMeals = preferenceMeals.map((meal) => ({ ...meal }));
     readyToEatMeals = readyToEatMeals.map((meal) => ({ ...meal }));
     ingredientsNeededMeals = ingredientsNeededMeals.map((meal) => ({
@@ -245,6 +254,40 @@ const getMealsFilteredByMember = async (memberId) => {
       readyToEatMeals: [],
       ingredientsNeededMeals: [],
     };
+  }
+};
+
+const recordMealConsumption = async (mealId, memberId) => {
+  const mealRecord = {
+    memberId: memberId,
+    mealId: mealId,
+    recordedAt: new Date().toISOString(),
+  };
+
+  console.log(
+    "Recording meal consumption:",
+    mealRecord.mealId +
+      " by " +
+      mealRecord.memberId +
+      " at " +
+      mealRecord.recordedAt
+  );
+
+  try {
+    const response = await axiosInstance.post(
+      "https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/mealRecords",
+      mealRecord,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log("Meal consumption recorded:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error recording meal consumption:", error);
+    throw error;
   }
 };
 
