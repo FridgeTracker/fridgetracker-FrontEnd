@@ -51,5 +51,6 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "proxy": "https://agile-atoll-76917-ba182676f53b.herokuapp.com"
 }
