@@ -7,8 +7,10 @@ import {
   CardMedia,
   Container,
   List,
+  ListItem,
   Typography,
   Grid,
+  Chip,
   Menu,
   MenuItem,
 } from "@mui/material";
@@ -110,24 +112,37 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
     handleClose();
   };
 
-  useEffect(() => {
-    const checkAvailability = async () => {
-      const availabilityResults = {};
-      setUser(await getUser());
-      for (const ingredient of meal.ingredients) {
-        availabilityResults[ingredient] =
-          await mealService.ingredientAvailability([ingredient]);
-      }
-      setAvailability(availabilityResults);
-    };
+  useEffect(
+    () => {
+      const checkAvailability = async () => {
+        const availabilityResults = {};
+        try {
+          setUser(await getUser());
+          const availabilityPromises = meal.ingredients.map((ingredient) =>
+            mealService.ingredientAvailability([ingredient])
+          );
+          const availabilityArray = await Promise.all(availabilityPromises);
+          meal.ingredients.forEach((ingredient, index) => {
+            availabilityResults[ingredient] = availabilityArray[index];
+          });
+          setAvailability(availabilityResults);
+        } catch (error) {
+          console.error("Error checking availability:", error);
+        }
+      };
 
-    checkAvailability();
-  }, [meal.ingredients]);
-
+      checkAvailability();
+    },
+    [meal.ingredients],
+    refreshMeals
+  );
   const handleConsumeMeal = async () => {
     try {
       const userData = await mealService.getUser();
       await mealService.consumeMeal(meal, memberId);
+      if (refreshMeals) {
+        refreshMeals();
+      }
       const updatePromises = meal.ingredients.map(async (ingredientName) => {
         let storageToUpdate;
 
@@ -183,10 +198,23 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
     }
   };
 
-  const hasAllIngredientsAvailable = meal.ingredients.every(
-    (ingredient) => availability[ingredient]
-  );
+  const checkAvailabilityAfterConsumption = async (ingredients) => {
+    const availabilityResults = {};
+    try {
+      const availabilityPromises = ingredients.map((ingredient) =>
+        mealService.ingredientAvailability([ingredient])
+      );
+      const availabilityArray = await Promise.all(availabilityPromises);
+      ingredients.forEach((ingredient, index) => {
+        availabilityResults[ingredient] = availabilityArray[index];
+      });
+    } catch (error) {
+      console.error("Error checking availability after consumption:", error);
+    }
+    return availabilityResults;
+  };
 
+  const hasAllIngredientsAvailable = Object.values(availability).every(Boolean);
   return (
     <Container sx={{ maxWidth: "none" }}>
       <Box sx={{ my: 4, display: "flex", alignItems: "center" }}>
@@ -220,9 +248,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
               {meal.ingredients.map((ingredient, index) => (
                 <IngredientItem key={index}>
                   <Typography variant="body1">{ingredient}</Typography>
-                  <AvailabilityIndicator
-                    available={availability[ingredient] || false}
-                  />
+                  <AvailabilityIndicator available={availability[ingredient]} />
                 </IngredientItem>
               ))}
             </IngredientsList>
