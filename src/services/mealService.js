@@ -10,8 +10,8 @@ let cache = {
   userData: null,
 };
 
-const getUser = async () => {
-  if (cache.userData) {
+const getUser = async (forceRefresh = false) => {
+  if (cache.userData && !forceRefresh) {
     return cache.userData;
   }
   try {
@@ -88,13 +88,12 @@ const ingredientAvailability = async (ingredients) => {
       ...userData.freezers.flatMap((freezer) => freezer.items),
     ];
 
-    return ingredients.every((ingredient) =>
+    return ingredients.every((ingredientName) =>
       allItems.some(
         (item) =>
           item.foodName &&
-          ingredient.name &&
-          item.foodName.toLowerCase() === ingredient.name.toLowerCase() &&
-          item.quantity >= ingredient.quantity // Check for quantity, assuming ingredient has quantity
+          item.foodName.toLowerCase() === ingredientName.toLowerCase() &&
+          item.quantity >= 1
       )
     );
   } catch (error) {
@@ -125,13 +124,14 @@ const updateItemQuantity = async (itemId, quantity, storageId) => {
     );
 
     console.log("Item updated successfully:", response.data);
+    // Update the cached user data
+    const updatedUserData = await getUser(true);
+    cache.userData = updatedUserData;
     return response.data;
   } catch (error) {
     console.error("Failed to update item:", error.response.data);
     throw error;
   }
-
-  // clearCache();
 };
 
 const consumeMeal = async (meal, memberId) => {
@@ -170,7 +170,9 @@ const consumeMeal = async (meal, memberId) => {
   await Promise.all(updatePromises);
   await recordMealConsumption(meal.id, memberId);
 
-  clearCache();
+  // Update the cached user data
+  const updatedUserData = await getUser(true);
+  cache.userData = updatedUserData;
 };
 
 const getMealsFilteredByMember = async (memberId) => {
@@ -255,6 +257,7 @@ const getMealsFilteredByMember = async (memberId) => {
       ingredientsNeededMeals: [],
     };
   }
+  clearCache();
 };
 
 const recordMealConsumption = async (mealId, memberId) => {
