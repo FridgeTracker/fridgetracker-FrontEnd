@@ -7,15 +7,15 @@ import {
   CardMedia,
   Container,
   List,
+  ListItem,
   Typography,
   Grid,
-  Menu,
-  MenuItem
+  Chip,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { getUser } from "../Requests/getRequest";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { styled } from "@mui/material/styles";
-import { addItemRequest } from "../Requests/postRequests";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -86,44 +86,15 @@ const NutritionLabel = styled(Typography)(({ theme }) => ({
   fontWeight: "bold",
 }));
 
-/*Simulated function; need to replace with actual availability check
-const MealDetails = ({ meal, onGoBack }) => {
-  const hasAllIngredientsAvailable = meal.ingredients.every((ingredient) =>
-    ingredientAvailability(ingredient)
-  );
-  */
-const MealDetails = ({ meal, onGoBack }) => {
-
+const MealDetails = ({ meal, onGoBack, refreshMeals }) => {
   const [availability, setAvailability] = useState({});
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [user, setUser] = useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const handleMenuItemClick = async (list) => {
-    meal.ingredients.forEach(element => {
-      const itemToAdd = {
-        foodName: element,
-        quantity: 1,
-        id: list.s_listId
-      };
-      addItemRequest(itemToAdd);
-    });
-
-    handleClose();
-  };
 
   useEffect(() => {
     const checkAvailability = async () => {
       const availabilityResults = {};
-      setUser(await getUser());
       for (const ingredient of meal.ingredients) {
         availabilityResults[ingredient] =
-          await mealService.ingredientAvailability([ingredient]); // Assuming ingredientAvailability takes an array
+          await mealService.ingredientAvailability([ingredient]);
       }
       setAvailability(availabilityResults);
     };
@@ -131,7 +102,61 @@ const MealDetails = ({ meal, onGoBack }) => {
     checkAvailability();
   }, [meal.ingredients]);
 
-  // Calculate if all ingredients are available
+  const handleConsumeMeal = async () => {
+    try {
+      const userData = await mealService.getUser();
+
+      const updatePromises = meal.ingredients.map(async (ingredientName) => {
+        const ingredientData = userData.fridges
+          .concat(userData.freezers)
+          .flatMap((storage) => storage.items)
+          .find(
+            (item) =>
+              item.foodName.toLowerCase() === ingredientName.toLowerCase()
+          );
+
+        if (ingredientData && ingredientData.quantity > 0) {
+          const newQuantity = ingredientData.quantity - 1;
+          return mealService.updateItemQuantity(
+            ingredientData.itemID,
+            newQuantity,
+            ingredientData.id
+          );
+        } else {
+          return Promise.resolve(null);
+        }
+      });
+
+      const updatedIngredients = await Promise.all(updatePromises);
+
+      const newAvailability = await Promise.all(
+        meal.ingredients.map(async (ingredientName) => {
+          return {
+            name: ingredientName,
+            available: await mealService.ingredientAvailability([
+              ingredientName,
+            ]),
+          };
+        })
+      );
+
+      const newAvailabilityMap = newAvailability.reduce((acc, ingredient) => {
+        acc[ingredient.name] = ingredient.available;
+        return acc;
+      }, {});
+
+      setAvailability(newAvailabilityMap);
+
+      console.log("Meal consumed successfully.");
+
+      if (refreshMeals) {
+        refreshMeals();
+      }
+    } catch (error) {
+      console.error("Failed to consume meal:", error);
+    }
+  };
+
   const hasAllIngredientsAvailable = meal.ingredients.every(
     (ingredient) => availability[ingredient]
   );
@@ -190,19 +215,9 @@ const MealDetails = ({ meal, onGoBack }) => {
                       : "#15724e",
                   },
                 }}
-                onClick={handleClick}
               >
                 Add to List
               </Button>
-              <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                {user && user.shoppingLists.map((list) => 
-                <MenuItem onClick={() => handleMenuItemClick(list)}>{list.s_listName}</MenuItem>
-                )}
-              </Menu>
             </Box>
           </StyledCard>
         </Grid>
@@ -251,6 +266,7 @@ const MealDetails = ({ meal, onGoBack }) => {
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
               <Button
                 variant="contained"
+                onClick={handleConsumeMeal}
                 disabled={!hasAllIngredientsAvailable}
                 sx={{
                   backgroundColor: !hasAllIngredientsAvailable
@@ -273,14 +289,5 @@ const MealDetails = ({ meal, onGoBack }) => {
     </Container>
   );
 };
-
-// Simulated function; need to replace with actual availability check
-/*
-const ingredientAvailability = (ingredient) => {
-  // Simulated check; replace with actual availability check
-  console.log(ingredient);
-  return Math.random() > 0.3; // 70% chance of ingredient being available
-};
-*/
 
 export default MealDetails;
