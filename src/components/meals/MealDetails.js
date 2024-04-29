@@ -11,11 +11,15 @@ import {
   Typography,
   Grid,
   Chip,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { styled } from "@mui/material/styles";
+import { getUser } from "../Requests/getRequest";
+import { addItemRequest } from "../Requests/postRequests";
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: "transparent",
@@ -86,12 +90,34 @@ const NutritionLabel = styled(Typography)(({ theme }) => ({
   fontWeight: "bold",
 }));
 
-const MealDetails = ({ meal, onGoBack, refreshMeals }) => {
+const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
   const [availability, setAvailability] = useState({});
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [user, setUser] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleMenuItemClick = async (list) => {
+    meal.ingredients.forEach((element) => {
+      const itemToAdd = {
+        foodName: element,
+        quantity: 1,
+        id: list.s_listId,
+      };
+      addItemRequest(itemToAdd);
+    });
+
+    handleClose();
+  };
 
   useEffect(() => {
     const checkAvailability = async () => {
       const availabilityResults = {};
+      setUser(await getUser());
       for (const ingredient of meal.ingredients) {
         availabilityResults[ingredient] =
           await mealService.ingredientAvailability([ingredient]);
@@ -105,53 +131,57 @@ const MealDetails = ({ meal, onGoBack, refreshMeals }) => {
   const handleConsumeMeal = async () => {
     try {
       const userData = await mealService.getUser();
-
+      await mealService.consumeMeal(meal, memberId);
       const updatePromises = meal.ingredients.map(async (ingredientName) => {
-        const ingredientData = userData.fridges
-          .concat(userData.freezers)
-          .flatMap((storage) => storage.items)
-          .find(
-            (item) =>
-              item.foodName.toLowerCase() === ingredientName.toLowerCase()
-          );
+        let storageToUpdate;
 
-        if (ingredientData && ingredientData.quantity > 0) {
-          const newQuantity = ingredientData.quantity - 1;
+        for (const storageType of ["fridges", "freezers"]) {
+          for (const storage of userData[storageType]) {
+            const item = storage.items.find(
+              (item) =>
+                item.foodName.toLowerCase() === ingredientName.toLowerCase()
+            );
+            if (item) {
+              storageToUpdate = {
+                storageId: storage.id,
+                item,
+              };
+              break;
+            }
+          }
+          if (storageToUpdate) {
+            break;
+          }
+        }
+
+        // If the ingredient is found and there's enough quantity, update the backend
+        if (storageToUpdate && storageToUpdate.item.quantity > 0) {
+          const newQuantity = storageToUpdate.item.quantity - 1;
           return mealService.updateItemQuantity(
-            ingredientData.itemID,
+            storageToUpdate.item.itemID,
             newQuantity,
-            ingredientData.id
+            storageToUpdate.storageId // Pass the storage ID here
           );
         } else {
-          return Promise.resolve(null);
+          // If the ingredient isn't found or the quantity is insufficient, no update is needed
+          console.warn(
+            `Ingredient ${ingredientName} not found or quantity insufficient for consumption.`
+          );
+          return Promise.resolve(null); // Resolve to null to indicate no action needed
         }
       });
 
-      const updatedIngredients = await Promise.all(updatePromises);
-
-      const newAvailability = await Promise.all(
-        meal.ingredients.map(async (ingredientName) => {
-          return {
-            name: ingredientName,
-            available: await mealService.ingredientAvailability([
-              ingredientName,
-            ]),
-          };
-        })
+      const updatedIngredients = (await Promise.all(updatePromises)).filter(
+        (result) => result
       );
 
-      const newAvailabilityMap = newAvailability.reduce((acc, ingredient) => {
-        acc[ingredient.name] = ingredient.available;
-        return acc;
-      }, {});
-
-      setAvailability(newAvailabilityMap);
+      if (updatedIngredients.length > 0) {
+        if (refreshMeals) {
+          refreshMeals();
+        }
+      }
 
       console.log("Meal consumed successfully.");
-
-      if (refreshMeals) {
-        refreshMeals();
-      }
     } catch (error) {
       console.error("Failed to consume meal:", error);
     }
@@ -215,9 +245,22 @@ const MealDetails = ({ meal, onGoBack, refreshMeals }) => {
                       : "#15724e",
                   },
                 }}
+                onClick={handleClick}
               >
                 Add to List
               </Button>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                {user &&
+                  user.shoppingLists.map((list) => (
+                    <MenuItem onClick={() => handleMenuItemClick(list)}>
+                      {list.s_listName}
+                    </MenuItem>
+                  ))}
+              </Menu>
             </Box>
           </StyledCard>
         </Grid>
