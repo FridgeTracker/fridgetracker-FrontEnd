@@ -7,16 +7,12 @@ import {
   CardMedia,
   Container,
   List,
-  ListItem,
   Typography,
   Grid,
-  Chip,
   Menu,
   MenuItem,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { styled } from "@mui/material/styles";
 import { getUser } from "../Requests/getRequest";
 import { addItemRequest } from "../Requests/postRequests";
