@@ -184,7 +184,7 @@ const MealList = () => {
                       <Box sx={{ display: "flex", alignItems: "center" }}>
                         {member.imageURL && (
                           <Avatar
-                            src={member.imageURL}
+                            src={require(`../assets/memberIcons/${member.imageURL}`)}
                             sx={{ width: 24, height: 24, marginRight: 1 }}
                           />
                         )}
@@ -201,7 +201,7 @@ const MealList = () => {
                   <MenuItem key={member.id} value={member.id}>
                     <ListItemIcon>
                       <Avatar
-                        src={member.imageURL}
+                        src={require(`../assets/memberIcons/${member.imageURL}`)}
                         sx={{ width: 24, height: 24 }}
                       />
                     </ListItemIcon>
