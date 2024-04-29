@@ -19,12 +19,12 @@ import {
 } from "@mui/material";
 import MealDetails from "./MealDetails";
 import mealService from "../../services/mealService";
-import MealCard from "./MealCard"; 
+import MealCard from "./MealCard";
 
-const MealList = ({userData}) => {
+const MealList = () => {
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedMemberId, setSelectedMemberId] = useState("");
-  const [members] = useState(userData.members);
+  const [members, setMembers] = useState([]);
 
   const [preferenceMeals, setPreferenceMeals] = useState([]);
   const [readyToEatMeals, setReadyToEatMeals] = useState([]);
@@ -53,6 +53,21 @@ const MealList = ({userData}) => {
     (page - 1) * mealsPerPage,
     page * mealsPerPage
   );
+
+  useEffect(() => {
+    // Fetch members when the component mounts
+    const fetchMembers = async () => {
+      try {
+        const fetchedMembers = await mealService.getMembers();
+        setMembers(fetchedMembers);
+      } catch (error) {
+        console.error("Failed to fetch members:", error);
+        setMembers([]); // Set to an empty array in case of error
+      }
+    };
+
+    fetchMembers();
+  }, []);
 
   useEffect(() => {
     if (selectedMemberId) {
@@ -89,6 +104,42 @@ const MealList = ({userData}) => {
     }
   }, [selectedMemberId]);
 
+  const updateMealsState = (categorizedMeals) => {
+    // Assuming categorizedMeals object contains arrays for each meal category
+    setPreferenceMeals(
+      categorizedMeals.preferenceMeals.map((meal) => ({
+        ...meal,
+        uniqueKey: `${meal.id}-${Date.now()}`, // Assign new keys to force re-render
+      }))
+    );
+    setReadyToEatMeals(
+      categorizedMeals.readyToEatMeals.map((meal) => ({
+        ...meal,
+        uniqueKey: `${meal.id}-${Date.now()}`,
+      }))
+    );
+    setIngredientsNeededMeals(
+      categorizedMeals.ingredientsNeededMeals.map((meal) => ({
+        ...meal,
+        uniqueKey: `${meal.id}-${Date.now()}`,
+      }))
+    );
+  };
+
+  const fetchMeals = async () => {
+    try {
+      const categorizedMeals = await mealService.getMealsFilteredByMember(
+        selectedMemberId
+      );
+      updateMealsState(categorizedMeals); // Update the state with the new meals
+    } catch (error) {
+      console.error("Failed to fetch meals:", error);
+      setPreferenceMeals([]);
+      setReadyToEatMeals([]);
+      setIngredientsNeededMeals([]);
+    }
+  };
+
   const handleMealSelect = (meal) => {
     setSelectedMeal(meal);
   };
@@ -106,91 +157,98 @@ const MealList = ({userData}) => {
           members.find((member) => member.id === selectedMemberId)?.name ||
           "Back to List"
         }
+        refreshMeals={fetchMeals} // Pass the fetchMeals function as a prop
       />
     );
   }
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Paper sx={{ mb: 2, p: 2 }}>
-        <FormControl fullWidth>
-          <InputLabel id="member-select-label">Select Member</InputLabel>
-          <Select
-            labelId="member-select-label"
-            value={selectedMemberId}
-            onChange={(e) => setSelectedMemberId(e.target.value)}
-            displayEmpty
-            label="Select Member" 
-            renderValue={(selected) => {
-              if (selected) {
-                const member = members.find((m) => m.id === selected);
-                return (
-                  <Box sx={{ display: "flex", alignItems: "center" }}>
-                    {member.imageURL && (
+    <Container sx={{ mt: 2 }}>
+      <Paper sx={{ mb: 2, p: 1 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id="member-select-label" size="small">
+                Select Member
+              </InputLabel>
+              <Select
+                size="small"
+                labelId="member-select-label"
+                value={selectedMemberId}
+                onChange={(e) => setSelectedMemberId(e.target.value)}
+                displayEmpty
+                label="Select Member"
+                renderValue={(selected) => {
+                  if (selected) {
+                    const member = members.find((m) => m.id === selected);
+                    return (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        {member.imageURL && (
+                          <Avatar
+                            src={member.imageURL}
+                            sx={{ width: 24, height: 24, marginRight: 1 }}
+                          />
+                        )}
+                        {member.name}
+                      </Box>
+                    );
+                  }
+                }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {members.map((member) => (
+                  <MenuItem key={member.id} value={member.id}>
+                    <ListItemIcon>
                       <Avatar
-                        src={require(`../assets/memberIcons/${member.imageURL}`)}
-                        sx={{ width: 24, height: 24, marginRight: 1 }}
+                        src={member.imageURL}
+                        sx={{ width: 24, height: 24 }}
                       />
-                    )}
+                    </ListItemIcon>
                     {member.name}
-                  </Box>
-                );
-              }
-              return <em>None</em>;
-            }}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {members.map((member) => (
-              <MenuItem key={member.id} value={member.id}>
-                <ListItemIcon>
-                  <Avatar
-                    src={require(`../assets/memberIcons/${member.imageURL}`)}
-                    sx={{ width: 24, height: 24 }}
-                  />
-                </ListItemIcon>
-                {member.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <FormControl component="fieldset" sx={{ mt: 2 }}>
-          <FormLabel component="legend">Filter Meals</FormLabel>
-          <RadioGroup
-            row
-            aria-label="meal-filter"
-            name="row-radio-buttons-group"
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value);
-              setPage(1); 
-            }}
-          >
-            <FormControlLabel value="all" control={<Radio />} label="All" />
-            <FormControlLabel
-              value="preference"
-              control={<Radio />}
-              label="Preferences"
-            />
-            <FormControlLabel
-              value="ready"
-              control={<Radio />}
-              label="Ready to Eat"
-            />
-            <FormControlLabel
-              value="needed"
-              control={<Radio />}
-              label="Ingredients Needed"
-            />
-          </RadioGroup>
-        </FormControl>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl component="fieldset" fullWidth>
+              <FormLabel component="legend" size="small">
+                Filter Meals
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-label="meal-filter"
+                name="row-radio-buttons-group"
+                value={filter}
+                onChange={(e) => {
+                  setFilter(e.target.value);
+                  setPage(1);
+                }}
+              >
+                <FormControlLabel value="all" control={<Radio />} label="All" />
+                <FormControlLabel
+                  value="preference"
+                  control={<Radio />}
+                  label="Preferences"
+                />
+                <FormControlLabel
+                  value="ready"
+                  control={<Radio />}
+                  label="Ready to Eat"
+                />
+                <FormControlLabel
+                  value="needed"
+                  control={<Radio />}
+                  label="Ingredients Needed"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+        </Grid>
       </Paper>
 
-      <Typography variant="h4" gutterBottom>
-        {filter.charAt(0).toUpperCase() + filter.slice(1)} Meals
-      </Typography>
       <Grid container spacing={4}>
         {paginatedMeals.map((meal, index) => (
           <MealCard
