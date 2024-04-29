@@ -131,7 +131,7 @@ const updateItemQuantity = async (itemId, quantity, storageId) => {
     throw error;
   }
 
-  clearCache();
+  // clearCache();
 };
 
 const consumeMeal = async (meal, memberId) => {
