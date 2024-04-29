@@ -197,7 +197,7 @@ const MealList = () => {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {members.map((member) => (
+                {members && members.map((member) => (
                   <MenuItem key={member.id} value={member.id}>
                     <ListItemIcon>
                       <Avatar
