@@ -148,6 +148,7 @@ const MealList = () => {
   };
 
   if (selectedMeal) {
+    console.log(selectedMemberId);
     return (
       <MealDetails
         meal={selectedMeal}
@@ -157,6 +158,7 @@ const MealList = () => {
           "Back to List"
         }
         refreshMeals={fetchMeals} // Pass the fetchMeals function as a prop
+        memberId={selectedMemberId}
       />
     );
   }
