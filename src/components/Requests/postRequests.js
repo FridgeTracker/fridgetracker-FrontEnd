@@ -4,7 +4,7 @@ import { authenticateUser, getAuthToken } from "../authService";
 
 export const addStorageRequest = async (formData) => {
     try {
-        const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addStorage}`,formData);
+        const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addStorage`,formData);
         return response.data;
       } catch (error) {
         console.error('Failed to save data:', error);
