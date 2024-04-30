@@ -2,18 +2,9 @@ import axios from "axios";
 import { getUser, getUserRank } from "./getRequest";
 import { authenticateUser, getAuthToken } from "../authService";
 
-export const addFreezerRequest = async (formData) => {
+export const addStorageRequest = async (formData) => {
     try {
-        const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addFreezer`,formData);
-        return response.data;
-      } catch (error) {
-        console.error('Failed to save data:', error);
-      } 
-}
-
-export const addFridgeRequest = async (formData) => {
-    try {
-        const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addFridge`,formData);
+        const response = await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/addStorage}`,formData);
         return response.data;
       } catch (error) {
         console.error('Failed to save data:', error);
@@ -188,18 +179,15 @@ export const loginUserRequest = async (formData,navigate,setLoading) => {
 
 
 export const deleteStorageRequest = async (deleteFridge, handleUpdateFridge) => {
-  let selectedDelete = "";
 
-  if(deleteFridge.type === "Fridge"){
-    selectedDelete = "deleteFridge";
-  } 
-  else if(deleteFridge.type === "Freezer"){
-    selectedDelete = "deleteFreezer";
+  const formData = {
+    type:deleteFridge.type,
+    id:deleteFridge.id
   }
 
   try {
 
-    await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/${selectedDelete}/${deleteFridge.id}`);
+    await axios.post(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteStorage`,formData);
     handleUpdateFridge();
 
   } 

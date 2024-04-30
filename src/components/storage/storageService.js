@@ -1,5 +1,5 @@
 import { getUser } from "../Requests/getRequest";
-import { addFreezerRequest, addFridgeRequest } from "../Requests/postRequests";
+import { addStorageRequest } from "../Requests/postRequests";
 import { getAuthToken } from "../authService";
 
 
@@ -54,15 +54,14 @@ const storageHandler = (clickedStorage, selectedStorage, setselectedStorage, set
 
 const handleAddStorage = async (formData, storageType, handleUpdateFridge) => {
     const addStorageData = {
-        storageName: formData.get(storageType === "fridge" ? "fridgeName" : "freezerName"),
+        storageName: formData.get(storageType === "FRIDGE" ? "fridgeName" : "freezerName"),
         capacity: formData.get("capacity"),
-        userID: getAuthToken()
+        type:storageType,
+        userID:getAuthToken()
     };
 
-    const addRequest = storageType === "fridge" ? addFridgeRequest : addFreezerRequest;
-
     try {
-        await addRequest(addStorageData);
+        await addStorageRequest(addStorageData);
         handleUpdateFridge();
     } catch (error) {
         console.error('Failed to save data:', error);

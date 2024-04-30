@@ -69,7 +69,7 @@ const handleDeleteStorage = async (deleteFridge) => {
             <div className='addFridgeButtonWrapper'>
               {addFridge ? (
                 <div className='submitAddFridgeWrapper'>
-                  <form onSubmit={(event) => handleAddStorage(event,"fridge")} className='addFridgeForm'>
+                  <form onSubmit={(event) => handleAddStorage(event,"FRIDGE")} className='addFridgeForm'>
                     <input type="text" name="fridgeName" placeholder='Enter fridge Name' />
                     <input type="number" name="capacity" placeholder='Enter fridge Capacity' />
                     <input type="submit" placeholder='Add Fridge' className='addFridgeSubmit'/>
@@ -98,7 +98,7 @@ const handleDeleteStorage = async (deleteFridge) => {
               <div className='addFridgeButtonWrapper'>
                 {addFreezer ? (
                   <div className='submitAddFridgeWrapper'>
-                    <form onSubmit={handleAddStorage} className='addFridgeForm'>
+                    <form onSubmit={(event) => handleAddStorage(event,"FREEZER")} className='addFridgeForm'>
                       <input type="text" name="freezerName" placeholder='Enter Freezer Name' />
                       <input type="number" name="capacity" placeholder='Enter Fridge Capacity' />
                       <input type="submit" placeholder='Add Freezer' className='addFridgeSubmit'/>
