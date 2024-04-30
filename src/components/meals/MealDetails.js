@@ -7,10 +7,8 @@ import {
   CardMedia,
   Container,
   List,
-  ListItem,
   Typography,
   Grid,
-  Chip,
   Menu,
   MenuItem,
 } from "@mui/material";
@@ -198,7 +196,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
     }
   };
 
-  const checkAvailabilityAfterConsumption = async (ingredients) => {
+  /*const checkAvailabilityAfterConsumption = async (ingredients) => {
     const availabilityResults = {};
     try {
       const availabilityPromises = ingredients.map((ingredient) =>
@@ -212,7 +210,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
       console.error("Error checking availability after consumption:", error);
     }
     return availabilityResults;
-  };
+  };*/
 
   const hasAllIngredientsAvailable = Object.values(availability).every(Boolean);
   return (

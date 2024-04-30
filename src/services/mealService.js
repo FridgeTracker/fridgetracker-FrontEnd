@@ -257,7 +257,7 @@ const getMealsFilteredByMember = async (memberId) => {
       ingredientsNeededMeals: [],
     };
   }
-  clearCache();
+  //clearCache();
 };
 
 const recordMealConsumption = async (mealId, memberId) => {
