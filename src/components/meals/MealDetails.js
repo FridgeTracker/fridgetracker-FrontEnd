@@ -90,6 +90,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
   const [availability, setAvailability] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -110,30 +111,27 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
     handleClose();
   };
 
-  useEffect(
-    () => {
-      const checkAvailability = async () => {
-        const availabilityResults = {};
-        try {
-          setUser(await getUser());
-          const availabilityPromises = meal.ingredients.map((ingredient) =>
-            mealService.ingredientAvailability([ingredient])
-          );
-          const availabilityArray = await Promise.all(availabilityPromises);
-          meal.ingredients.forEach((ingredient, index) => {
-            availabilityResults[ingredient] = availabilityArray[index];
-          });
-          setAvailability(availabilityResults);
-        } catch (error) {
-          console.error("Error checking availability:", error);
-        }
-      };
+  useEffect(() => {
+    const checkAvailability = async () => {
+      const availabilityResults = {};
+      try {
+        setUser(await getUser());
+        const availabilityPromises = meal.ingredients.map((ingredient) =>
+          mealService.ingredientAvailability([ingredient])
+        );
+        const availabilityArray = await Promise.all(availabilityPromises);
+        meal.ingredients.forEach((ingredient, index) => {
+          availabilityResults[ingredient] = availabilityArray[index];
+        });
+        setAvailability(availabilityResults);
+      } catch (error) {
+        console.error("Error checking availability:", error);
+      }
+    };
 
-      checkAvailability();
-    },
-    [meal.ingredients],
-    refreshMeals
-  );
+    checkAvailability();
+  }, [meal.ingredients, refreshMeals, refresh]);
+
   const handleConsumeMeal = async () => {
     try {
       const userData = await mealService.getUser();
@@ -141,6 +139,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
       if (refreshMeals) {
         refreshMeals();
       }
+
       const updatePromises = meal.ingredients.map(async (ingredientName) => {
         let storageToUpdate;
 
@@ -190,27 +189,26 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
         }
       }
 
+      // Re-fetch the meal data after consuming the meal
+      const updatedMeal = await mealService.getMealById(meal.id);
+
+      // Update the availability state with the new meal data
+      const availabilityResults = {};
+      const availabilityPromises = updatedMeal.ingredients.map((ingredient) =>
+        mealService.ingredientAvailability([ingredient])
+      );
+      const availabilityArray = await Promise.all(availabilityPromises);
+      updatedMeal.ingredients.forEach((ingredient, index) => {
+        availabilityResults[ingredient] = availabilityArray[index];
+      });
+      setAvailability(availabilityResults);
+
       console.log("Meal consumed successfully.");
+      setRefresh(!refresh); // Toggle the refresh state to trigger a re-render
     } catch (error) {
       console.error("Failed to consume meal:", error);
     }
   };
-
-  /*const checkAvailabilityAfterConsumption = async (ingredients) => {
-    const availabilityResults = {};
-    try {
-      const availabilityPromises = ingredients.map((ingredient) =>
-        mealService.ingredientAvailability([ingredient])
-      );
-      const availabilityArray = await Promise.all(availabilityPromises);
-      ingredients.forEach((ingredient, index) => {
-        availabilityResults[ingredient] = availabilityArray[index];
-      });
-    } catch (error) {
-      console.error("Error checking availability after consumption:", error);
-    }
-    return availabilityResults;
-  };*/
 
   const hasAllIngredientsAvailable = Object.values(availability).every(Boolean);
   return (
