@@ -39,6 +39,7 @@ function ShoppingList(){
 
   const createShoppingList = async () => {
     shoppingListService.createShoppingList(setUser, user);
+    setUser(await getUser());
   }
 
   const addListItem = async () => {
@@ -54,15 +55,18 @@ function ShoppingList(){
   }
 
   const deleteList = async (selectedList) => {
-    const form = {s_listId:selectedList.s_listId};
+    const form = {
+      id:selectedList.id,
+      type:"SHOPPING"
+    };
     await deleteListRequest(form,setUser,setSelectedList);
   }
   
     
   const changeListName = async (updatedListName) => { 
     const form = {
-      s_listId: selectedList.s_listId,
-      s_listName: updatedListName
+      id: selectedList.id,
+      storageName: updatedListName
     };
     await changeListRequest(form, setUser);
   }
@@ -76,7 +80,7 @@ function ShoppingList(){
               <div className="listNameTitle">Shopping List</div>
 
                 {user && user.shoppingLists.map((list) => 
-                  <div className='listName' onClick={() => {setSelectedList(list); setUpdatedListName(list.s_listName)}}>{list.s_listName}</div>
+                  <div className='listName' onClick={() => {setSelectedList(list); setUpdatedListName(list.storageName)}}>{list.storageName}</div>
                 )}
 
               <div className="createNewS_list" onClick={() => createShoppingList()}>Create New List</div>

@@ -141,7 +141,7 @@ export const createListRequest = async (formData,setUser) => {
 
 export const deleteListRequest = async (formData,setUser,setSelectedList) => {
   try{
-    axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteList",formData);
+    axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/deleteStorage",formData);
     const updatedUser = await getUser();
     setUser(updatedUser);
     setSelectedList(null);
