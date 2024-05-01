@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let base_url = "";
+let base_url = "https://agile-atoll-76917-ba182676f53b.herokuapp.com";
 
 const axiosInstance = axios.create({
   baseURL: base_url,
@@ -16,7 +16,9 @@ const getUser = async (forceRefresh = false) => {
   }
   try {
     const response = await axiosInstance.get(
-      `/api/user/${localStorage.getItem("UUID")}`
+      `https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/user/${localStorage.getItem(
+        "UUID"
+      )}`
     );
     cache.userData = response.data;
     return response.data;
@@ -38,7 +40,9 @@ const getMembers = async () => {
 
 const getMeals = async () => {
   try {
-    const response = await axiosInstance.get("meal_plans");
+    const response = await axiosInstance.get(
+      "https://agile-atoll-76917-ba182676f53b.herokuapp.com/meal_plans"
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching meals:", error);
@@ -294,6 +298,25 @@ const recordMealConsumption = async (mealId, memberId) => {
   }
 };
 
+const checkIngredientsAvailabilityAfterConsumption = async (ingredients) => {
+  try {
+    const availabilityResults = {};
+    const availabilityPromises = ingredients.map((ingredient) =>
+      ingredientAvailability([ingredient])
+    );
+    const availabilityArray = await Promise.all(availabilityPromises);
+    ingredients.forEach((ingredient, index) => {
+      availabilityResults[ingredient] = availabilityArray[index];
+    });
+    return availabilityResults;
+  } catch (error) {
+    console.error(
+      "Error checking ingredient availability after consumption:",
+      error
+    );
+    throw error;
+  }
+};
 const clearCache = () => {
   cache.userData = null;
 };
@@ -309,6 +332,7 @@ const mealService = {
   clearCache,
   updateItemQuantity,
   consumeMeal,
+  checkIngredientsAvailabilityAfterConsumption,
 };
 
 export default mealService;
