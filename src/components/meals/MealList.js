@@ -18,10 +18,12 @@ import {
 } from "@mui/material";
 import MealDetails from "./MealDetails";
 import mealService from "../../services/mealService";
+import { useMealListObserver } from "./MealListObserver";
 
 import MealCard from "./MealCard";
 
 const MealList = () => {
+  const observer = useMealListObserver();
   const [selectedMeal, setSelectedMeal] = useState(null);
   const [selectedMemberId, setSelectedMemberId] = useState("");
   const [members, setMembers] = useState([]);
@@ -102,7 +104,7 @@ const MealList = () => {
       setReadyToEatMeals([]);
       setIngredientsNeededMeals([]);
     }
-  }, [selectedMemberId]);
+  }, [selectedMemberId, observer]);
 
   const updateMealsState = (categorizedMeals) => {
     // Assuming categorizedMeals object contains arrays for each meal category
@@ -126,10 +128,10 @@ const MealList = () => {
     );
   };
 
-  const fetchMeals = async () => {
+  const fetchMeals = async (memberId) => {
     try {
       const categorizedMeals = await mealService.getMealsFilteredByMember(
-        selectedMemberId
+        memberId
       );
       updateMealsState(categorizedMeals); // Update the state with the new meals
     } catch (error) {
@@ -145,7 +147,20 @@ const MealList = () => {
   };
 
   const handleGoBack = () => {
-    setSelectedMeal(null); // Deselect the meal and go back to the list
+    setSelectedMeal(null);
+  };
+
+  const handleMemberChange = async (memberId) => {
+    setSelectedMemberId(memberId);
+    await mealService.getUser(true);
+    await fetchMeals(memberId);
+  };
+
+  const handleFilterChange = async (filterValue) => {
+    setFilter(filterValue);
+    setPage(1); // Reset the page to 1
+    await mealService.getUser(true);
+    await fetchMeals(selectedMemberId);
   };
 
   if (selectedMeal) {
@@ -177,7 +192,7 @@ const MealList = () => {
                 size="small"
                 labelId="member-select-label"
                 value={selectedMemberId}
-                onChange={(e) => setSelectedMemberId(e.target.value)}
+                onChange={(e) => handleMemberChange(e.target.value)}
                 displayEmpty
                 label="Select Member"
                 renderValue={(selected) => {
@@ -225,10 +240,7 @@ const MealList = () => {
                 aria-label="meal-filter"
                 name="row-radio-buttons-group"
                 value={filter}
-                onChange={(e) => {
-                  setFilter(e.target.value);
-                  setPage(1);
-                }}
+                onChange={(e) => handleFilterChange(e.target.value)}
               >
                 <FormControlLabel value="all" control={<Radio />} label="All" />
                 <FormControlLabel
