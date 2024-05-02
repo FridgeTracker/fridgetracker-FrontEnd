@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import MealDetails from "./MealDetails";
 import mealService from "../../services/mealService";
+
 import MealCard from "./MealCard";
 
 const MealList = () => {
@@ -199,17 +200,18 @@ const MealList = () => {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                {members && members.map((member) => (
-                  <MenuItem key={member.id} value={member.id}>
-                    <ListItemIcon>
-                      <Avatar
-                        src={require(`../assets/memberIcons/${member.imageURL}`)}
-                        sx={{ width: 24, height: 24 }}
-                      />
-                    </ListItemIcon>
-                    {member.name}
-                  </MenuItem>
-                ))}
+                {members &&
+                  members.map((member) => (
+                    <MenuItem key={member.id} value={member.id}>
+                      <ListItemIcon>
+                        <Avatar
+                          src={require(`../assets/memberIcons/${member.imageURL}`)}
+                          sx={{ width: 24, height: 24 }}
+                        />
+                      </ListItemIcon>
+                      {member.name}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </Grid>

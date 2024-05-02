@@ -32,7 +32,6 @@ const SidebarButton = ({ icon, text, onClick }) => (
 );
 
 function Dash() {
-
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
@@ -52,14 +51,13 @@ function Dash() {
     fetchUserData();
   }, [navigate]);
 
-
   const updateUser = async () => {
     try {
       setUserData(await getUser());
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
-  }
+  };
 
   const [showSelectedNav, setNav] = useState(false);
   const [showMembers, setMembers] = useState(false);
@@ -67,7 +65,7 @@ function Dash() {
   const [showSettings, setSettings] = useState(false);
   const [showDashboard, setDashboard] = useState(false);
   const [showMealList, setMealList] = useState(false);
-  const [showShoppingList,setShoppingList] = useState(false);
+  const [showShoppingList, setShoppingList] = useState(false);
 
   const handleItemClick = (item) => {
     setNav(true);
@@ -154,25 +152,29 @@ function Dash() {
           <input type="text" />
           <img className="searchIcon" src={searchIcon} alt="search icon" />
           <p>
-            {userData && userData.imageData ? <img className="userIcon" src={userData.imageData} alt="" />
-            :<img className="userIcon" src={user} alt="" />}
+            {userData && userData.imageData ? (
+              <img className="userIcon" src={userData.imageData} alt="" />
+            ) : (
+              <img className="userIcon" src={user} alt="" />
+            )}
             {userData && userData.familyName}
           </p>
         </div>
 
         {showSelectedNav ? (
           <>
-            {showSettings && <Setting userData={userData} updateUser={updateUser} />}
+            {showSettings && (
+              <Setting userData={userData} updateUser={updateUser} />
+            )}
             {showMembers && <Members />}
             {showFridges && <Storage />}
-            {showMealList && <MealList userData={userData}/>}
-            {showDashboard && <Dashboard/>}
-            {showShoppingList && <ShoppingList/>}
+            {showMealList && <MealList userData={userData} />}
+            {showDashboard && <Dashboard />}
+            {showShoppingList && <ShoppingList />}
           </>
         ) : (
-          <Dashboard/>
+          <Dashboard />
         )}
-        
       </div>
     </div>
   );

@@ -134,80 +134,29 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
 
   const handleConsumeMeal = async () => {
     try {
-      const userData = await mealService.getUser();
       await mealService.consumeMeal(meal, memberId);
+      await updateAvailabilityAfterConsumption(meal);
+
       if (refreshMeals) {
         refreshMeals();
       }
 
-      const updatePromises = meal.ingredients.map(async (ingredientName) => {
-        let storageToUpdate;
-
-        for (const storageType of ["fridges", "freezers"]) {
-          for (const storage of userData[storageType]) {
-            const item = storage.items.find(
-              (item) =>
-                item.foodName.toLowerCase() === ingredientName.toLowerCase()
-            );
-            if (item) {
-              storageToUpdate = {
-                storageId: storage.id,
-                item,
-              };
-              break;
-            }
-          }
-          if (storageToUpdate) {
-            break;
-          }
-        }
-
-        // If the ingredient is found and there's enough quantity, update the backend
-        if (storageToUpdate && storageToUpdate.item.quantity > 0) {
-          const newQuantity = storageToUpdate.item.quantity - 1;
-          return mealService.updateItemQuantity(
-            storageToUpdate.item.itemID,
-            newQuantity,
-            storageToUpdate.storageId // Pass the storage ID here
-          );
-        } else {
-          // If the ingredient isn't found or the quantity is insufficient, no update is needed
-          console.warn(
-            `Ingredient ${ingredientName} not found or quantity insufficient for consumption.`
-          );
-          return Promise.resolve(null); // Resolve to null to indicate no action needed
-        }
-      });
-
-      const updatedIngredients = (await Promise.all(updatePromises)).filter(
-        (result) => result
-      );
-
-      if (updatedIngredients.length > 0) {
-        if (refreshMeals) {
-          refreshMeals();
-        }
-      }
-
-      // Re-fetch the meal data after consuming the meal
-      const updatedMeal = await mealService.getMealById(meal.id);
-
-      // Update the availability state with the new meal data
-      const availabilityResults = {};
-      const availabilityPromises = updatedMeal.ingredients.map((ingredient) =>
-        mealService.ingredientAvailability([ingredient])
-      );
-      const availabilityArray = await Promise.all(availabilityPromises);
-      updatedMeal.ingredients.forEach((ingredient, index) => {
-        availabilityResults[ingredient] = availabilityArray[index];
-      });
-      setAvailability(availabilityResults);
-
       console.log("Meal consumed successfully.");
-      setRefresh(!refresh); // Toggle the refresh state to trigger a re-render
     } catch (error) {
       console.error("Failed to consume meal:", error);
     }
+  };
+
+  const updateAvailabilityAfterConsumption = async (consumedMeal) => {
+    const availabilityResults = {};
+    const availabilityPromises = consumedMeal.ingredients.map((ingredient) =>
+      mealService.ingredientAvailability([ingredient])
+    );
+    const availabilityArray = await Promise.all(availabilityPromises);
+    consumedMeal.ingredients.forEach((ingredient, index) => {
+      availabilityResults[ingredient] = availabilityArray[index];
+    });
+    setAvailability(availabilityResults);
   };
 
   const hasAllIngredientsAvailable = Object.values(availability).every(Boolean);

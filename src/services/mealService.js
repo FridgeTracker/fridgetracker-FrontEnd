@@ -106,11 +106,11 @@ const ingredientAvailability = async (ingredients) => {
   }
 };
 
-const updateItemQuantity = async (itemId, quantity, storageId) => {
+const updateItemQuantity = async (itemId, quantity, expiryDate, storageId) => {
   const updatedItem = {
     itemID: itemId,
     quantity: quantity,
-    expiryDate: "2024-04-02",
+    expiryDate: expiryDate,
     id: storageId,
   };
 
@@ -118,6 +118,7 @@ const updateItemQuantity = async (itemId, quantity, storageId) => {
     "Updating item:",
     updatedItem.itemID,
     updatedItem.quantity,
+    updatedItem.expiryDate,
     updatedItem.id
   );
 
@@ -127,14 +128,13 @@ const updateItemQuantity = async (itemId, quantity, storageId) => {
       updatedItem
     );
 
-    console.log("Item updated successfully:", response.data);
+    console.log(response.data);
     // Update the cached user data
     const updatedUserData = await getUser(true);
     cache.userData = updatedUserData;
     return response.data;
   } catch (error) {
     console.error("Failed to update item:", error.response.data);
-    throw error;
   }
 };
 
@@ -145,6 +145,7 @@ const consumeMeal = async (meal, memberId) => {
 
   const userData = await getUser();
 
+  // Update ingredient quantities
   const updatePromises = meal.ingredients.map(async (ingredientName) => {
     let updated = false;
 
@@ -156,7 +157,12 @@ const consumeMeal = async (meal, memberId) => {
 
         if (ingredient && ingredient.quantity > 0) {
           const newQuantity = ingredient.quantity - 1;
-          await updateItemQuantity(ingredient.itemID, newQuantity, storage.id);
+          await updateItemQuantity(
+            ingredient.itemID,
+            newQuantity,
+            ingredient.expiryDate,
+            storage.id
+          );
           updated = true;
           break;
         }
