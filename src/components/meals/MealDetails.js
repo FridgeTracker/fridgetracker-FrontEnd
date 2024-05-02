@@ -90,7 +90,6 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
   const [availability, setAvailability] = useState({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [user, setUser] = useState(null);
-  const [refresh, setRefresh] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -130,7 +129,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
     };
 
     checkAvailability();
-  }, [meal.ingredients, refreshMeals, refresh]);
+  }, [meal.ingredients, refreshMeals]);
 
   const handleConsumeMeal = async () => {
     try {
