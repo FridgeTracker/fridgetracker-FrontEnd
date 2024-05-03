@@ -102,7 +102,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
       const itemToAdd = {
         foodName: element,
         quantity: 1,
-        id: list.s_listId,
+        id: list.id,
       };
       addItemRequest(itemToAdd);
     });
@@ -223,7 +223,7 @@ const MealDetails = ({ meal, onGoBack, refreshMeals, memberId }) => {
                 {user &&
                   user.shoppingLists.map((list) => (
                     <MenuItem onClick={() => handleMenuItemClick(list)}>
-                      {list.s_listName}
+                      {list.storageName}
                     </MenuItem>
                   ))}
               </Menu>
