@@ -32,20 +32,20 @@ function MealRecord({ user }) {
           "https://agile-atoll-76917-ba182676f53b.herokuapp.com/meal_plans"
         );
         const data = await response.json();
+        setMember(null);
         setMeals(data);
+        
       } catch (error) {
         console.error("Error fetching meals:", error);
       }
     };
-
+  
     fetchMeals();
   }, []);
 
   // Filter records whenever the selected member changes
   useEffect(() => {
-    const records = member
-      ? mealRecords.filter((record) => record.memberId === member)
-      : mealRecords;
+    const records = mealRecords.filter((record) => record.memberId === member);
     setFilteredRecords(records);
   }, [member, mealRecords]);
 
@@ -70,7 +70,7 @@ function MealRecord({ user }) {
           value={member || ""}
           onChange={(e) => setMember(e.target.value)}
         >
-          <option value="">All Members</option>
+          <option value="">Select</option>
           {user &&
             user.members.map((member) => (
               <option key={member.id} value={member.id}>
