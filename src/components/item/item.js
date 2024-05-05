@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import "./item.css";
 import ComboBox from "./searchSuggestion";
 import itemService from "./itemService";
+import { getFoodDataValue } from "../Requests/getRequest";
 
 const Item = ({Item, storageId, updateFridge}) => {
 
@@ -45,6 +46,7 @@ const Item = ({Item, storageId, updateFridge}) => {
         itemService.handleSubmit(selectedItem, event, storageId, updateFridge);
     };
 
+
     return (
     <div className= "itemCardContainer">
         {Item ? (
@@ -83,7 +85,7 @@ const Item = ({Item, storageId, updateFridge}) => {
                     <p><u> Add Item  </u></p>
                 </div>
                 <div className="itemFormContainer">
-                   <ComboBox handleSubmit={handleSubmit}/>
+                   <ComboBox handleSubmit={handleSubmit} foodData={getFoodDataValue()}/>
                 </div>
             </>
         )

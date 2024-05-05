@@ -21,14 +21,21 @@ export const getUsers = async () => {
     }
 }
 
+let foodData = null;
 
 export const getFoodData = async () => {
     try {
         const response = await axios.get('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/getFoodData');
+        foodData = response.data;
         return response.data;
-      } catch (error) {
+    } catch (error) {
         console.error('Error fetching food data:', error);
-      }
+        throw error; // Rethrow the error to handle it elsewhere if needed
+    }
+}
+
+export const getFoodDataValue = () => {
+    return foodData;
 }
 
 export const getAlerts = async () => {
@@ -39,7 +46,6 @@ export const getAlerts = async () => {
         console.error('Error fetching food data:', error);
       }
 }
-
 
 export const getUserRank = async (navigate) => {
     try{

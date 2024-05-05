@@ -22,7 +22,7 @@ import MealList from "./components/meals/MealList";
 import ShoppingList from "./components/shoppinglist/shoppinglist";
 
 import { getAuthToken, logoutUser } from "./components/authService";
-import { getUser } from "./components/Requests/getRequest";
+import { getFoodData, getUser } from "./components/Requests/getRequest";
 
 const SidebarButton = ({ icon, text, onClick }) => (
   <div className="dashboardButtonC" onClick={onClick}>
@@ -48,8 +48,22 @@ function Dash() {
         console.error("Failed to fetch user data:", error);
       }
     };
+    
     fetchUserData();
   }, [navigate]);
+
+  useEffect(() => {
+    async function fetchFoodData() {
+      try {
+        await getFoodData();
+      } 
+      catch (error) {
+        console.error('Error fetching food data:', error);
+      }
+    }
+
+    fetchFoodData();
+  }, []);
 
   const updateUser = async () => {
     try {
