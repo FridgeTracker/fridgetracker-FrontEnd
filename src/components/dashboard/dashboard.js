@@ -15,9 +15,13 @@ function Dashboard(){
         async function fetchData() {
             await getAlerts();
             setUser(await getUser());
+            console.log(await getUser());
         }
         fetchData();
     }, []);
+
+    // Assuming mealRecords and meals are state variables managed by useState
+
     
     return(
 

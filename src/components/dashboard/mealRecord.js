@@ -79,28 +79,33 @@ function MealRecord({ user }) {
             ))}
         </select>
       </div>
+      <div className="directional_bar_noti">
+          <table className="notiTableMeal">
+              <tr>
+                <th>Meal</th>
+                <th>Protein</th>
+                <th>Fats</th>
+                <th>Calories</th>
+                <th>Date</th>
+              </tr>
+          </table>
+      </div>
+
+      <div className="notiContent">
       <table className="meal-record-table">
-        <thead>
-          <tr>
-            <th>Meal</th>
-            <th>Protein</th>
-            <th>Carb</th>
-            <th>Fats</th>
-            <th>Date</th>
-          </tr>
-        </thead>
         <tbody>
           {filteredRecords.map((record) => (
             <tr key={record.id}>
               <td>{getMealName(record.mealId)}</td>
               <td>{getMealNutrition(record.mealId).Protein}</td>
-              <td>{getMealNutrition(record.mealId).Calories}</td>
               <td>{getMealNutrition(record.mealId).Fat}</td>
+              <td>{getMealNutrition(record.mealId).Calories}</td> 
               <td>{new Date(record.recordedAt).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

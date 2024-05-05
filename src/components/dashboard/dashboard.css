@@ -78,22 +78,44 @@ h1 {
   width: 100%;
   background-color: rgb(219, 219, 219);
 }
-.directional_bar table {
+.notiTableMeal{
   width: 100%;
   font-size: 1.5vh;
-  font-weight: bold;
+  text-align: left;
 }
-.directional_bar td:nth-child(1) {
+
+.notiTableMeal th:nth-child(1){
+  width: 12.3%;
+  padding-left: 2%;
+}
+.notiTableMeal th:nth-child(2),
+.notiTableMeal th:nth-child(3),
+.notiTableMeal th:nth-child(4){
+  width: 4%;
+}
+.notiTableMeal th:nth-child(5){
+  text-align: end;
+  width: 11%;
+  padding-right: 3.5%;
+}
+
+
+.meal-record-table{
+  width: 100%;
+  font-size: 1.5vh;
+}
+
+.meal-record-table td:nth-child(1){
   width: 35%;
   padding-left: 2%;
 }
-.directional_bar td:nth-child(2),
-.directional_bar td:nth-child(3),
-.directional_bar td:nth-child(4) {
+.meal-record-table td:nth-child(2)
+.meal-record-table td:nth-child(3)
+.meal-record-table td:nth-child(4){
   width: 10%;
 }
 
-.directional_bar td:nth-child(5) {
+.meal-record-table td:nth-child(5){
   text-align: end;
   width: 30%;
   padding-right: 2%;
@@ -249,20 +271,28 @@ h1 {
   display: flex;
   align-items: center;
   box-shadow: 0vh 0.08vh 0.15vh rgb(70, 70, 70);
+  position: relative;
 }
 .nutritionMember span {
   position: absolute;
   right: 0;
-  margin-right: 10%;
-  width: 20%;
-}
-.nutritionMember p {
-  width: 100%;
-  font-size: 2vh;
+  top:0;
+  margin-top: 6%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 2%;
+  width: 30%;
   font-weight: bold;
-  margin-left: 1vh;
-  position: relative;
+  font-size: 2vh;
 }
+#nutMember{
+  margin-left: 2%;
+  font-weight: bold;
+  font-size: 2vh;
+}
+
 
 .nutIcon {
   height: 4vh;
@@ -283,55 +313,4 @@ h1 {
   height: 30%;
   width: 93%;
   border-radius: 0.4vh;
-}
-.mealRecordWrapper {
-  width: 100%;
-  max-width: 100%;
-  overflow-y: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 8px;
-  text-align: left;
-  white-space: nowrap;
-}
-
-.meal-record-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: Arial, sans-serif;
-}
-
-.meal-record-table th,
-.meal-record-table td {
-  padding: 12px 15px;
-  text-align: left;
-}
-
-.meal-record-table th {
-  background-color: #dbdbdb;
-  color: #fff;
-}
-
-.tableScroll {
-  overflow-y: auto;
-  max-height: 400px; /* Adjust this value based on your needs */
-}
-
-.tableScroll table {
-  border-collapse: collapse;
-}
-
-.tableScroll tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.tableScroll tr:hover {
-  background-color: #e6e6e6;
 }
