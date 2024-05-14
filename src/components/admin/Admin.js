@@ -41,7 +41,8 @@ function Admin(){
 
     const handleChangeUserInfo = async (event) => {
         event.preventDefault();
-        const clickedButtonName = document.activeElement.name;
+        const clickedButton = event.nativeEvent.submitter;
+        const clickedButtonName = clickedButton.name;
 
         const formData = new FormData(event.target);
         const form = {
