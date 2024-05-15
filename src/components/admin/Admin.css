@@ -200,3 +200,34 @@ p {
     border: none;
     cursor: pointer;
 }
+
+
+.notificationTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.notificationTable th, .notificationTable td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.notificationTable th {
+    background-color: #073a00;
+}
+
+.notiMessage td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tableHeader {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.adminLeft {
+    text-align: center;
+}

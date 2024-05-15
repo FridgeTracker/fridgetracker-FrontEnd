@@ -6,7 +6,7 @@ import {useNavigate } from 'react-router-dom';
 import {getAuthToken, logoutUser } from "../authService";
 
 import AdminUser from './adminUser';
-import { getUserRank, getUsers } from '../Requests/getRequest';
+import { getUser, getUserRank, getUsers } from '../Requests/getRequest';
 import axios from 'axios';
 
 
@@ -15,6 +15,7 @@ function Admin(){
     const[users,setUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const[messsage, setMessage] = useState("");
+    const[admin, setadmin] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -22,7 +23,12 @@ function Admin(){
         const checkUserRank = async () => {
           await getUserRank(navigate);
         };
+
+        const settingAdmin = async () => {
+            setadmin(await getUser());
+        }
       
+        settingAdmin();
         checkUserRank();
       }, [navigate]);
 
@@ -65,7 +71,6 @@ function Admin(){
 
     }
     
-    
     return(
         <div className='admin'>
             <section className='userContainer'>
@@ -85,8 +90,25 @@ function Admin(){
                 <section className='adminTerminalWrapper'>
                     <div className='adminTerminal'>
                         <div className='adminLeft'>
-                            <p>Admin Alerts</p>
-
+                            <h3>Admin Alerts</h3>
+                            <table className="notificationTable">
+                            <thead>
+                                <tr>
+                                    <th className="tableHeader">Sender</th>
+                                    <th className="tableHeader">Email</th>
+                                    <th className="tableHeader">Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {admin && admin.notification.map((noti, index) => (
+                                    <tr key={index} className="notiMessage">
+                                        <td>{noti.sender}</td>
+                                        <td>{noti.message}</td>
+                                        <td>{noti.alert_type}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                         </div>
                         <div className='adminRight'>
                             <div className='userIDSelection'>

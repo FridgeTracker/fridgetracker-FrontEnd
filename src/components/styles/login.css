@@ -76,6 +76,7 @@ body, html {
     color: white;
     font-size: large;
     text-align: center;
+    cursor: pointer;
 }
 
 .buttonWrapper{
