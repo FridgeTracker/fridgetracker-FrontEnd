@@ -20,6 +20,7 @@ h1 {
 
 /* MEAL RECORD */
 .mealRecordWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: white;
   height: 50%;
   width: 95%;
@@ -123,6 +124,7 @@ h1 {
 
 /* NOTI RECORD */
 .notificationWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 2%;
   background-color: white;
   height: 41%;
@@ -220,6 +222,7 @@ h1 {
 
 /* FOR NUTRI */
 .nutritionWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: rgb(243, 243, 243);
   height: 62%;
   width: 93%;
@@ -308,6 +311,7 @@ h1 {
 
 /* ITEM */
 .itemsWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 5%;
   background-color: white;
   height: 30%;

@@ -38,7 +38,7 @@ function StoredItems({ user }) {
                         data: combinedCategories,
                         highlightScope: { faded: 'global', highlighted: 'item' },
                         innerRadius: "30%",
-                        outerRadius: "80%",
+                        outerRadius: "70%",
                         paddingAngle: 5,
                         cornerRadius: 5,
                         startAngle: -90,

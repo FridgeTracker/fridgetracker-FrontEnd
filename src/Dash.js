@@ -163,8 +163,8 @@ function Dash() {
             <div className="bar2"></div>
             <div className="bar3"></div>
           </div>
-          <input type="text" />
-          <img className="searchIcon" src={searchIcon} alt="search icon" />
+         {/*} <input type="text" />
+          <img className="searchIcon" src={searchIcon} alt="search icon" />*/}
           <p>
             {userData && userData.imageData ? (
               <img className="userIcon" src={userData.imageData} alt="" />

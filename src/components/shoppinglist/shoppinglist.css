@@ -48,7 +48,18 @@
     color: black;
     cursor: pointer;
 }
-
+.listName2{
+    height: 6%;
+    width: 85%;
+    margin: 2vh auto;
+    background-color: #fff4d6;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+}
 .listName:hover{
     background-color: #1B8B60;
 }
@@ -90,9 +101,10 @@
 
 }
 .s_listOptions{
-    height: 10%;
+    height: 8%;
     width: 100;
     display: flex;
+    margin-top: 1%;
 
 }
 .s_listOptions div{

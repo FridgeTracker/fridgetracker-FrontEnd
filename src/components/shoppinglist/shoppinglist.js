@@ -149,7 +149,7 @@ function ShoppingList({user, setUser}){
             <div className="shoppingListNameHolder">
               <div className="listNameTitle">Shopping List</div>
 
-              <div className='listName' onClick={() => getMealIngredients()}>Suggestion List</div>
+              <div className='listName2' onClick={() => getMealIngredients()}>Suggestion List</div>
 
                 {user && user.shoppingLists.map((list) => 
                   <div className='listName' onClick={() => {setSelectedList(list); setUpdatedListName(list.storageName); setItems(null);}}>{list.storageName}</div>
