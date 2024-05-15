@@ -75,7 +75,7 @@ function LoginUser(){
                   {!forget && <input className='passInput' type="password" name="password" placeholder="Enter Password Here" required/>}
                 </div>
 
-                {!forget && <span className='forgotButton' onClick={() => setforget(true)}><p> Forgot Password? </p></span>}
+                {!forget && <span className='forgotButton' onClick={() => {setforget(true); seterrorMessagge("")}}><p> Forgot Password? </p></span>}
                 
                 <div className='buttonWrapper'>
                   {forget &&
