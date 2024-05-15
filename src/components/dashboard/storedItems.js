@@ -56,9 +56,10 @@ function StoredItems({ user }) {
                         fill: 'black',
                         },
                       direction: 'column',
-                      position: { vertical: 'middle', horizontal: 'right' },
+                      position: { vertical: 'top', horizontal: 'right' },
                       itemMarkWidth: 10,
                       itemMarkHeight: 10,
+                      padding:32
                     },
                     
                   }}
