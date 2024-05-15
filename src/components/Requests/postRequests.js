@@ -164,14 +164,16 @@ export const changeListRequest = async (formData,setUser) => {
 }
 
 
-export const loginUserRequest = async (formData,navigate,setLoading) => {
+export const loginUserRequest = async (formData,navigate,setLoading,seterrorMessagge) => {
   try {
     const response = await axios.post('https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/login', formData);  
     authenticateUser(response.data.id);
     await getUserRank(navigate);
   } 
   catch (error) {
-      console.error('Login failed:', error);       
+      seterrorMessagge("Login Failed");  
+      console.error('Login failed:', error); 
+      
   } finally {
       setLoading(false);
   } 

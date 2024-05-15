@@ -14,7 +14,7 @@ function LoginUser(){
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [forget, setforget] = useState(false);
-
+    const[errorMessagge, seterrorMessagge] = useState("");
     // If User didnt logout token stays stored and relog automatically
     useEffect(() => {
       const redirectUser = async () => {
@@ -34,7 +34,7 @@ function LoginUser(){
           password: form.get("password")
          };
 
-        await loginUserRequest(formData,navigate,setLoading);
+        await loginUserRequest(formData,navigate,setLoading,seterrorMessagge);
     }
 
     const forgotPassword = async(e)=>{
@@ -93,8 +93,11 @@ function LoginUser(){
                 </div>
           
               </form>
+              
             </div>
+            <p className='erroMessageLogin'>{errorMessagge && errorMessagge}</p>
           </div>
+          
         </div>
       )
     };
