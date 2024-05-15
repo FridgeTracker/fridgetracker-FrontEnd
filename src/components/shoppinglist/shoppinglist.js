@@ -70,6 +70,75 @@ function ShoppingList(){
     };
     await changeListRequest(form, setUser);
   }
+
+  const [mealRecords, setMealRecords] = useState([]);
+  const [meals, setMeals] = useState([]);
+  const [suggestItems, setItems] = useState([]);
+  
+  const fetchMemberRecords = async (memberID) => {
+      try {
+          const response = await fetch(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/mealRecords/${memberID}`);
+          const data = await response.json();
+          return data; // Return the fetched data
+      } catch (error) {
+          console.error("Error fetching meal records:", error);
+          return []; // Return an empty array in case of an error
+      }
+  };
+  
+  useEffect(() => {
+      const fetchMeals = async () => {
+          try {
+              const response = await fetch("https://agile-atoll-76917-ba182676f53b.herokuapp.com/meal_plans");
+              const data = await response.json();
+              setMeals(data);
+  
+          } catch (error) {
+              console.error("Error fetching meals:", error);
+          }
+      };
+      
+      fetchMeals();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getMealData = async () => {
+
+    const allMealRecords = [];
+    for (const member of user.members) {
+        const memberMealRecords = await fetchMemberRecords(member.id);
+        allMealRecords.push(...memberMealRecords);
+    }
+
+    setMealRecords(allMealRecords);
+
+  }
+
+  const getMealIngredients = () => {
+
+    getMealData();
+    const ingredientsSet = new Set();
+
+    mealRecords.forEach(record => {
+        const meal = meals.find((m) => m.id === record.mealId);
+        if (meal) {
+            const ingredients = meal.ingredients || [];
+            ingredients.forEach(ingredient => {
+                ingredientsSet.add(ingredient);
+            });
+        } else {
+            ingredientsSet.add({ name: "Unknown" });
+        }
+    });
+
+    const uniqueIngredients = Array.from(ingredientsSet);
+    setItems(uniqueIngredients);
+    setSelectedList(null);
+};
+
+
+
+  
   
     return (
         <div className='shoppingList'>
@@ -79,8 +148,10 @@ function ShoppingList(){
             <div className="shoppingListNameHolder">
               <div className="listNameTitle">Shopping List</div>
 
+              <div className='listName' onClick={() => getMealIngredients()}>Suggestion List</div>
+
                 {user && user.shoppingLists.map((list) => 
-                  <div className='listName' onClick={() => {setSelectedList(list); setUpdatedListName(list.storageName)}}>{list.storageName}</div>
+                  <div className='listName' onClick={() => {setSelectedList(list); setUpdatedListName(list.storageName); setItems(null);}}>{list.storageName}</div>
                 )}
 
               <div className="createNewS_list" onClick={() => createShoppingList()}>Create New List</div>
@@ -108,6 +179,20 @@ function ShoppingList(){
             <div className='eachItem'> 
 
             <table id="eachItemTable">
+            {suggestItems && suggestItems.map((item, index) => (
+              <React.Fragment key={index}>
+                <tr>
+                  <td id="foodName">
+                    {item}
+                  </td>
+                  <td id="quantity">
+                    {1}
+                  </td>
+                  <td id="type"> 
+                  </td> 
+                </tr>
+              </React.Fragment>
+            ))}
               {selectedList && selectedList.items.map((item, index) => (
                 <tr key={index}>
                   {editMode && editMode === item ? (
