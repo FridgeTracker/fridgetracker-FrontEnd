@@ -10,9 +10,8 @@ import conmfirmIcon from "../assets/confirmIcon.png";
 import shoppingListService from './shoppingListService';
 
 
-function ShoppingList(){
+function ShoppingList({user, setUser}){
 
-  const[user,setUser] = useState(null);
   const[selectedList, setSelectedList] = useState(null);
   const[editMode,setEditMode] = useState(null);
   const[updatedListName , setUpdatedListName] = useState(null);
@@ -29,8 +28,10 @@ function ShoppingList(){
   useEffect(() => {
     const fetchUser = async () => {
       setUser(await getUser());
+      getMealData();
     };
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (event) => {
@@ -105,6 +106,7 @@ function ShoppingList(){
   const getMealData = async () => {
 
     const allMealRecords = [];
+    console.log(user);
     for (const member of user.members) {
         const memberMealRecords = await fetchMemberRecords(member.id);
         allMealRecords.push(...memberMealRecords);
@@ -116,7 +118,6 @@ function ShoppingList(){
 
   const getMealIngredients = () => {
 
-    getMealData();
     const ingredientsSet = new Set();
 
     mealRecords.forEach(record => {

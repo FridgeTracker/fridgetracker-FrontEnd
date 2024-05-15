@@ -184,7 +184,7 @@ function Dash() {
             {showFridges && <Storage />}
             {showMealList && <MealList userData={userData} />}
             {showDashboard && <Dashboard />}
-            {showShoppingList && <ShoppingList />}
+            {showShoppingList && <ShoppingList user = {userData} setUser = {updateUser}/>}
           </>
         ) : (
           <Dashboard />

@@ -15,7 +15,6 @@ function Dashboard(){
         async function fetchData() {
             await getAlerts();
             setUser(await getUser());
-            console.log(await getUser());
         }
         fetchData();
     }, []);
@@ -27,7 +26,7 @@ function Dashboard(){
 
         <div className="dashboard">
 
-            <section className="leftSides">
+            {user && <><section className="leftSides">
                 <MealRecord user={user}/>
                 <Notifications user={user}/>
             </section>
@@ -35,7 +34,7 @@ function Dashboard(){
             <section className="rightSides">
                 <Nutrition user={user}/>
                 <StoredItems user={user}/>
-            </section>
+            </section> </>}
 
            
         </div>

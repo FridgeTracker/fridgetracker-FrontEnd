@@ -313,4 +313,5 @@ h1 {
   height: 30%;
   width: 93%;
   border-radius: 0.4vh;
+  overflow: hidden;
 }
