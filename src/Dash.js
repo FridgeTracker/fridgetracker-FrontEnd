@@ -5,7 +5,7 @@ import "./Dash.css";
 
 import logo from "./components/assets/fridgeLogo.png";
 import user from "./components/assets/memberIcons/memberIcon.png";
-import searchIcon from "./components/assets/searchIcon.png";
+//import searchIcon from "./components/assets/searchIcon.png";
 import powerIcon from "./components/assets/powerIcon.png";
 import dashIcon from "./components/assets/dashIcon.png";
 import membersIcon from "./components/assets/membersIcon.png";
