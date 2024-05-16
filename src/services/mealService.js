@@ -1,266 +1,391 @@
-// src/services/mealService.js
+import axios from "axios";
 
-const members = [
-  {
-    id: 1,
-    memberName: "Member 1",
-    age: 25,
-    allergies: ["chicken"],
-  },
-  {
-    id: 2,
-    memberName: "Member 2",
-    age: 30,
-    allergies: ["peanuts", "shellfish", "Bread"],
-  },
-  { id: 3, memberName: "Member 3", age: 28, allergies: [] },
-  { id: 4, memberName: "Member 4", age: 22, allergies: ["gluten"] },
-  { id: 5, memberName: "Member 5", age: 35, allergies: ["bee stings"] },
-  { id: 6, memberName: "Member 6", age: 40, allergies: ["dairy", "soy"] },
-];
+// Subject class for the Observer pattern
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
 
-let mockMeals = [
-  {
-    PlanID: 1,
-    MealType: "Breakfast",
-    MealName: "Roast Turkey",
-    Image:
-      "https://hips.hearstapps.com/hmg-prod/images/kfc-nuggets-1-6421f3b4547e8.jpg",
-    NutritionalInformation: {
-      Calories: "500",
-      Protein: "42g",
-      Carbs: "0g",
-      Fat: "35g",
-    },
-    Ingredients: [
-      "Whole chicken",
-      "Extra-virgin olive oil",
-      "Italian seasoning",
-      "Kosher salt",
-      "Freshly ground black pepper",
-    ],
-    PreparationMethod:
-      "Preheat the oven to 425°F (220°C), place a baking rack in the lower ⅓ of the oven, and bring the chicken to room temperature. Pat the chicken dry with paper towels. Place the chicken breast side up in an oven-safe pan (I prefer cast iron). Truss the legs. Drizzle with oil and use your hands to rub it.",
-  },
-  {
-    PlanID: 2,
-    MealType: "Lunch",
-    MealName: "Quinoa Salad",
-    Image: "quinoa-salad.jpg",
-    NutritionalInformation: {
-      Calories: "350",
-      Protein: "8g",
-      Carbs: "45g",
-      Fat: "15g",
-    },
-    Ingredients: [
-      "Quinoa",
-      "Cucumbers",
-      "Cherry tomatoes",
-      "Feta cheese",
-      "Lemon vinaigrette",
-    ],
-    PreparationMethod:
-      "Rinse quinoa under cold running water. Cook quinoa as directed on package. Allow to cool. Combine with diced cucumbers, cherry tomatoes, crumbled feta cheese, and dress with lemon vinaigrette.",
-  },
-  {
-    PlanID: 3,
-    MealType: "Dinner",
-    MealName: "Grilled Salmon",
-    Image: "grilled-salmon.jpg",
-    NutritionalInformation: {
-      Calories: "470",
-      Protein: "50g",
-      Carbs: "0g",
-      Fat: "28g",
-    },
-    Ingredients: [
-      "Salmon fillets",
-      "Extra-virgin olive oil",
-      "Lemon slices",
-      "Dill",
-      "Salt and pepper",
-    ],
-    PreparationMethod:
-      "Preheat grill to medium-high heat. Brush salmon fillets with olive oil and season with salt and pepper. Grill skin-side down for 6-8 minutes. Flip over onto lemon slices and grill for an additional 3-4 minutes.",
-  },
-  {
-    PlanID: 4,
-    MealType: "Snack",
-    MealName: "Greek Yogurt with Honey",
-    Image: "greek-yogurt-honey.jpg",
-    NutritionalInformation: {
-      Calories: "180",
-      Protein: "10g",
-      Carbs: "24g",
-      Fat: "6g",
-    },
-    Ingredients: ["Greek yogurt", "Honey", "Almond slices", "Blueberries"],
-    PreparationMethod:
-      "Spoon Greek yogurt into a bowl, drizzle with honey, and top with almond slices and blueberries.",
-  },
-  {
-    PlanID: 5,
-    MealType: "Breakfast",
-    MealName: "Avocado Toast",
-    Image: "avocado-toast.jpg",
-    NutritionalInformation: {
-      Calories: "320",
-      Protein: "9g",
-      Carbs: "30g",
-      Fat: "20g",
-    },
-    Ingredients: [
-      "Whole grain bread",
-      "Ripe avocado",
-      "Lemon juice",
-      "Salt and pepper",
-      "Red pepper flakes",
-    ],
-    PreparationMethod:
-      "Toast whole grain bread to your liking. Mash ripe avocado with lemon juice, salt, and pepper. Spread on toast and sprinkle with red pepper flakes.",
-  },
-  {
-    PlanID: 6,
-    MealType: "Lunch",
-    MealName: "Chicken Caesar Wrap",
-    Image: "chicken-caesar-wrap.jpg",
-    NutritionalInformation: {
-      Calories: "560",
-      Protein: "36g",
-      Carbs: "40g",
-      Fat: "30g",
-    },
-    Ingredients: [
-      "Grilled chicken breast",
-      "Romaine lettuce",
-      "Caesar dressing",
-      "Parmesan cheese",
-      "Whole wheat wraps",
-    ],
-    PreparationMethod:
-      "Chop grilled chicken breast and romaine lettuce. Toss with Caesar dressing and Parmesan cheese. Fill whole wheat wraps with the mixture and roll tightly.",
-  },
-  {
-    PlanID: 7,
-    MealType: "Dinner",
-    MealName: "Beef Stir-Fry",
-    Image: "beef-stir-fry.jpg",
-    NutritionalInformation: {
-      Calories: "610",
-      Protein: "55g",
-      Carbs: "20g",
-      Fat: "35g",
-    },
-    Ingredients: [
-      "Sliced beef",
-      "Broccoli florets",
-      "Carrot slices",
-      "Soy sauce",
-      "Ginger",
-    ],
-    PreparationMethod:
-      "Heat a pan over high heat. Add sliced beef and vegetables. Stir-fry until beef is browned. Add soy sauce and ginger, cook for an additional minute.",
-  },
-  {
-    PlanID: 8,
-    MealType: "Snack",
-    MealName: "Protein Smoothie",
-    Image: "protein-smoothie.jpg",
-    NutritionalInformation: {
-      Calories: "220",
-      Protein: "20g",
-      Carbs: "18g",
-      Fat: "8g",
-    },
-    Ingredients: [
-      "Scoop of protein powder",
-      "Almond milk",
-      "Frozen berries",
-      "Spinach",
-      "Chia seeds",
-    ],
-    PreparationMethod:
-      "Blend protein powder, almond milk, frozen berries, spinach, and chia seeds until smooth.",
-  },
-  {
-    PlanID: 9,
-    MealType: "Breakfast",
-    MealName: "Omelette",
-    Image: "omelette.jpg",
-    NutritionalInformation: {
-      Calories: "400",
-      Protein: "22g",
-      Carbs: "2g",
-      Fat: "34g",
-    },
-    Ingredients: [
-      "Eggs",
-      "Milk",
-      "Shredded cheese",
-      "Diced tomatoes",
-      "Spinach",
-    ],
-    PreparationMethod:
-      "Whisk eggs and milk together. Pour into a heated skillet. Add cheese, tomatoes, and spinach before the eggs set. Fold omelette in half and cook until set.",
-  },
-  {
-    PlanID: 10,
-    MealType: "Dinner",
-    MealName: "Pasta Primavera",
-    Image: "pasta-primavera.jpg",
-    NutritionalInformation: {
-      Calories: "480",
-      Protein: "15g",
-      Carbs: "75g",
-      Fat: "15g",
-    },
-    Ingredients: [
-      "Pasta",
-      "Assorted vegetables (zucchini, bell peppers, carrots)",
-      "Olive oil",
-      "Garlic",
-      "Parmesan cheese",
-    ],
-    PreparationMethod:
-      "Cook pasta according to package directions. Sauté vegetables in olive oil and garlic until tender. Toss cooked pasta with vegetables and top with Parmesan cheese.",
-  },
-];
+  addObserver(observer) {
+    this.observers.push(observer);
+  }
 
-const getMeals = async () => {
-  return Promise.resolve(mockMeals);
-};
+  removeObserver(observer) {
+    this.observers = this.observers.filter((obs) => obs !== observer);
+  }
 
-const getMealsFilteredByMemberAllergies = (memberId) => {
-  const member = members.find((m) => m.id === memberId);
-  if (!member) return Promise.resolve(mockMeals); // If member not found, return all meals
+  notifyObservers(data) {
+    this.observers.forEach((observer) => observer.update(data));
+  }
+}
 
-  // Lowercase all member allergies for case-insensitive comparison
-  const memberAllergies = member.allergies.map((allergy) =>
-    allergy.toLowerCase()
-  );
-
-  // Filter meals where ingredients do not include any of the member's allergies
-  const filteredMeals = mockMeals.filter((meal) => {
-    return !meal.Ingredients.some((ingredient) =>
-      memberAllergies.includes(ingredient.toLowerCase())
-    );
+// MealService class with the Singleton pattern and Observer pattern
+class MealService extends Subject {
+  // Private properties and methods
+  #base_url = "https://agile-atoll-76917-ba182676f53b.herokuapp.com";
+  #axiosInstance = axios.create({
+    baseURL: this.#base_url,
   });
+  #cache = {
+    userData: null,
+  };
 
-  return Promise.resolve(filteredMeals);
-};
+  // Private constructor to prevent creating new instances
+  constructor() {
+    super(); // Call the Subject constructor
 
-const getMealById = (planId) => {
-  const meal = mockMeals.find((meal) => meal.PlanID === planId);
-  return Promise.resolve(meal); // Wrapping in a promise to simulate async operation
-};
+    if (!MealService.instance) {
+      MealService.instance = this;
+    }
 
-// Update your mealService object to include the new function
-const mealService = {
-  members,
-  getMeals,
-  getMealsFilteredByMemberAllergies,
-  getMealById, // Include the new function here
-};
+    return MealService.instance;
+  }
 
+  // Static method to get the singleton instance
+  static getInstance() {
+    if (!MealService.instance) {
+      MealService.instance = new MealService();
+    }
+
+    return MealService.instance;
+  }
+
+  async getUser(forceRefresh = false) {
+    if (this.#cache.userData && !forceRefresh) {
+      return this.#cache.userData;
+    }
+
+    try {
+      const response = await this.#axiosInstance.get(
+        `${this.#base_url}/api/user/${localStorage.getItem("UUID")}`
+      );
+      const newUserData = response.data;
+      this.#cache.userData = newUserData;
+      this.notifyObservers(newUserData); // Notify observers
+      return newUserData;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async getMembers() {
+    try {
+      const data = await this.getUser();
+      return data.members;
+    } catch (error) {
+      console.error("Error fetching members:", error);
+      throw error;
+    }
+  }
+
+  async getMeals() {
+    try {
+      const response = await this.#axiosInstance.get(
+        `${this.#base_url}/meal_plans`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching meals:", error);
+      throw error;
+    }
+  }
+
+  async getMealsFilteredByMemberAllergies(memberId) {
+    try {
+      const members = await this.getMembers();
+      const member = members.find((m) => m.id === memberId);
+      if (!member) {
+        return await this.getMeals();
+      }
+
+      const memberAllergies = new Set(
+        member.allergies.map((allergy) => allergy.toLowerCase())
+      );
+      return (await this.getMeals()).filter((meal) => {
+        const ingredients = meal.ingredients.map((ingredient) =>
+          ingredient.toLowerCase()
+        );
+        return !ingredients.some((ingredient) =>
+          memberAllergies.has(ingredient)
+        );
+      });
+    } catch (error) {
+      console.error("Error in getMealsFilteredByMemberAllergies:", error);
+      throw error;
+    }
+  }
+
+  async getMealById(mealId) {
+    try {
+      const meals = await this.getMeals();
+      return meals.find((meal) => meal.id === mealId);
+    } catch (error) {
+      console.error("Error fetching meal by ID:", error);
+      throw error;
+    }
+  }
+
+  async ingredientAvailability(ingredients) {
+    try {
+      const userData = await this.getUser();
+
+      const allItems = [
+        ...userData.fridges.flatMap((fridge) => fridge.items),
+        ...userData.freezers.flatMap((freezer) => freezer.items),
+      ];
+
+      return ingredients.every((ingredientName) =>
+        allItems.some(
+          (item) =>
+            item.foodName &&
+            item.foodName.toLowerCase() === ingredientName.toLowerCase() &&
+            item.quantity >= 1
+        )
+      );
+    } catch (error) {
+      console.error("Error checking ingredient availability:", error);
+      throw error;
+    }
+  }
+
+  async updateItemQuantity(itemId, quantity, expiryDate, storageId) {
+    const updatedItem = {
+      itemID: itemId,
+      quantity: quantity,
+      expiryDate: expiryDate,
+      id: storageId,
+    };
+
+    console.log(
+      "Updating item:",
+      updatedItem.itemID,
+      updatedItem.quantity,
+      updatedItem.expiryDate,
+      updatedItem.id
+    );
+
+    try {
+      const response = await axios.post(
+        `${this.#base_url}/api/updateItem`,
+        updatedItem
+      );
+
+      console.log(response.data);
+      // Update the cached user data
+      const updatedUserData = await this.getUser(true);
+      this.#cache.userData = updatedUserData;
+      return response.data;
+    } catch (error) {
+      console.error("Failed to update item:", error.response.data);
+    }
+  }
+
+  async consumeMeal(meal, memberId) {
+    if (!meal || !meal.ingredients || !memberId) {
+      throw new Error("Meal data or Member ID is missing.");
+    }
+
+    const userData = await this.getUser();
+
+    // Update ingredient quantities
+    const updatePromises = meal.ingredients.map(async (ingredientName) => {
+      let updated = false;
+
+      for (const storageType of ["fridges", "freezers"]) {
+        for (const storage of userData[storageType]) {
+          const ingredient = storage.items.find(
+            (item) =>
+              item.foodName.toLowerCase() === ingredientName.toLowerCase()
+          );
+
+          if (ingredient && ingredient.quantity > 0) {
+            const newQuantity = ingredient.quantity - 1;
+            await this.updateItemQuantity(
+              ingredient.itemID,
+              newQuantity,
+              ingredient.expiryDate,
+              storage.id
+            );
+            updated = true;
+            break;
+          }
+        }
+        if (updated) break;
+      }
+
+      if (!updated) {
+        console.error(
+          `Ingredient not found or quantity is zero: ${ingredientName}`
+        );
+      }
+    });
+
+    await Promise.all(updatePromises);
+    await this.recordMealConsumption(meal.id, memberId);
+
+    // Update the cached user data
+    const updatedUserData = await this.getUser(true);
+    this.#cache.userData = updatedUserData;
+  }
+
+  async getMealsFilteredByMember(memberId) {
+    try {
+      const members = await this.getMembers();
+      const member = members.find((m) => m.id === memberId);
+      if (!member) {
+        return {
+          preferenceMeals: [],
+          readyToEatMeals: [],
+          ingredientsNeededMeals: [],
+        };
+      }
+
+      const allergies = Array.isArray(member.allergies)
+        ? member.allergies.map((allergy) => allergy.toLowerCase())
+        : [];
+      const preferences = Array.isArray(member.preference)
+        ? member.preference.map((preference) => preference.toLowerCase())
+        : [];
+
+      let meals = await this.getMeals();
+
+      // Use Promise.all to wait for all the ingredientAvailability checks
+      const mealsWithAvailability = await Promise.all(
+        meals.map(async (meal) => {
+          const mealIngredients = meal.ingredients.map((ingredient) =>
+            ingredient.toLowerCase()
+          );
+          const hasAllergen = mealIngredients.some((ingredient) =>
+            allergies.includes(ingredient)
+          );
+          const hasPreference = mealIngredients.some((ingredient) =>
+            preferences.includes(ingredient)
+          );
+          const isReadyToEat = await this.ingredientAvailability(
+            mealIngredients
+          ); // Await the availability check
+
+          return {
+            ...meal,
+            hasAllergen,
+            hasPreference,
+            isReadyToEat,
+          };
+        })
+      );
+
+      // Now filter the meals based on the computed properties
+      let preferenceMeals = [];
+      let readyToEatMeals = [];
+      let ingredientsNeededMeals = [];
+
+      mealsWithAvailability.forEach((meal) => {
+        if (!meal.hasAllergen) {
+          if (meal.hasPreference) {
+            preferenceMeals.push(meal);
+          }
+          if (meal.isReadyToEat) {
+            readyToEatMeals.push(meal);
+          } else {
+            ingredientsNeededMeals.push(meal);
+          }
+        }
+      });
+
+      // Map the meals to ensure they're fresh objects (if needed)
+      preferenceMeals = preferenceMeals.map((meal) => ({ ...meal }));
+      readyToEatMeals = readyToEatMeals.map((meal) => ({ ...meal }));
+      ingredientsNeededMeals = ingredientsNeededMeals.map((meal) => ({
+        ...meal,
+      }));
+
+      return {
+        preferenceMeals,
+        readyToEatMeals,
+        ingredientsNeededMeals,
+      };
+    } catch (error) {
+      console.error("Error in getMealsFilteredByMember:", error);
+      return {
+        preferenceMeals: [],
+        readyToEatMeals: [],
+        ingredientsNeededMeals: [],
+      };
+    }
+  }
+
+  async recordMealConsumption(mealId, memberId) {
+    const mealRecord = {
+      memberId: memberId,
+      mealId: mealId,
+      recordedAt: new Date().toISOString(),
+    };
+
+    console.log(
+      "Recording meal consumption:",
+      mealRecord.mealId +
+        " by " +
+        mealRecord.memberId +
+        " at " +
+        mealRecord.recordedAt
+    );
+
+    try {
+      const response = await this.#axiosInstance.post(
+        `${this.#base_url}/api/mealRecords`,
+        mealRecord,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Meal consumption recorded:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error recording meal consumption:", error);
+      throw error;
+    }
+  }
+
+  async checkIngredientsAvailabilityAfterConsumption(ingredients) {
+    try {
+      const availabilityResults = {};
+      const availabilityPromises = ingredients.map((ingredient) =>
+        this.ingredientAvailability([ingredient])
+      );
+      const availabilityArray = await Promise.all(availabilityPromises);
+      ingredients.forEach((ingredient, index) => {
+        availabilityResults[ingredient] = availabilityArray[index];
+      });
+      return availabilityResults;
+    } catch (error) {
+      console.error(
+        "Error checking ingredient availability after consumption:",
+        error
+      );
+      throw error;
+    }
+  }
+
+  clearCache() {
+    this.#cache.userData = null;
+  }
+}
+
+// Export the singleton instance
+const mealService = MealService.getInstance();
 export default mealService;
+
+class UserDataObserver {
+  update(userData) {
+    console.log("User data updated:", userData);
+  }
+}
+
+// Create an observer instance
+const userDataObserver = new UserDataObserver();
+
+// Add the observer to the MealService
+mealService.addObserver(userDataObserver);

@@ -2,28 +2,43 @@ body, html {
     margin: 0;
     font-family: 'Rokkitt', serif;
   }
-.loginWrapper {
-    background-image: url(../assets/moon.png);
-    background-size: 150vw 120vh; /* 100% of viewport width and height */
-    background-position: left center;
+  
+  .loginWrapper {
+    position: relative;
     height: 100vh; 
     width: 100vw; 
-    display: flex; 
-}
-
-.fridgeContainer {
-    height: 100%;
-    width: 50%;
     display: flex;
-    justify-content: flex-end;
+    overflow: hidden;
+    justify-content: center;
     align-items: center;
-    right: 10px;
+}
+
+.loginWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(../assets/testbck.png);
+    background-size: cover;
+    filter: blur(5px);
+}
+
+.loginContainer{
+    width: 60%;
+    height: 70%;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    display: flex;
 
 }
 
-.fridgeContainer img{
-    height: 80%;
-
+#forgetButton{
+    background-color: rgb(0, 59, 0);
+    color: white;
+    border-radius: 5px;
+    width: 45%;
 }
 
 .rightSide{
@@ -32,6 +47,8 @@ body, html {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    align-items: center;
 }
 
 .formContainer{
@@ -39,47 +56,52 @@ body, html {
 }
 
 .formTitle{
-    color: white;
-    font-size:x-large;
+    color: rgb(0, 0, 0);
+    font-size:2.5vh;
     text-align: center;
-  
 }
 
 .inputWrapper{
-    margin-top: 10px;
-    margin-bottom: 20px;
+    margin-top: 10%;
+    margin-bottom: 2%;
     width: auto;
     height: auto;
+}
+
+.inputWrapper label{
+    margin-top: 5%;
+    padding: 0;
+    font-size: 1.4vh;
 }
 
 .formWrapper input{
     width: 100%;
     height: 5vh;
-    border-radius: 50px;
-    background-color: rgb(58, 58, 58);
-    color: white;
-    border: 1px solid white;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid grey;
+    color: rgb(0, 0, 0);
     flex: 1;
-    margin-top: 30px;
+    margin-bottom: 5%;
     font-family: 'Rokkitt', serif;
-    font-size: large;
-    padding-left: 30px;
-
+    font-size: 2vh;
+    padding-left: 10px;
 }
 
 
 .formWrapper input::placeholder{
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .forgotButton {
-    color: white;
-    font-size: large;
+    color: rgb(0, 63, 5);
+    font-size: 1.5vh;
     text-align: center;
+    cursor: pointer;
 }
 
 .buttonWrapper{
-    margin-top: 40px;
+    margin-top: 10%;
     width: 100%;
     height: auto;
     display: flex; /* Use flexbox */
@@ -89,19 +111,32 @@ body, html {
 .buttonWrapper button{
     height: 5vh;
     width: 45%;
-    border-radius: 30px;
-    font-size: larger;
+    border-radius: 10px;
+    font-size: 1.5vh;
     font-family: 'Rokkitt', serif;
     cursor: pointer;
 }
 
 .buttonWrapper #signIn{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     border: none;
 }
 
 .buttonWrapper #signUp{
-    background-color: rgb(53, 53, 53);
+    background-color: rgb(0, 71, 18);
     border: none;
     color:white;
+}
+
+.erroMessageLogin{
+    margin-top: 5%;
+    color: rgb(190, 0, 0);
+}
+
+.leftSideFore{
+    height: 100%;
+    width: 55%;
+    background-position: left center;
+    background-size: cover;
+    background-image: url(../assets/testbck.png);
 }

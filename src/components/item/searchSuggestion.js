@@ -1,40 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { createFilterOptions } from '@mui/material/Autocomplete';
 
 import "./item.css";
-import { getFoodData } from '../Requests/getRequest';
-
-
 
 const filterOptions = createFilterOptions({
     stringify: ({ foodItem, id }) => `Item: ${foodItem} ${id}`
   });
 
 
-export default function ComboBox({handleSubmit}) {
-  const [foodData, setFoodData] = useState([]);
+export default function ComboBox({handleSubmit, foodData}) {
+
   const [selectedItem, setSelectedItem] = useState(null);
-
-  useEffect(() => {
-    async function fetchFoodData() {
-      try {
-        setFoodData(await getFoodData());
-      } 
-      catch (error) {
-        console.error('Error fetching food data:', error);
-      }
-    }
-
-    fetchFoodData();
-  }, []);
 
   return (
     <>               
 
        <form className="addItemForm" onSubmit={(event) => handleSubmit(selectedItem, event)}>                 
-    <Autocomplete
+    {foodData && <Autocomplete
       disablePortal
       id="combo-box-demo"
       options={foodData}
@@ -61,6 +45,7 @@ export default function ComboBox({handleSubmit}) {
       renderInput={(params) => <TextField {...params} label="Food Item"/>}
       
     />
+  }
 
     
     <p>Quantity</p>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { getAuthToken } from '../authService.js';
-import { changePasswordRequest } from '../Requests/postRequests.js';
-import axios from 'axios';
+import { changePasswordRequest, updateNotificationsRequest } from '../Requests/postRequests.js';
 
 function SecuritySettings({user, updateUser}) {
+
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -43,23 +43,24 @@ function SecuritySettings({user, updateUser}) {
                 password: formData.get("CP"),
                 newPw: formData.get("CNP") 
             };
-            console.log(newPasswordInfo);
 
             try {
                 setError(await changePasswordRequest(newPasswordInfo));
-            } catch (error) {
-                console.error('Failed to update Password:', error);
+            } 
+            catch (error) {
                 setError(error);
             }
-    }else{
-        setError('Password do not match.');
-    }
+
+        }
+        else{
+            setError('Password do not match.');
+        }
     };
+
 
     const updateNotifications = async () => {
         try{
-            const response = await axios.post("https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/updateNotifications",userAlerts);
-            setMessage(response.data);
+            setMessage(await updateNotificationsRequest(userAlerts));
             updateUser();
         } catch(error){
             console.error(error);

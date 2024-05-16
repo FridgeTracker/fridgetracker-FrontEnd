@@ -36,8 +36,8 @@ const GeneralInfo = () => (
 const ProfileForm = ({ member, handleFormSubmit }) => {
 
     const handleSubmit = (e) => {
-
         e.preventDefault();
+
         const formData = new FormData(e.target);
         const newData = ({
             name:formData.get("memberName"),
@@ -49,7 +49,6 @@ const ProfileForm = ({ member, handleFormSubmit }) => {
 
     return (
         <div className="memberProfileSettings">
-
             <div className="currentDetails">
                 <p>Current Member Name: {member.name}</p>
                 <p>Current Member Age: {member.age}</p>
@@ -74,14 +73,11 @@ const BodyForm = ({ member, handleFormSubmit }) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
-
         const newData = ({
             weight:formData.get("memberWeight"),
             height:formData.get("memberHeight")
         });
-
         handleFormSubmit(newData);
-
     };
 
     const calculateBMR = () => {
@@ -95,8 +91,6 @@ const BodyForm = ({ member, handleFormSubmit }) => {
         return BMI.toFixed(1);
     }
 
-    console.log(member);
-
     return (
         <div className="bodySettingsWrapper">
 
@@ -107,7 +101,6 @@ const BodyForm = ({ member, handleFormSubmit }) => {
             <form onSubmit={handleSubmit} className="editBodySettingsForm">     
                 <p>Change Weight: <input type="text" placeholder="Enter new height here" name="memberWeight" required/> </p>
                 <p>Change Height: <input type="number" placeholder="Enter new weight here" name="memberHeight" required/></p>
-
                 <button type="submit">Save</button>
             </form>
 

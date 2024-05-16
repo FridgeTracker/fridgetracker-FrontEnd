@@ -167,6 +167,10 @@ button {
 
 }
 
+#uploadItems{
+    margin-left: 10vh;
+    background-color: rgb(196, 111, 0);
+}
 
 #updateMessage{
     width: auto;

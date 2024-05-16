@@ -1,97 +1,38 @@
 import "./member.css";
 import { useState, useEffect } from 'react';
-import { getAuthToken } from '../authService.js';
 
 import Member from "./member.js";
 
 import addImage from '../assets/plus_sign.png';
 import { getUser } from "../Requests/getRequest.js";
-import { addMemberRequest, deleteMemberRequest } from "../Requests/postRequests.js";
+import memberService from "./memberService.js";
 
 function Members(){
-
 
     const [userData, setUserData] = useState({});
     const [selectedMember, setSelectedMember] = useState(null);
     const [addMember, setAddMember] = useState(false);
 
-    const handleUpdateMember = async () => {
-      try {
-        const user_Data = await getUser();
-        setUserData(user_Data);
-        const updatedSelectedMember = user_Data.members.find(member => member.id === selectedMember.id);
-       
-        if (updatedSelectedMember) {
-            setSelectedMember(updatedSelectedMember);
-        }
+    useEffect(() => {
+      const fetchUserData = async () => {
+        setUserData(await getUser());
+      };
+      fetchUserData();
+    }, []); 
 
-      } catch (error) {
-        console.error('Failed to fetch user data:', error);
-      }
+    
+    const handleUpdateMember = async () => {
+      memberService.handleUpdateMember(setUserData, selectedMember, setSelectedMember);
+    }
+    
+    const handleAddMember = async (event) => {
+      memberService.handleAddMember(event, setAddMember, setUserData);
     }
 
-
-    useEffect(() => {
-        const fetchUserData = async () => {
-          try {
-            const user_Data = await getUser();
-            setUserData(user_Data);
-          } catch (error) {
-            console.error('Failed to fetch user data:', error);
-          }
-        };
-        fetchUserData();
-      }, []); 
-    
-
-      const handleAddMember = async (event) => {
-
-        setAddMember(false);
-        event.preventDefault(); 
+    const deleteMember = async (member) => {
+      memberService.deleteMember(member,setUserData,setSelectedMember);
+    }
       
-        const formData = new FormData(event.target);
-
-        const member = {
-              name: formData.get("memberName"),
-              age:20,
-              allergies:[],
-              preference:[],
-              height:170,
-              weight:60,
-              imageURL:'ftlogo.png'
-        }
-
-        const addMember = {
-            member:member,
-            userID:getAuthToken()
-        };
-      
-        try {
-            setUserData(await addMemberRequest(addMember));
-          } 
-          catch (error) {
-            console.error('Failed to Add new Member:', error);
-          } 
-      
-      }
-
-      const deleteMember = async (member) => {
- 
-        try{
-          await deleteMemberRequest(member);
-          setUserData(await getUser());
-          setSelectedMember(null);
-
-        } catch(error) {
-          console.error(error);
-        }
-      }
-
-      useEffect(() => {
-        setUserData(userData); // Log userData when it changes
-      }, [userData]);
-      
-
     return (
 
         <div className="member">

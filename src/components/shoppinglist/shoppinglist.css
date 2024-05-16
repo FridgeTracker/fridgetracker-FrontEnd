@@ -48,7 +48,18 @@
     color: black;
     cursor: pointer;
 }
-
+.listName2{
+    height: 6%;
+    width: 85%;
+    margin: 2vh auto;
+    background-color: #fff4d6;
+    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    cursor: pointer;
+}
 .listName:hover{
     background-color: #1B8B60;
 }
@@ -93,17 +104,16 @@
     height: 8%;
     width: 100;
     display: flex;
+    margin-top: 1%;
 
 }
 .s_listOptions div{
     height: 80%;
     width: 25%;
     margin:auto;
-    background-color: aqua;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10%;
     cursor: pointer;
 
 }
@@ -218,3 +228,16 @@
     cursor: pointer;
 }
 
+#listNameTitle{
+    background-color: transparent;
+    border: 1px solid black;
+    height: 3vh;
+    text-align: center;
+    font-size: 2vh;
+}
+
+#confirmImg{
+    margin-left: 1vh;
+    width: 3vh;
+    cursor: pointer;
+}

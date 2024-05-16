@@ -1,43 +1,146 @@
 import React, { useEffect, useState } from "react";
 import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Grid,
   Container,
-  Pagination,
+  Grid,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Paper,
   Box,
-  Button,
-  ButtonGroup,
+  Pagination,
+  Select,
+  MenuItem,
+  Avatar,
+  ListItemIcon,
+  InputLabel,
 } from "@mui/material";
-import MealDetails from "./MealDetails"; // Adjust the import path as necessary
+import MealDetails from "./MealDetails";
+import mealService from "../../services/mealService";
+import { useMealListObserver } from "./MealListObserver";
 
-import mealService from "../../services/mealService"; // Adjust the import path as necessary
+import MealCard from "./MealCard";
 
-const MealList = ({userData}) => {
-
-  const [meals, setMeals] = useState([]);
+const MealList = () => {
+  const observer = useMealListObserver();
   const [selectedMeal, setSelectedMeal] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedMemberId, setSelectedMemberId] = useState(1); // Start with the first member
-  const [mealsPerPage] = useState(8); // Adjust the number of items per page as needed
-  const [members] = useState(userData.members);
+  const [selectedMemberId, setSelectedMemberId] = useState("");
+  const [members, setMembers] = useState([]);
 
-  // Find the selected member's details using the selectedMemberId
-  const selectedMember = members.find(
-    (member) => member.id === selectedMemberId
+  const [preferenceMeals, setPreferenceMeals] = useState([]);
+  const [readyToEatMeals, setReadyToEatMeals] = useState([]);
+  const [ingredientsNeededMeals, setIngredientsNeededMeals] = useState([]);
+
+  const [filter, setFilter] = useState("all");
+  const [page, setPage] = useState(1);
+  const mealsPerPage = 8;
+
+  const allMeals = [
+    ...preferenceMeals,
+    ...readyToEatMeals,
+    ...ingredientsNeededMeals,
+  ];
+  const filteredMeals =
+    filter === "preference"
+      ? preferenceMeals
+      : filter === "ready"
+      ? readyToEatMeals
+      : filter === "needed"
+      ? ingredientsNeededMeals
+      : allMeals;
+
+  const pageCount = Math.ceil(filteredMeals.length / mealsPerPage);
+  const paginatedMeals = filteredMeals.slice(
+    (page - 1) * mealsPerPage,
+    page * mealsPerPage
   );
 
   useEffect(() => {
-    mealService.getMeals().then(setMeals);
+    // Fetch members when the component mounts
+    const fetchMembers = async () => {
+      try {
+        const fetchedMembers = await mealService.getMembers();
+        setMembers(fetchedMembers);
+      } catch (error) {
+        console.error("Failed to fetch members:", error);
+        setMembers([]); // Set to an empty array in case of error
+      }
+    };
+
+    fetchMembers();
   }, []);
 
   useEffect(() => {
-    mealService
-      .getMealsFilteredByMemberAllergies(selectedMemberId)
-      .then(setMeals);
-  }, [selectedMemberId]);
+    if (selectedMemberId) {
+      mealService
+        .getMealsFilteredByMember(selectedMemberId)
+        .then((categorizedMeals) => {
+          // Assign a new unique identifier for each meal
+          const updatedPreferenceMeals = categorizedMeals.preferenceMeals.map(
+            (meal) => ({
+              ...meal,
+              uniqueKey: `${meal.id}-${Date.now()}`,
+            })
+          );
+          const updatedReadyToEatMeals = categorizedMeals.readyToEatMeals.map(
+            (meal) => ({
+              ...meal,
+              uniqueKey: `${meal.id}-${Date.now()}`,
+            })
+          );
+          const updatedIngredientsNeededMeals =
+            categorizedMeals.ingredientsNeededMeals.map((meal) => ({
+              ...meal,
+              uniqueKey: `${meal.id}-${Date.now()}`,
+            }));
+
+          setPreferenceMeals(updatedPreferenceMeals);
+          setReadyToEatMeals(updatedReadyToEatMeals);
+          setIngredientsNeededMeals(updatedIngredientsNeededMeals);
+        });
+    } else {
+      setPreferenceMeals([]);
+      setReadyToEatMeals([]);
+      setIngredientsNeededMeals([]);
+    }
+  }, [selectedMemberId, observer]);
+
+  const updateMealsState = (categorizedMeals) => {
+    // Assuming categorizedMeals object contains arrays for each meal category
+    setPreferenceMeals(
+      categorizedMeals.preferenceMeals.map((meal) => ({
+        ...meal,
+        uniqueKey: `${meal.id}-${Date.now()}`, // Assign new keys to force re-render
+      }))
+    );
+    setReadyToEatMeals(
+      categorizedMeals.readyToEatMeals.map((meal) => ({
+        ...meal,
+        uniqueKey: `${meal.id}-${Date.now()}`,
+      }))
+    );
+    setIngredientsNeededMeals(
+      categorizedMeals.ingredientsNeededMeals.map((meal) => ({
+        ...meal,
+        uniqueKey: `${meal.id}-${Date.now()}`,
+      }))
+    );
+  };
+
+  const fetchMeals = async (memberId) => {
+    try {
+      const categorizedMeals = await mealService.getMealsFilteredByMember(
+        memberId
+      );
+      updateMealsState(categorizedMeals); // Update the state with the new meals
+    } catch (error) {
+      console.error("Failed to fetch meals:", error);
+      setPreferenceMeals([]);
+      setReadyToEatMeals([]);
+      setIngredientsNeededMeals([]);
+    }
+  };
 
   const handleMealSelect = (meal) => {
     setSelectedMeal(meal);
@@ -47,123 +150,142 @@ const MealList = ({userData}) => {
     setSelectedMeal(null);
   };
 
-  // Calculate the currently displayed meals
-  const indexOfLastMeal = currentPage * mealsPerPage;
-  const indexOfFirstMeal = indexOfLastMeal - mealsPerPage;
-  const currentMeals = meals.slice(indexOfFirstMeal, indexOfLastMeal);
-
-  // Change page
-  const handleChangePage = (event, newPage) => {
-    setCurrentPage(newPage);
+  const handleMemberChange = async (memberId) => {
+    setSelectedMemberId(memberId);
+    await mealService.getUser(true);
+    await fetchMeals(memberId);
   };
 
-  // Calculate the total number of pages
-  const pageCount = Math.ceil(meals.length / mealsPerPage);
+  const handleFilterChange = async (filterValue) => {
+    setFilter(filterValue);
+    setPage(1); // Reset the page to 1
+    await mealService.getUser(true);
+    await fetchMeals(selectedMemberId);
+  };
 
   if (selectedMeal) {
+    console.log(selectedMemberId);
     return (
-      <Container>
-        <MealDetails
-          meal={selectedMeal}
-          onGoBack={handleGoBack}
-          memberName={selectedMember.name}
-        />
-      </Container>
+      <MealDetails
+        meal={selectedMeal}
+        onGoBack={handleGoBack}
+        memberName={
+          members.find((member) => member.id === selectedMemberId)?.name ||
+          "Back to List"
+        }
+        refreshMeals={fetchMeals} // Pass the fetchMeals function as a prop
+        memberId={selectedMemberId}
+      />
     );
   }
 
   return (
-    <Container sx={{ marginTop: 5 }}>
-      {/* Horizontal list of member filters */}
-      <Box sx={{ display: "flex", justifyContent: "center", my: 5 }}>
-        <ButtonGroup
-          variant="text"
-          aria-label="text button group"
-          sx={{
-            ".MuiButton-root": {
-              borderRadius: 0,
-              color: "#1b8b60",
-              "&.MuiButton-contained": {
-                backgroundColor: "#1b8b60",
-                color: "#fff",
-                "&:hover": {
-                  backgroundColor: "#15724e",
-                },
-              },
-              "&:hover": {
-                backgroundColor: "#1b8b60",
-                color: "#fff",
-                opacity: 0.8,
-              },
-            },
-          }}
-        >
-          {members.map((member) => (
-            <Button
-              key={member.id}
-              onClick={() => setSelectedMemberId(member.id)}
-              variant={selectedMemberId === member.id ? "contained" : "text"}
-            >
-              {member.name}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </Box>
+    <Container sx={{ mt: 2 }}>
+      <Paper sx={{ mb: 2, p: 1 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth>
+              <InputLabel id="member-select-label" size="small">
+                Select Member
+              </InputLabel>
+              <Select
+                size="small"
+                labelId="member-select-label"
+                value={selectedMemberId}
+                onChange={(e) => handleMemberChange(e.target.value)}
+                displayEmpty
+                label="Select Member"
+                renderValue={(selected) => {
+                  if (selected) {
+                    const member = members.find((m) => m.id === selected);
+                    return (
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        {member.imageURL && (
+                          <Avatar
+                            src={require(`../assets/memberIcons/${member.imageURL}`)}
+                            sx={{ width: 24, height: 24, marginRight: 1 }}
+                          />
+                        )}
+                        {member.name}
+                      </Box>
+                    );
+                  }
+                }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                {members &&
+                  members.map((member) => (
+                    <MenuItem key={member.id} value={member.id}>
+                      <ListItemIcon>
+                        <Avatar
+                          src={require(`../assets/memberIcons/${member.imageURL}`)}
+                          sx={{ width: 24, height: 24 }}
+                        />
+                      </ListItemIcon>
+                      {member.name}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl component="fieldset" fullWidth>
+              <FormLabel component="legend" size="small">
+                Filter Meals
+              </FormLabel>
+              <RadioGroup
+                row
+                aria-label="meal-filter"
+                name="row-radio-buttons-group"
+                value={filter}
+                onChange={(e) => handleFilterChange(e.target.value)}
+              >
+                <FormControlLabel value="all" control={<Radio />} label="All" />
+                <FormControlLabel
+                  value="preference"
+                  control={<Radio />}
+                  label="Preferences"
+                />
+                <FormControlLabel
+                  value="ready"
+                  control={<Radio />}
+                  label="Ready to Eat"
+                />
+                <FormControlLabel
+                  value="needed"
+                  control={<Radio />}
+                  label="Ingredients Needed"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </Paper>
 
       <Grid container spacing={4}>
-        {currentMeals.map((meal) => (
-          <Grid item key={meal.PlanID} xs={12} sm={6} md={4} lg={3}>
-            <Card raised onClick={() => handleMealSelect(meal)}>
-              <CardMedia
-                component="img"
-                height="194"
-                image={
-                  meal.Image ||
-                  "https://hips.hearstapps.com/hmg-prod/images/kfc-nuggets-1-6421f3b4547e8.jpg"
-                } // Ensure this points to a valid image or placeholder
-                alt={meal.MealName}
-              />
-              <CardContent sx={{ textAlign: "center" }}>
-                <Typography variant="h6">{meal.MealName}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+        {paginatedMeals.map((meal, index) => (
+          <MealCard
+            key={`${filter}-meal-${meal.id}-page-${page}-index-${index}`}
+            meal={meal}
+            onSelect={handleMealSelect}
+          />
         ))}
       </Grid>
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
-          marginTop: 3,
-          paddingBottom: 3,
+          mt: 3,
+          pb: 3,
         }}
       >
         <Pagination
           count={pageCount}
-          page={currentPage}
-          onChange={handleChangePage}
-          sx={{
-            ".MuiPaginationItem-root": {
-              borderRadius: 0,
-            },
-            ".Mui-selected": {
-              backgroundColor: "#1b8b60",
-              "&:hover": {
-                backgroundColor: "#15724e",
-              },
-            },
-            ".MuiPaginationItem-ellipsis": {
-              color: "text.secondary",
-            },
-            ".MuiButtonBase-root": {
-              color: "#1b8b60",
-              "&:hover": {
-                backgroundColor: "#1b8b60",
-                color: "#fff",
-                opacity: 0.8,
-              },
-            },
-          }}
+          page={page}
+          onChange={(_, newPage) => setPage(newPage)}
+          sx={{ ".MuiPaginationItem-root": { borderRadius: 0 } }}
         />
       </Box>
     </Container>

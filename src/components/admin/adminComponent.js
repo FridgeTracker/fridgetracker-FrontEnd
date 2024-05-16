@@ -35,7 +35,6 @@ function AdminComponent({ selection, object }){
         case "freezer":
             return <AdminFreezer freezer={object} />;
         default:
-            console.log(object);
             return null;
     }
 

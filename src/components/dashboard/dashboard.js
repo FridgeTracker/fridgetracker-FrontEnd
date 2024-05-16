@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-import { getUser } from "../Requests/getRequest";
+import { getAlerts, getUser } from "../Requests/getRequest";
 import "./dashboard.css";
 import MealRecord from "./mealRecord";
 import Notifications from "./notifications";
 import Nutrition from "./Nutrition";
 import StoredItems from "./storedItems";
-import axios from "axios";
-import { getAuthToken } from "../authService";
 
 
 function Dashboard(){
@@ -15,30 +13,28 @@ function Dashboard(){
 
     useEffect(() => {
         async function fetchData() {
-            const response = await axios.get(`https://agile-atoll-76917-ba182676f53b.herokuapp.com/api/getAlerts/${getAuthToken()}`);
-            console.log(response);
+            await getAlerts();
             setUser(await getUser());
         }
         fetchData();
     }, []);
 
+    // Assuming mealRecords and meals are state variables managed by useState
 
     
     return(
 
         <div className="dashboard">
 
-            <section className="leftSides">
+            {user && <><section className="leftSides">
                 <MealRecord user={user}/>
                 <Notifications user={user}/>
             </section>
 
             <section className="rightSides">
-
                 <Nutrition user={user}/>
                 <StoredItems user={user}/>
-
-            </section>
+            </section> </>}
 
            
         </div>

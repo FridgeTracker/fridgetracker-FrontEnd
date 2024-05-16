@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./Dash.css";
+
 import logo from "./components/assets/fridgeLogo.png";
 import user from "./components/assets/memberIcons/memberIcon.png";
-import themeIcon from "./components/assets/iconSwitch.png";
-import searchIcon from "./components/assets/searchIcon.png";
+//import searchIcon from "./components/assets/searchIcon.png";
 import powerIcon from "./components/assets/powerIcon.png";
 import dashIcon from "./components/assets/dashIcon.png";
 import membersIcon from "./components/assets/membersIcon.png";
@@ -21,10 +21,8 @@ import Dashboard from "./components/dashboard/dashboard";
 import MealList from "./components/meals/MealList";
 import ShoppingList from "./components/shoppinglist/shoppinglist";
 
-
-
 import { getAuthToken, logoutUser } from "./components/authService";
-import { getUser } from "./components/Requests/getRequest";
+import { getFoodData, getUser } from "./components/Requests/getRequest";
 
 const SidebarButton = ({ icon, text, onClick }) => (
   <div className="dashboardButtonC" onClick={onClick}>
@@ -34,44 +32,46 @@ const SidebarButton = ({ icon, text, onClick }) => (
 );
 
 function Dash() {
-
-
   const navigate = useNavigate();
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
-
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const UUID = getAuthToken();
-        if (!UUID) {
+        if (!getAuthToken()) {
           navigate("/");
           return;
         }
-        const userData = await getUser();
-        setUserData(userData);
+        setUserData(await getUser());
         setDashboard(true);
       } catch (error) {
         console.error("Failed to fetch user data:", error);
       }
     };
+    
     fetchUserData();
   }, [navigate]);
 
+  useEffect(() => {
+    async function fetchFoodData() {
+      try {
+        await getFoodData();
+      } 
+      catch (error) {
+        console.error('Error fetching food data:', error);
+      }
+    }
 
-const updateUser = async () => {
+    fetchFoodData();
+  }, []);
+
+  const updateUser = async () => {
     try {
-      const userData = await getUser();
-      setUserData(userData);
+      setUserData(await getUser());
     } catch (error) {
       console.error("Failed to fetch user data:", error);
     }
-}
+  };
 
   const [showSelectedNav, setNav] = useState(false);
   const [showMembers, setMembers] = useState(false);
@@ -79,7 +79,7 @@ const updateUser = async () => {
   const [showSettings, setSettings] = useState(false);
   const [showDashboard, setDashboard] = useState(false);
   const [showMealList, setMealList] = useState(false);
-  const [showShoppingList,setShoppingList] = useState(false);
+  const [showShoppingList, setShoppingList] = useState(false);
 
   const handleItemClick = (item) => {
     setNav(true);
@@ -100,7 +100,7 @@ const updateUser = async () => {
   };
 
   return (
-    <div className={`wrapper ${theme === "dark" ? "dark-theme" : ""}`}>
+    <div className="wrapper">
       <div className={`sideBarWrapper ${isOpen ? "open" : ""}`}>
         <div className="fridgeLogoWrapper">
           <img src={logo} alt="fridge logo" />
@@ -163,33 +163,31 @@ const updateUser = async () => {
             <div className="bar2"></div>
             <div className="bar3"></div>
           </div>
-          <input type="text" />
-          <img className="searchIcon" src={searchIcon} alt="search icon" />
+         {/*} <input type="text" />
+          <img className="searchIcon" src={searchIcon} alt="search icon" />*/}
           <p>
-
-            {userData && userData.imageData ? <img className="userIcon" src={userData.imageData} alt="" />
-            :<img className="userIcon" src={user} alt="" />}
-
+            {userData && userData.imageData ? (
+              <img className="userIcon" src={userData.imageData} alt="" />
+            ) : (
+              <img className="userIcon" src={user} alt="" />
+            )}
             {userData && userData.familyName}
           </p>
-          <img
-            className="themeChanger"
-            src={themeIcon}
-            onClick={toggleTheme}
-            alt="theme changer"
-          />
         </div>
+
         {showSelectedNav ? (
           <>
-            {showSettings && <Setting userData={userData} updateUser={updateUser} />}
+            {showSettings && (
+              <Setting userData={userData} updateUser={updateUser} />
+            )}
             {showMembers && <Members />}
             {showFridges && <Storage />}
-            {showMealList && <MealList userData={userData}/>}
-            {showDashboard && <Dashboard/>}
-            {showShoppingList && <ShoppingList/>}
+            {showMealList && <MealList userData={userData} />}
+            {showDashboard && <Dashboard />}
+            {showShoppingList && <ShoppingList user = {userData} setUser = {updateUser}/>}
           </>
         ) : (
-          <Dashboard/>
+          <Dashboard />
         )}
       </div>
     </div>

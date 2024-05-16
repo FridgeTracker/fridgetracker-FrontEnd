@@ -1,291 +1,321 @@
-h1{
-    margin: 0;
+h1 {
+  margin: 0;
 }
 
-.leftSides{
-    height: 100%;
-    width: 75%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.leftSides {
+  height: 100%;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.rightSides{
-    height: 100%;
-    width: 25%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+.rightSides {
+  height: 100%;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* MEAL RECORD */
-.mealRecordWrapper{
-    background-color: white;
-    height: 50%;
-    width: 95%;
-    border-radius: 1vh;
+.mealRecordWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  height: 50%;
+  width: 95%;
+  border-radius: 0.5vh;
 }
 
-.recordTopBar{
-    height: 13%;
-    width: 100%;
-    align-items: center;
-    display: flex;
-    position: relative;
+.recordTopBar {
+  height: 13%;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  position: relative;
 }
-.recordTopBar p{
-    margin-left: 2%;
-    font-size: 2.5vh;
-    font-weight: bold;
-    color: rgb(0, 56, 0);
+.recordTopBar p {
+  margin-left: 2%;
+  font-size: 2.5vh;
+  font-weight: bold;
+  color: rgb(0, 56, 0);
+}
+
+.recordTopBarNoti {
+  height: 17%;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+.recordTopBarNoti p {
+  margin-left: 2%;
+  font-size: 2.5vh;
+  font-weight: bold;
+  color: rgb(0, 56, 0);
+}
+
+.memberSelectors {
+  border: 1px solid rgb(170, 170, 170);
+  width: 10%;
+  border-radius: 0.5vh;
+  height: 50%;
+  position: absolute;
+  right: 0;
+  margin-right: 3%;
+  display: flex;
+  align-items: center;
+}
+
+.memberSelectors p {
+  border-radius: 2vh;
+  font-size: 1.4vh;
+  color: rgb(136, 136, 136);
+  padding-left: 5%;
+}
+
+.directional_bar {
+  height: 6%;
+  width: 100%;
+  background-color: rgb(219, 219, 219);
+}
+.notiTableMeal{
+  width: 100%;
+  font-size: 1.5vh;
+  text-align: left;
+}
+
+.notiTableMeal th:nth-child(1){
+  width: 12.3%;
+  padding-left: 2%;
+}
+.notiTableMeal th:nth-child(2),
+.notiTableMeal th:nth-child(3),
+.notiTableMeal th:nth-child(4){
+  width: 4%;
+}
+.notiTableMeal th:nth-child(5){
+  text-align: end;
+  width: 11%;
+  padding-right: 3.5%;
 }
 
 
-.recordTopBarNoti{
-    height: 17%;
-    width: 100%;
-    align-items: center;
-    display: flex;
-    position: relative;
-}
-.recordTopBarNoti p{
-    margin-left: 2%;
-    font-size: 2.5vh;
-    font-weight: bold;
-    color: rgb(0, 56, 0);
+.meal-record-table{
+  width: 100%;
+  font-size: 1.5vh;
 }
 
-.memberSelectors{
-    border: 1px solid rgb(170, 170, 170);
-    width: 10%;
-    border-radius: .5vh;
-    height: 50%;
-    position: absolute;
-    right: 0;
-    margin-right: 3%;
-    display: flex;
-    align-items: center;
+.meal-record-table td:nth-child(1){
+  width: 35%;
+  padding-left: 2%;
+}
+.meal-record-table td:nth-child(2)
+.meal-record-table td:nth-child(3)
+.meal-record-table td:nth-child(4){
+  width: 10%;
 }
 
-.memberSelectors p{
-    border-radius: 2vh;
-    font-size: 1.4vh;
-    color:rgb(136, 136, 136);
-    padding-left: 5%;
+.meal-record-table td:nth-child(5){
+  text-align: end;
+  width: 30%;
+  padding-right: 2%;
 }
-
-.directional_bar{
-    height: 6%;
-    width: 100%;
-    background-color: rgb(219, 219, 219);
-}
-.directional_bar table{
-    width: 100%;
-    font-size: 1.5vh;
-    font-weight: bold;
-}
-.directional_bar td:nth-child(1){
-    width: 35%;
-    padding-left: 2%;
-}
-.directional_bar td:nth-child(2),
-.directional_bar td:nth-child(3),
-.directional_bar td:nth-child(4){
-    width: 10%;
-}
-
-.directional_bar td:nth-child(5){
-    text-align: end;
-    width: 30%;
-    padding-right: 2%;
-}
-
-
 
 /* NOTI RECORD */
-.notificationWrapper{
-    margin-top: 2%;
-    background-color: white;
-    height: 41%;
-    width: 95%;
-    border-radius: 1vh;
+.notificationWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 2%;
+  background-color: white;
+  height: 41%;
+  width: 95%;
+  border-radius: 0.4vh;
 }
 
+.directional_bar_noti {
+  height: 7%;
+  width: 100%;
+  background-color: rgb(219, 219, 219);
+}
+.notiTable {
+  width: 100%;
+  height: 100%;
+  font-size: 1.5vh;
+  font-weight: bold;
+  align-items: center;
+}
+.notiTable td:nth-child(1) {
+  width: 16%;
+  padding-left: 2%;
+}
+.notiTable td:nth-child(2) {
+  width: 21%;
+}
+.notiTable td:nth-child(3) {
+  width: 35%;
+}
+.notiTable td:nth-child(4) {
+  width: 7%;
+}
 
-.directional_bar_noti{
-    height: 7%;
-    width: 100%;
-    background-color: rgb(219, 219, 219);
-}
-.notiTable{
-    width: 100%;
-    height: 100%;
-    font-size: 1.5vh;
-    font-weight: bold;
-    align-items: center;
-}
-.notiTable td:nth-child(1){
-    width: 16%;
-    padding-left: 2%;
-}
-.notiTable td:nth-child(2){
-    width: 21%
-}
-.notiTable td:nth-child(3){
-    width:35%
-}
-.notiTable td:nth-child(4){
-    width: 7%;
-}
-
-.notiContent{
-    width: 100%;
-    height: 76%;
-    overflow-y: scroll;
+.notiContent {
+  width: 100%;
+  height: 76%;
+  overflow-y: scroll;
 }
 .notiContent::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
-.notiTableContent{
-    width: 100%;
-    font-size: 1.5vh;
-    font-weight: bold;
+.notiTableContent {
+  width: 100%;
+  font-size: 1.5vh;
 }
-.notiTableContent img{
-    width: 3vh;
-    margin-right: .5vh;
+.notiTableContent img {
+  width: 2.5vh;
+  margin-right: 0.5vh;
 }
-.notiTableContent td:nth-child(1){
-    width: 25%;
-    padding-left: 2%;
-    display: flex;
-    align-items: center;
-}
-
-.notiTableContent td:nth-child(2){
-    width: 20%;
+.notiTableContent td:nth-child(1) {
+  width: 27%;
+  padding-left: 5%;
+  display: flex;
+  align-items: center;
 }
 
-.notiTableContent td:nth-child(3){
-    width: 50%;
-}
-.notiTableContent td:nth-child(4){
-    width: 10%;
+.notiTableContent td:nth-child(2) {
+  width: 21.5%;
 }
 
-.Admin{
-    width: 3vh;
+.notiTableContent td:nth-child(3) {
+  width: 48%;
 }
-.Server{
-    width: 3vh;
+.notiTableContent td:nth-child(4) {
+  width: 10%;
 }
 
+.Admin {
+  width: 3vh;
+}
+.Server {
+  width: 3vh;
+}
 
 .senderCell {
-    display: flex;
-    align-items: center;
-  }
+  display: flex;
+  align-items: center;
+}
 .responseText {
-color: green;
-} 
+  color: green;
+}
 .alertText {
-color: red;
-} 
+  color: red;
+}
 .notificationText {
-color: orange;
+  color: orange;
 }
-.reminderText{
-    color: rgb(5, 145, 0);
+.reminderText {
+  color: rgb(5, 145, 0);
 }
-
+.adminText {
+  color: rgb(88, 176, 228);
+}
 
 /* FOR NUTRI */
-.nutritionWrapper{
-    background-color: rgb(243, 243, 243);
-    height: 62%;
-    width: 93%;
-    border-radius: 1vh;
-    position: relative;
+.nutritionWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgb(243, 243, 243);
+  height: 62%;
+  width: 93%;
+  border-radius: 0.4vh;
+  position: relative;
 }
 
-.rightTopBar{
-    height: 10%;
-    width: 100%;
-    align-items: center;
-    display: flex;
+.rightTopBar {
+  height: 10%;
+  width: 100%;
+  align-items: center;
+  display: flex;
 }
 
-.rightTopBarItem{
-    height: 20%;
-    width: 100%;
-    align-items: center;
-    display: flex;
+.rightTopBarItem {
+  height: 20%;
+  width: 100%;
+  align-items: center;
+  display: flex;
 }
 
-.rightTopBarItem p{
-    margin-left: 5%;
-    font-size: 2.5vh;
-    font-weight: bold;
-    color: rgb(0, 56, 0);
+.rightTopBarItem p {
+  margin-left: 5%;
+  font-size: 2.5vh;
+  font-weight: bold;
+  color: rgb(0, 56, 0);
 }
 
-.rightTopBar p{
-    margin-left: 5%;
-    font-size: 2.5vh;
-    font-weight: bold;
-    color: rgb(0, 56, 0);
+.rightTopBar p {
+  margin-left: 5%;
+  font-size: 2.5vh;
+  font-weight: bold;
+  color: rgb(0, 56, 0);
 }
-.nutritionContents{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.nutritionMember{
-    background-color: white;
-    margin-top: 2%;
-    height: 15%;
-    width: 95%;
-    border-radius: 1vh;
-    display: flex;
-    align-items: center;
-}
-.nutritionMember span{
-    position: absolute;
-    right:0;
-    margin-right: 10%;
-    width: 20%;
-}
-.nutritionMember p{
-    width: 100%;
-   font-size: 2vh;
-   font-weight: bold;
-   margin-left: 1vh;
-   position: relative;
+.nutritionContents {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.nutIcon{
-    height: 4vh;
-    margin-left: 1vh;
+.nutritionMember {
+  background-color: white;
+  margin-top: 2%;
+  height: 15%;
+  width: 95%;
+  border-radius: 0.5vh;
+  display: flex;
+  align-items: center;
+  box-shadow: 0vh 0.08vh 0.15vh rgb(70, 70, 70);
+  position: relative;
+}
+.nutritionMember span {
+  position: absolute;
+  right: 0;
+  top:0;
+  margin-top: 6%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 2%;
+  width: 30%;
+  font-weight: bold;
+  font-size: 2vh;
+}
+#nutMember{
+  margin-left: 2%;
+  font-weight: bold;
+  font-size: 2vh;
 }
 
-#calories_nut{
-    font-size: 1.2vh;
-    color:grey;
-    position: relative;
-    font-weight: bold;
-    
+
+.nutIcon {
+  height: 4vh;
+  margin-left: 1vh;
+}
+
+#calories_nut {
+  font-size: 1.2vh;
+  color: grey;
+  position: relative;
+  font-weight: bold;
 }
 
 /* ITEM */
-.itemsWrapper{
-    margin-top: 5%;
-    background-color: white;
-    height: 30%;
-    width: 93%;
-    border-radius: 1vh;
+.itemsWrapper {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 5%;
+  background-color: white;
+  height: 30%;
+  width: 93%;
+  border-radius: 0.4vh;
+  overflow: hidden;
 }
